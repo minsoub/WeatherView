@@ -56,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case "0001":   // 공항기상정보
                         intent = new Intent(MainActivity.this, AirportActivity.class);
+                        break;
+                    case "0002":   // 낙뢰정보
+                        break;
+                    case "0003":   // 날씨 정보
+                        break;
+                    case "0004":   // 주간 날씨
+                        break;
+                    case "0005":   // 생활 기상
+                        break;
+                    case "0006":   // 지진 정보
+                        break;
                     default:
                         break;
                 }
