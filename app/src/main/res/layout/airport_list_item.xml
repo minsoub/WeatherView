@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/left_margin"
+            android:id="@+id/icao_img"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/item_margin"
+            android:paddingBottom="@dimen/item_margin"
+            android:text="New Text"
+            android:id="@+id/icao_cd"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/left_margin"
+            android:paddingTop="@dimen/item_margin"
+            android:paddingBottom="@dimen/item_margin"
+            android:text="New Text"
+            android:id="@+id/icao_nm"
+            android:textSize="20dp"
+            android:textColor="#666666"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+</LinearLayout>

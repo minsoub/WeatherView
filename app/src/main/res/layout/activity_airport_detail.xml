@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+tools:context=".AirportDetailActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/item_margin"
+            android:paddingBottom="@dimen/item_margin"
+            android:text="New Text"
+            android:id="@+id/icao_name"
+            android:textSize="24dp"
+            android:textColor="#000000"
+            android:background="#00BCD4"
+            android:gravity="center"
+             />
+
+        <TableLayout
+            android:background="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:stretchColumns="*"
+
+            android:id="@+id/table_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="측정일시" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/airport_crt_dt"
+                    android:text="B" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="풍향:" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:id="@+id/wind_direction"
+                    android:text="B" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="풍속:" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:id="@+id/wind_speed"
+                    android:text="B" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="양극단풍향: " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/yang_wind_direction"
+                    android:text="B" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="시정: " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/eyes_view"
+                    android:text="B" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="기온: " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/tempo"
+                    android:text="B" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="기압: " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/qnh"
+                    android:text="B" />
+            </TableRow>
+
+        </TableLayout>
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/qnh">
+        </com.google.android.gms.maps.MapView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
