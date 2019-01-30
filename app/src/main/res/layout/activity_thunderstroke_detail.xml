@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+tools:context=".ThunderStrokeDetailActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/item_margin"
+            android:paddingBottom="@dimen/item_margin"
+            android:text="New Text"
+            android:id="@+id/thunder_stroke_name"
+            android:textSize="24dp"
+            android:textColor="#000000"
+            android:background="#00BCD4"
+            android:gravity="center"
+             />
+
+        <TableLayout
+            android:background="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:stretchColumns="*"
+
+            android:id="@+id/table_id"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="@string/thunderstroke_time" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/thunderstroke_time"
+                    android:text="B" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="@string/thunderstroke_position" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:id="@+id/thunderstroke_position"
+                    android:text="B" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="@string/thunderstroke_lat" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:id="@+id/thunderstroke_lat"
+                    android:text="B" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="@string/thunderstroke_lon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/thunderstroke_lon"
+                    android:text="B" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="@string/thunderstroke_strong" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/thunderstroke_strong"
+                    android:text="B" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:background="#ffe5a3"
+                    android:textColor="#2b2b2b"
+                    android:text="@string/thunderstroke_type" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:background="#FFFFFF"
+                    android:textColor="#2b2b2b"
+                    android:layout_span="3"
+                    android:id="@+id/thunderstroke_type"
+                    android:text="B" />
+            </TableRow>
+
+        </TableLayout>
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thunderstroke_map">
+        </com.google.android.gms.maps.MapView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

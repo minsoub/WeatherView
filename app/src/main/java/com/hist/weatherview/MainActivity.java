@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(MainActivity.this, AirportActivity.class);
                         break;
                     case "0002":   // 낙뢰정보
+                        intent = new Intent(MainActivity.this, ThunderStrokeDetailActivity.class);
                         break;
                     case "0003":   // 날씨 정보
                         break;

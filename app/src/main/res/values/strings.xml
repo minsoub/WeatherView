@@ -3,4 +3,12 @@
     <string name="appbar_scrolling_view_behavior">WeatherView</string>
     <string name="title_activity_airport_detail">AirportDetailActivity</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAWMwxCCZVniziKPb7ciknuuYRxoum0Pdg</string>
+
+    <!--낙뢰정보-->
+    <string name="thunderstroke_time">낙뢰시간</string>
+    <string name="thunderstroke_position">관측지점</string>
+    <string name="thunderstroke_lat">위도</string>
+    <string name="thunderstroke_lon">경도</string>
+    <string name="thunderstroke_strong">낙뢰강도</string>
+    <string name="thunderstroke_type">낙뢰타입</string>
 </resources>

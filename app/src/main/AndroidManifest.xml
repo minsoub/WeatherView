@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".AirportActivity" />
         <activity android:name=".AirportDetailActivity" />
+        <activity android:name=".ThunderStrokeActivity" />
+        <activity android:name=".ThunderStrokeDetailActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
