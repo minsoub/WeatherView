@@ -9,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.hist.weatherview.thunderstroke.ThunderStrokeDetailActivity;
+import com.hist.weatherview.weatherlife.WeatherLifeActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     case "0004":   // 주간 날씨
                         break;
                     case "0005":   // 생활 기상
+                        intent = new Intent(MainActivity.this, WeatherLifeActivity.class);
                         break;
                     case "0006":   // 지진 정보
                         break;

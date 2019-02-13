@@ -1,4 +1,4 @@
-package com.hist.weatherview;
+package com.hist.weatherview.thunderstroke;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.hist.weatherview.R;
 
 import java.time.LocalDateTime;
 

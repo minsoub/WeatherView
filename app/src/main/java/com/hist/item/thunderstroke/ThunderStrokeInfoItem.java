@@ -1,4 +1,4 @@
-package com.hist.item;
+package com.hist.item.thunderstroke;
 
 import android.graphics.drawable.Drawable;
 

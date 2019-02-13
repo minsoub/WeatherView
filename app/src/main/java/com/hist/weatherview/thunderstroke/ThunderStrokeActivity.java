@@ -1,4 +1,4 @@
-package com.hist.weatherview;
+package com.hist.weatherview.thunderstroke;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.hist.adapater.AirportItemAdapter;
 import com.hist.item.AirportInfoItem;
+import com.hist.weatherview.AirportDetailActivity;
+import com.hist.weatherview.R;
 
 /**
  * 낙뢰정보 액티비티

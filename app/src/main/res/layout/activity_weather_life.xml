@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".weatherlife.WeatherLifeActivity">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/lifeweather_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00BCD4"
+                android:gravity="center"
+                android:paddingBottom="@dimen/item_margin"
+                android:paddingTop="@dimen/item_margin"
+                android:text="@string/lifeweather_time"
+                android:textColor="#000000"
+                android:textSize="24dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/weatherlife_area_search_border"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="20dp"
+                    android:text="@string/lifeweather_region"/>
+
+                <EditText
+                    android:id="@+id/inputMainOriginCurrent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:focusable="false"
+                    android:textSize="13dp"
+                    android:textColor="#FFFF0000"
+                    android:editable="false"
+                    android:background="@drawable/weatherlife_current_position"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_weatherlife_area_search"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:ellipsize="start"
+                    android:gravity="center"
+                    android:hint="Search text"
+                    android:focusable="false"
+                    android:editable="false"
+                    android:singleLine="true"
+                    android:drawableRight="@android:drawable/ic_menu_search"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/lifewather_type"
+                        android:text="@string/lifeweather_type"
+                        android:textSize="25dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/lifewather_date"
+                        android:text="@string/lifeweather_date"
+                        android:textSize="25dp"
+                        />
+
+
+                </LinearLayout>
+<!--                    <com.hist.adapater.EnhancedWrapContentViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:id="@+id/viewpager"
+                        android:background="@android:color/darker_gray"
+                        />-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_height="fill_parent"
+                        android:layout_width="fill_parent"
+                        />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabDots"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabBackground="@drawable/weatherlife_selector"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+</android.support.constraint.ConstraintLayout>
