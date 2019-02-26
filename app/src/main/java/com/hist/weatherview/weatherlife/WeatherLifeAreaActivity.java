@@ -7,17 +7,23 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hist.adapater.weatherlife.WeatherLifeAreaDataParser;
+import com.hist.adapater.weatherlife.WeatherLifeAreaDataParserListener;
+import com.hist.adapater.weatherlife.WeatherLifeAreaExpandableListViewAdapter;
 import com.hist.adapater.weatherlife.WeatherLifeAreaListViewAdapter;
+import com.hist.item.weatherlife.WeatherLifeArea;
 import com.hist.weatherview.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /**
@@ -26,7 +32,7 @@ import java.util.LinkedHashMap;
  * Date: 2018.01.29
  * Remark: 현재 사용 안함
  */
-public class WeatherLifeAreaActivity extends AppCompatActivity {
+public class WeatherLifeAreaActivity extends AppCompatActivity implements WeatherLifeAreaDataParserListener{
 
     ArrayAdapter mAdapter;
     WeatherLifeAreaListViewAdapter mAreaAdapter;
@@ -36,6 +42,13 @@ public class WeatherLifeAreaActivity extends AppCompatActivity {
     //Test용
     LinkedHashMap<String, String> linkedHashMap;
 
+    /* Expandable List View */
+    WeatherLifeAreaExpandableListViewAdapter mExpandalbeAreaAdapter;
+    List<String> cityList;
+    HashMap<String, List<String>> cityListDetail;
+    HashMap<String, List<String>> cityKeyListDetail;
+    ExpandableListView mExpandableListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +56,55 @@ public class WeatherLifeAreaActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mListView = (ListView) findViewById(R.id.list);
+        // mListView = (ListView) findViewById(R.id.list);
         mEmptyView = (TextView) findViewById(R.id.emptyView);
+
+        /* Expandable List View */
+        mExpandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view_weather_life_area);
+
+        GenerateWeatherLifeArea();
+
+        cityListDetail = MakeDummy();
+        // Key 생성
+        cityKeyListDetail = MakeKeyDummy();
+        cityList = new ArrayList<String>(this.cityListDetail.keySet());
+        mExpandalbeAreaAdapter = new WeatherLifeAreaExpandableListViewAdapter(this, cityList, cityListDetail);
+        mExpandableListView.setAdapter(mExpandalbeAreaAdapter);
+
+        /* Event Handler */
+        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        cityList.get(groupPosition)
+                                + " -> "
+                                + cityListDetail.get(
+                                cityList.get(groupPosition)).get(
+                                childPosition)
+                        +" , Key -> "
+                        + cityKeyListDetail.get(
+                                cityList.get(groupPosition)).get(
+                                childPosition)
+                        , Toast.LENGTH_SHORT
+                )
+                        .show();
+
+                Intent intent = new Intent();
+                intent.putExtra("areaCode", cityKeyListDetail.get(
+                        cityList.get(groupPosition)).get(
+                        childPosition));
+                intent.putExtra("areaName", cityListDetail.get(
+                        cityList.get(groupPosition)).get(
+                        childPosition));
+                setResult(RESULT_OK, intent);
+                finish();
+
+                return false;
+            }
+        });
+
 
         /*mAdapter = new ArrayAdapter(WeatherLifeAreaActivity.this,
                 android.R.layout.simple_list_item_1,
@@ -54,7 +114,7 @@ public class WeatherLifeAreaActivity extends AppCompatActivity {
 
         mAreaAdapter = new WeatherLifeAreaListViewAdapter(WeatherLifeAreaActivity.this, linkedHashMap);
 
-        //mListView.setAdapter(mAdapter);
+        /*주석
         mListView.setAdapter(mAreaAdapter);
 
         mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -77,7 +137,7 @@ public class WeatherLifeAreaActivity extends AppCompatActivity {
         });
 
         mListView.setEmptyView(mEmptyView);
-
+        */
     }
 
     @Override
@@ -135,12 +195,110 @@ public class WeatherLifeAreaActivity extends AppCompatActivity {
         */
     }
 
+    private void GenerateWeatherLifeArea()
+    {
+        WeatherLifeAreaDataParser parser = new WeatherLifeAreaDataParser(this);
+        parser.LoadWeatherLifePlaceInfo();
+    }
+
     //Dummy 리스트를 만든다.
-    private void MakeDummy()
+    private HashMap<String, List<String>> MakeDummy()
     {
         linkedHashMap = new LinkedHashMap<String, String>();
 
         linkedHashMap.put("1100000000", "서울");
         linkedHashMap.put("1111000000", "종로구");
+
+        HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
+
+        List<String> seoul = new ArrayList<String>();
+        seoul.add("서울특별시");
+        seoul.add("종로구");
+        seoul.add("중구");
+        seoul.add("용산구");
+        seoul.add("성동구");
+        seoul.add("광진구");
+        seoul.add("동대문구");
+        seoul.add("중랑구");
+        seoul.add("성북구");
+        seoul.add("도봉구");
+        seoul.add("노원구");
+        seoul.add("은평구");
+        seoul.add("서대문구");
+        seoul.add("마포구");
+        seoul.add("양천구");
+        seoul.add("강서구");
+        seoul.add("구로구");
+        seoul.add("금천구");
+        seoul.add("영등포구");
+        seoul.add("동작구");
+        seoul.add("관악구");
+        seoul.add("서초구");
+        seoul.add("강남구");
+        seoul.add("관악구");
+
+        List<String> busan = new ArrayList<String>();
+        busan.add("부산광역시");
+        busan.add("중구");
+        busan.add("서구");
+        busan.add("동구");
+        busan.add("영도구");
+
+        expandableListDetail.put("서울특별시", seoul);
+        expandableListDetail.put("부산광역시", busan);
+
+        WeatherLifeAreaDataParser parser = new WeatherLifeAreaDataParser(this);
+        parser.LoadWeatherLifePlaceInfo();
+
+
+        return expandableListDetail;
+    }
+
+    private HashMap<String, List<String>> MakeKeyDummy()
+    {
+        HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
+
+        List<String> seoul = new ArrayList<String>();
+        seoul.add("1100000000");
+        seoul.add("1111000000");
+        seoul.add("1114000000");
+        seoul.add("1117000000");
+        seoul.add("1120000000");
+        seoul.add("1121500000");
+        seoul.add("1123000000");
+        seoul.add("1126000000");
+        seoul.add("1129000000");
+        seoul.add("도봉구");
+        seoul.add("노원구");
+        seoul.add("은평구");
+        seoul.add("서대문구");
+        seoul.add("마포구");
+        seoul.add("양천구");
+        seoul.add("강서구");
+        seoul.add("구로구");
+        seoul.add("금천구");
+        seoul.add("영등포구");
+        seoul.add("동작구");
+        seoul.add("관악구");
+        seoul.add("서초구");
+        seoul.add("강남구");
+        seoul.add("관악구");
+
+        List<String> busan = new ArrayList<String>();
+        busan.add("부산광역시");
+        busan.add("중구");
+        busan.add("서구");
+        busan.add("동구");
+        busan.add("영도구");
+
+        expandableListDetail.put("서울특별시", seoul);
+        expandableListDetail.put("부산광역시", busan);
+        return expandableListDetail;
+    }
+
+    @Override
+    public void OnFinishParsing(HashMap<String, List<String>> expandableListDetail, HashMap<String, List<String>> expandableKeyListDetail) {
+        this.cityListDetail = expandableListDetail;
+        this.cityKeyListDetail = expandableKeyListDetail;
     }
 }

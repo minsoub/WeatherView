@@ -15,11 +15,25 @@ tools:context=".weatherlife.WeatherLifeAreaActivity">
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ThemeOverlay.AppCompat.Dark" />-->
 
+<!--
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+-->
+
+    <ExpandableListView
+        android:id="@+id/expandable_list_view_weather_life_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:divider="#A4C739"
+        android:dividerHeight="0.5dp"
+        >
+
+
+    </ExpandableListView>
 
     <TextView
         android:id="@+id/emptyView"
