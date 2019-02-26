@@ -38,6 +38,7 @@ public class WeatherLifeAreaDataParser {
     public void LoadWeatherLifePlaceInfo()
     {
         LoadWeatherLifePlaceRawDataThread thread = new LoadWeatherLifePlaceRawDataThread();
+        listener.OnStartParsing();
         thread.start();
     }
 
@@ -58,19 +59,13 @@ public class WeatherLifeAreaDataParser {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     ParseCSVFile(line);
-                    //buffer.append(line + "\n");
                 }
-
-                // System.out.println("-----data : " +  buffer.toString());
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            // 종료 시점
-            // listener를 통해서 알린다.
+            // 종료 시점 listener를 통해서 알린다.
             listener.OnFinishParsing(expandableListDetail, expandableKeyListDetail);
         }
 
@@ -81,6 +76,11 @@ public class WeatherLifeAreaDataParser {
 
             key = areaInfo[0];
             city = areaInfo[1];
+            //length가 2인 경우는 city만 있는 경우라서, city를 cityDetail에 추가해준다.
+            if(areaInfo.length == 2)
+            {
+                cityDetail = city;
+            }
             if(areaInfo.length > 2){
                 cityDetail = areaInfo[2];
             }
@@ -108,16 +108,6 @@ public class WeatherLifeAreaDataParser {
                 List<String> keyList = expandableKeyListDetail.get(city);
                 list.add(cityDetail);
                 keyList.add(key);
-
-                /*if(cityDetail == null)
-                {
-                    list.add(city);
-                    keyList.add(city);
-                }else
-                {
-                    list.add(cityDetail);
-                    keyList.add(key);
-                }*/
             }
         }
     }

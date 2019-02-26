@@ -1,5 +1,6 @@
 package com.hist.weatherview.weatherlife;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,20 +35,23 @@ import java.util.List;
  */
 public class WeatherLifeAreaActivity extends AppCompatActivity implements WeatherLifeAreaDataParserListener{
 
-    ArrayAdapter mAdapter;
-    WeatherLifeAreaListViewAdapter mAreaAdapter;
-    ListView mListView;
-    TextView mEmptyView;
+    private ArrayAdapter mAdapter;
+    private WeatherLifeAreaListViewAdapter mAreaAdapter;
+    private ListView mListView;
+    private TextView mEmptyView;
 
     //Test용
-    LinkedHashMap<String, String> linkedHashMap;
+    private LinkedHashMap<String, String> linkedHashMap;
 
     /* Expandable List View */
-    WeatherLifeAreaExpandableListViewAdapter mExpandalbeAreaAdapter;
-    List<String> cityList;
-    HashMap<String, List<String>> cityListDetail;
-    HashMap<String, List<String>> cityKeyListDetail;
-    ExpandableListView mExpandableListView;
+    private WeatherLifeAreaExpandableListViewAdapter mExpandalbeAreaAdapter;
+    private List<String> mCityList;
+    private HashMap<String, List<String>> mCityListDetail;
+    private HashMap<String, List<String>> mCityKeyListDetail;
+    private ExpandableListView mExpandableListView;
+    
+    /* ProgressBar */
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,56 +67,10 @@ public class WeatherLifeAreaActivity extends AppCompatActivity implements Weathe
         mExpandableListView = (ExpandableListView) findViewById(R.id.expandable_list_view_weather_life_area);
 
         GenerateWeatherLifeArea();
-
-        cityListDetail = MakeDummy();
-        // Key 생성
-        cityKeyListDetail = MakeKeyDummy();
-        cityList = new ArrayList<String>(this.cityListDetail.keySet());
-        mExpandalbeAreaAdapter = new WeatherLifeAreaExpandableListViewAdapter(this, cityList, cityListDetail);
-        mExpandableListView.setAdapter(mExpandalbeAreaAdapter);
-
-        /* Event Handler */
-        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        cityList.get(groupPosition)
-                                + " -> "
-                                + cityListDetail.get(
-                                cityList.get(groupPosition)).get(
-                                childPosition)
-                        +" , Key -> "
-                        + cityKeyListDetail.get(
-                                cityList.get(groupPosition)).get(
-                                childPosition)
-                        , Toast.LENGTH_SHORT
-                )
-                        .show();
-
-                Intent intent = new Intent();
-                intent.putExtra("areaCode", cityKeyListDetail.get(
-                        cityList.get(groupPosition)).get(
-                        childPosition));
-                intent.putExtra("areaName", cityListDetail.get(
-                        cityList.get(groupPosition)).get(
-                        childPosition));
-                setResult(RESULT_OK, intent);
-                finish();
-
-                return false;
-            }
-        });
-
-
         /*mAdapter = new ArrayAdapter(WeatherLifeAreaActivity.this,
                 android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.months_array));*/
-
-        MakeDummy();
-
-        mAreaAdapter = new WeatherLifeAreaListViewAdapter(WeatherLifeAreaActivity.this, linkedHashMap);
+//        mAreaAdapter = new WeatherLifeAreaListViewAdapter(WeatherLifeAreaActivity.this, linkedHashMap);
 
         /*주석
         mListView.setAdapter(mAreaAdapter);
@@ -297,8 +255,54 @@ public class WeatherLifeAreaActivity extends AppCompatActivity implements Weathe
     }
 
     @Override
+    public void OnStartParsing() {
+        mProgressDialog = ProgressDialog.show(this, "",
+                "불러오는중입니다.", true);
+    }
+
+    @Override
     public void OnFinishParsing(HashMap<String, List<String>> expandableListDetail, HashMap<String, List<String>> expandableKeyListDetail) {
-        this.cityListDetail = expandableListDetail;
-        this.cityKeyListDetail = expandableKeyListDetail;
+        if(mProgressDialog.isShowing())
+        {
+            mProgressDialog.dismiss();
+        }
+        mCityListDetail = expandableListDetail;
+        mCityKeyListDetail = expandableKeyListDetail;
+        mCityList = new ArrayList<String>(this.mCityListDetail.keySet());
+        mExpandalbeAreaAdapter = new WeatherLifeAreaExpandableListViewAdapter(this, mCityList, mCityListDetail);
+        mExpandableListView.setAdapter(mExpandalbeAreaAdapter);
+
+        /* Event Handler */
+        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        mCityList.get(groupPosition)
+                                + " -> "
+                                + mCityListDetail.get(
+                                mCityList.get(groupPosition)).get(
+                                childPosition)
+                                +" , Key -> "
+                                + mCityKeyListDetail.get(
+                                mCityList.get(groupPosition)).get(
+                                childPosition)
+                        , Toast.LENGTH_SHORT
+                )
+                        .show();
+
+                Intent intent = new Intent();
+                intent.putExtra("areaCode", mCityKeyListDetail.get(
+                        mCityList.get(groupPosition)).get(
+                        childPosition));
+                intent.putExtra("areaName", mCityList.get(groupPosition) + " " + mCityListDetail.get(
+                        mCityList.get(groupPosition)).get(
+                        childPosition));
+                setResult(RESULT_OK, intent);
+                finish();
+                return false;
+            }
+        });
     }
 }
