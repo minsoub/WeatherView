@@ -1,0 +1,18 @@
+<LinearLayout android:id="@+id/ll_weekly_weather_area_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/border_gray"
+    android:orientation="vertical"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/rv_weekly_weather_area_list"
+            />
+
+
+</LinearLayout>

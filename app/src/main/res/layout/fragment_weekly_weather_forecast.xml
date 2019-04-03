@@ -1,0 +1,61 @@
+<LinearLayout android:id="@+id/ll_weekly_weather_forecast"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/border_gray"
+    android:orientation="vertical"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:id="@+id/ll_weekly_weather_forecast_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp"
+            android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="날씨정보를 찾을 수 없습니다."
+                    android:textColor="@color/darkGray" />
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/rv_weekly_weather_forecast"
+            />
+
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="주간날씨예보정보"
+            android:textColor="@color/defaultTextColor" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/srf_weekly_weather_forecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:id="@+id/rv_weekly_weather_forecast"
+                            />
+                </android.support.v4.widget.SwipeRefreshLayout>
+              </FrameLayout>-->
+
+
+</LinearLayout>

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">WeatherView</string>
-    <string name="appbar_scrolling_view_behavior">WeatherView</string>
+    <!--<string name="appbar_scrolling_view_behavior">WeatherView</string>
+        스크롤링 behavior와 중복되서 우선 제거함 - JJW
+    -->
     <string name="title_activity_airport_detail">AirportDetailActivity</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAWMwxCCZVniziKPb7ciknuuYRxoum0Pdg</string>
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Today 날씨 아이템-->
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cv_weekly_weather_forecast"
+    card_view:cardBackgroundColor="@android:color/darker_gray"
+    card_view:cardElevation="0dp"
+    card_view:cardMaxElevation="0dp"
+    card_view:cardCornerRadius="1dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="150dp"
+        android:paddingStart="64dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="64dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_day"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:textSize="22sp"
+            android:text="오늘"
+            android:layout_alignParentLeft="true" />
+
+        <!--온도-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_temp_max"
+            android:layout_below="@+id/tv_day"
+            android:textSize="72sp"
+            android:text="30"
+            android:fontFamily="sans-serif-light"
+            />
+
+        <!--최저 온도-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_temp_min"
+            android:layout_below="@+id/tv_temp_max"
+            android:layout_marginTop="8dp"
+            android:textSize="36sp"
+            android:text="10"
+            android:fontFamily="sans-serif-light"
+            />
+
+        <!--날씨 아이콘-->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/iv_image"
+            android:layout_below="@+id/tv_day"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <!--날씨 설명-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_weather_type"
+            android:layout_below="@+id/iv_image"
+            android:text="맑음"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="26dp"
+            android:textSize="22sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="26dp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

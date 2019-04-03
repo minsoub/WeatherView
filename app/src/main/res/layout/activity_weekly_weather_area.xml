@@ -1,0 +1,65 @@
+<!--
+/**
+ * 지역 정보 장소 설정하기 레이아웃
+ * Author:JJW
+ * Date: 2018.03.18
+ * Remark:
+ */
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/in_weekly_weather_toolbar"
+        layout="@layout/toolbar_weekly_weather"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        android:id="@+id/container_weekly_weather_area">
+    </FrameLayout>
+<!--
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        android:id="@+id/container_place_detail">
+    </FrameLayout>
+-->
+    <!--<include layout="@layout/content_weekly_weather_forecast" />-->
+
+
+</LinearLayout>
+<!--<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/in_weekly_weather_toolbar"
+        layout="@layout/toolbar_weekly_weather"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_collapseMode="pin" />
+
+    <include layout="@layout/content_weekly_weather_forecast" />
+
+
+</android.support.design.widget.CoordinatorLayout>-->
+
+

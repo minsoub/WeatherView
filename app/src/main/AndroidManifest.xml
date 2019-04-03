@@ -25,8 +25,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".weatherlife.WeatherLifeActivity" />
-        <activity android:name=".weatherlife.WeatherLifeAreaActivity"></activity>
+        <activity android:name=".weatherlife.main.base.WeatherLifeActivity" />
+        <activity android:name=".weatherlife.area.base.WeatherLifeAreaActivity"></activity>
+        <activity
+            android:theme="@style/AppTheme2"
+            android:name=".weeklyweather.main.base.WeeklyWeatherActivity"
+
+            />
+        <activity
+            android:theme="@style/AppTheme2"
+            android:name=".weeklyweather.area.base.WeeklyWeatherAreaActivity"
+
+
+            />
     </application>
 
 </manifest>

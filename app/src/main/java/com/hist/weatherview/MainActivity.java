@@ -10,7 +10,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hist.weatherview.thunderstroke.ThunderStrokeDetailActivity;
-import com.hist.weatherview.weatherlife.WeatherLifeActivity;
+import com.hist.weatherview.weatherlife.main.base.WeatherLifeActivity;
+import com.hist.weatherview.weeklyweather.main.base.WeeklyWeatherActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     case "0003":   // 날씨 정보
                         break;
                     case "0004":   // 주간 날씨
+                        intent = new Intent(MainActivity.this, WeeklyWeatherActivity.class);
                         break;
                     case "0005":   // 생활 기상
                         intent = new Intent(MainActivity.this, WeatherLifeActivity.class);
