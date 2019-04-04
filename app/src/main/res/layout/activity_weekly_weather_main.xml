@@ -120,6 +120,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="26dp"
                     android:textSize="22sp"
+                    style="@style/CodeFont"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="26dp" />
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
     <string name="app_name">WeatherView</string>
     <!--<string name="appbar_scrolling_view_behavior">WeatherView</string>
         스크롤링 behavior와 중복되서 우선 제거함 - JJW
@@ -27,4 +27,8 @@
     <string name="action_settings">Settings</string>
     <string name="search_hint">Type and Search</string>
     <string name="menu_search">Search</string>
+
+
+    <!-- Temperature formats -->
+    <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 </resources>

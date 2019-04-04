@@ -66,7 +66,7 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(WeeklyWeatherForecastViewHolder viewHolder, final int i) {
         //viewHolder.imageView.setImageResource(items.get(position).getDrawableId());
-        viewHolder.CvWeeklyWeatherForecast.setTag(days.get(i).getDate());
+        //viewHolder.CvWeeklyWeatherForecast.setTag(days.get(i).getDate());
         viewHolder.IvImage.setContentDescription(days.get(i).getWeatherDescription());
 
             //viewHolder.IvImage.setImageResource(Util.getFeaturedWeatherIcon(days.get(i).getIconCode()));
@@ -85,16 +85,18 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
             viewHolder.IvImage.setImageResource(R.drawable.art_clouds);
             viewHolder.TvDay.setText("내일");
             viewHolder.TvWeatherType.setText("흐림");
-            viewHolder.TvTempMax.setText("20");
-            viewHolder.TvTempMin.setText("10");
+
+            viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, 20.1));
+
+            viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, 11.1));
             /*dayViewHolder.dayOfWeek.setText(context.getString(R.string.tomorrow));*/
         }
         else {
             viewHolder.IvImage.setImageResource(R.drawable.art_light_rain);
-            viewHolder.TvDay.setText("그외");
+            viewHolder.TvDay.setText("주간날짜");
             viewHolder.TvWeatherType.setText("흐림");
-            viewHolder.TvTempMax.setText("20");
-            viewHolder.TvTempMin.setText("10");
+            viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, 20.1));
+            viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, 10.1));
             //dayViewHolder.dayOfWeek.setText(days.get(i).getDate().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
         }
         //dayViewHolder.weatherType.setText(days.get(i).getWeatherDescription());
@@ -128,8 +130,8 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
         private List<WeeklyWeather> weeklyWeathers;
 
 
-        @BindView(R.id.cv_weekly_weather_forecast)
-        CardView CvWeeklyWeatherForecast;
+ /*       @BindView(R.id.cv_weekly_weather_forecast)
+        CardView CvWeeklyWeatherForecast;*/
         @BindView(R.id.iv_image)
         ImageView IvImage;
         @BindView(R.id.tv_day)

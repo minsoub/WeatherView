@@ -22,7 +22,7 @@ public interface WeeklyWeatherForecastView {
 
     void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeather> weeklyWeatherList);
 
-    void setWeeklyWeatherToday();       //오늘 날짜 정보 설정
+    void setWeeklyWeatherToday(WeeklyWeather today);       //오늘 날짜 정보 설정
 
     void clearWeeklyWeatherAdapter();   // 어뎁터 설정 초기화
 

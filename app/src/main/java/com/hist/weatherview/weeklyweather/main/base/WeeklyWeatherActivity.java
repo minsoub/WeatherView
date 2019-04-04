@@ -36,6 +36,7 @@ import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
 
 import java.util.List;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,6 +65,14 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     FrameLayout FlWeeklyWeatherBottomSheet;
     @BindView(R.id.tv_area)
     TextView TvArea;
+    @BindView(R.id.tv_weather_type)
+    TextView TvWeatherType;
+    @BindView(R.id.tv_temp_max)
+    TextView TvTempMax;
+    @BindView(R.id.tv_temp_min)
+    TextView TvTempMin;
+
+
     /*@BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;*/
 
@@ -248,6 +257,20 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
 
     @Override
     public void setWeeklyWeatherSearchArea(String area) {
+
+    }
+
+    @Override
+    public void setWeeklyWeatherTodayForecast(WeeklyWeather today) {
+        // 오늘날짜 날씨를 업데이트 한다.
+        // 1. 지역 설정
+        TvArea.setText("서울특별시 강서구 가양동");
+        // 2. 온도 설정
+        TvTempMax.setText(getString(R.string.format_temperature, 31.1));
+        TvTempMin.setText(getString(R.string.format_temperature, 11.1));
+        // 3. 이미지 설정
+        // 4. 날씨 타입 설정
+        TvWeatherType.setText("맑음");
 
     }
 

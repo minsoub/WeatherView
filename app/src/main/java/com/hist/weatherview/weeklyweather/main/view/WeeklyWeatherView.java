@@ -30,6 +30,8 @@ public interface WeeklyWeatherView {
 
     void setWeeklyWeatherSearchArea(String area);   // 지역 설정 완료 후 최종 지역 가져오기
 
+    void setWeeklyWeatherTodayForecast(WeeklyWeather today);
+
     void setWeeklyWeatherFavoriteArea(String area); // 즐겨 찾기 설정 완료 후 최종 즐겨 찾기 가졍괴
 
     void navigateToWeeklyWeatherSearchArea();       // 지역 설정 하기로 이동하기

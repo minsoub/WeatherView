@@ -21,11 +21,13 @@ import android.widget.Toast;
 import com.hist.item.weeklyweather.WeeklyWeather;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.weatherview.R;
+import com.hist.weatherview.weeklyweather.area.view.WeeklyWeatherAreaView;
 import com.hist.weatherview.weeklyweather.main.base.WeeklyWeatherActivity;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.adapter.WeeklyWeatherForecastRecycleViewAdapter;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.WeeklyWeatherForecastPresenter;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.impl.WeeklyWeatherForecastPresenterImpl;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.view.WeeklyWeatherForecastView;
+import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
 
 
 import java.util.ArrayList;
@@ -145,8 +147,9 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
 
 
     @Override
-    public void setWeeklyWeatherToday() {
+    public void setWeeklyWeatherToday(WeeklyWeather today) {
         // 오늘날짜 정보를 Activity로 넘긴다.
+        ((WeeklyWeatherView)context).setWeeklyWeatherTodayForecast(today);
     }
 
     @Override

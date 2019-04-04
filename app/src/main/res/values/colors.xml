@@ -22,4 +22,6 @@
 
     <color name="reddish">#FF453E</color>
     <drawable name="tab_nonselected">#fff</drawable>
+    <color name="grey">#cccccc</color>
+    <color name="sunshine_light_blue">#ff64c2f4</color>
 </resources>

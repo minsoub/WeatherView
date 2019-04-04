@@ -72,6 +72,10 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
         weeklyWeathers.add(a10);
 
         this.weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathers);
+
+        // 투데이 날씨를 base activity로 넘긴다.
+        this.weeklyWeatherForecastView.setWeeklyWeatherToday(a1);
+
     }
 
     @Override
