@@ -1,17 +1,25 @@
 package com.hist.weatherview.weatherlife.main.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hist.item.weatherlife.WeatherLifeBase;
 import com.hist.item.weatherlife.WeatherLifeItem;
+import com.hist.item.weatherlife.WeatherLifeResult;
+//import com.hist.item.weatherlife.old.WeatherLifeItem;
+import com.hist.item.weatherlife.old.WeatherLifeType;
 import com.hist.weatherview.R;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
 
 
 /***
@@ -20,20 +28,27 @@ import java.util.ArrayList;
  *  Desc : 생활 기상 관련 리스트뷰 어뎁터 (ArrayAdapter 기반)
  */
 
-public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeItem> {
-    private ArrayList<WeatherLifeItem> infoList = null;
+public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeResult> {
+    private WeatherLifeItem weatherLifeItem;
     private LayoutInflater inflater = null;
     private ViewHolder viewHolder = null;
     private Context ctx;
     private String weatherLifeItemTypName;
 
+
+
     public WeatherLifeListViewArrayAdapter(Context c, int textViewResourceId,
-                              ArrayList<WeatherLifeItem> arrays) {
-        super(c, textViewResourceId, arrays);
+                             WeatherLifeItem item) {
+
+        super(c, textViewResourceId, item.getResult());
         this.inflater = LayoutInflater.from(c);
         this.ctx = c;
-        this.weatherLifeItemTypName = this.GetWeatherTypeName(arrays);
+        this.weatherLifeItem = item;
+        this.weatherLifeItemTypName = item.getType();
+
     }
+
+
 
     public String getWeatherLifeItemTypName() {
         return weatherLifeItemTypName;
@@ -49,7 +64,7 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
     }
 
     @Override
-    public WeatherLifeItem getItem(int position) {
+    public WeatherLifeResult getItem(int position) {
         return super.getItem(position);
     }
 
@@ -84,14 +99,19 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
         // 이라고 생각 하시면 됩니다.
 
         //String level = weatherLifeLevelChecker.GetWeatherLifeLevel(getItem(position));
-        String level = getItem(position).GetWeatherLifeSeverityLevel();
-        viewHolder.txtStatus.setText(getItem(position).getStatus());
+        //String level = getItem(position).GetWeatherLifeSeverityLevel();
+        //viewHolder.txtStatus.setText(getItem(position).getStatus());
         viewHolder.imgView.setTag(position);
         //viewHolder.imgView.setImageResource(R.drawable.weatherlife_circle_danger);
+        //WeatherLifeType type = getItem(position).getType();
+
+
+        /*
         switch (level)
         {
             case "danger" :
                 viewHolder.imgView.setImageResource(R.drawable.weatherlife_circle_danger);
+
                 break;
             case "veryHigh":
                 viewHolder.imgView.setImageResource(R.drawable.weatherlife_circle_veryhigh);
@@ -109,7 +129,7 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
                 viewHolder.imgView.setImageResource(R.drawable.weatherlife_circle_low);
                 break;
         }
-
+*/
 
         //viewHolder.imgView.setOnClickListener(buttonClickListener);   //click event listener
 
@@ -124,15 +144,16 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
         return v;
     }
 
+
     // Adapter가 관리하는 Data List를 교체 한다.
     // 교체 후 Adapter.notifyDataSetChanged() 메서드로 변경 사실을
     // Adapter에 알려 주어 ListView에 적용 되도록 한다.
-    public void setArrayList(ArrayList<WeatherLifeItem> arrays){
-        this.infoList = arrays;
+    public void setArrayList(WeatherLifeItem item){
+        this.weatherLifeItem = item;
     }
 
-    public ArrayList<WeatherLifeItem> getArrayList(){
-        return infoList;
+    public WeatherLifeItem getArrayList(){
+        return this.weatherLifeItem;
     }
 
     public String GetWeatherTypeName(ArrayList<WeatherLifeItem> arrays)
@@ -142,7 +163,8 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
         {
             retVal = "";
         } else {
-            retVal = arrays.get(0).GetWeatherTypeName();
+            //retVal = arrays.get(0).GetWeatherTypeName();
+            retVal = "";
         }
 
         return retVal;
@@ -192,13 +214,18 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
      * 한번의 findViewByID 로 재사용 하기 위해 viewHolder를 사용 한다.
      */
     class ViewHolder{
+
+
+        //@BindView(R.id.txt_lifeweather_item_status)
         public TextView txtStatus = null;
+        //@BindView(R.id.txt_lifeweather_item_value)
         public ImageView imgView = null;
+        //@BindView(R.id.txt_lifeweather_item_desc)/
         public TextView txtDesc = null;
+        //@BindView(R.id.lifeweather_item_imgview)
         public TextView txtValue = null;
         //public Button btn_button = null;
         //public CheckBox cb_box = null;
-
     }
 
     @Override
@@ -209,7 +236,7 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeIte
 
     private void free(){
         inflater = null;
-        infoList = null;
+        weatherLifeItem = null;
         viewHolder = null;
         ctx = null;
     }

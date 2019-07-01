@@ -20,11 +20,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class NetworkInterceptor implements Interceptor {
-    private final String BASE_SERVER_API = "http://api.com/";
+    private final String BASE_SERVER_API = "http://54.180.26.21:9000/";
 
-    private final String THUNDERSTROKE_URL = "";    // 낙뢰정보
-    private final String WEEKLY_WEATHER_URL = "";    // 주간 날씨
-    private final String WEATHER_LIFE_URL = "";    // 생활 기상
+    private final String THUNDERSTROKE_URL = "thunderstroke/";      // 낙뢰정보
+    private final String WEEKLY_WEATHER_URL = "weeklyweather/";    // 주간 날씨
+    private final String TIME_WEATHER_URL = "timeweather/";    // 주간 날씨
+    private final String WEATHER_LIFE_URL = "weatherlife/";        // 생활 기상
 
     private String accessToken = null;      //토큰
     public Retrofit retrofit;               //Retrofit
@@ -68,6 +69,9 @@ public class NetworkInterceptor implements Interceptor {
      * @return
      */
     public Retrofit getWeeklyWeatherRepository() {
+
+
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_SERVER_API + WEEKLY_WEATHER_URL).addConverterFactory(new NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -107,4 +111,15 @@ public class NetworkInterceptor implements Interceptor {
     }
 
 
+    public Retrofit getTimeWeatherRepository() {
+
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_SERVER_API + TIME_WEATHER_URL).addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build();
+
+        return retrofit;
+    }
 }

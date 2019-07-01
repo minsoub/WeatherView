@@ -1,13 +1,9 @@
 package com.hist.weatherview.weeklyweather.main.presenter.impl;
 
 
-import com.hist.item.weeklyweather.WeeklyWeather;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.weatherview.weeklyweather.main.presenter.WeeklyWeatherPresenter;
 import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 주간 날씨 정보 예보 정보 베이스 프레젠터 인터페이스 구현

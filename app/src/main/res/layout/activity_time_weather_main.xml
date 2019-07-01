@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * 주간 기상 베이스 레이아웃
+ * Author:JJW
+ * Date: 2018.03.18
+ * Remark:
+ */
+-->
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:background="@android:color/darker_gray"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary">
+
+<!--            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/main_3"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"/>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"
+                android:background="@android:color/holo_blue_bright"
+                android:paddingStart="54dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="54dp"
+                android:paddingRight="16dp"
+                app:layout_collapseMode="parallax"
+                >
+
+                <!--지역-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_area"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="25dp"
+                    android:textSize="22sp"
+                    android:text="서울특별시 등촌동"
+                    android:layout_alignParentLeft="true" />
+
+                <!--요일-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_day"
+                    android:layout_below="@+id/tv_area"
+                    android:textSize="20sp"
+                    android:text="오늘"
+                    android:layout_alignParentLeft="true" />
+                <!--온도-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_temp_max"
+                    android:layout_below="@+id/tv_day"
+                    android:textSize="52sp"
+                    android:text="30"
+                    android:fontFamily="sans-serif-light"
+                    />
+
+                <!--최저 온도-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_temp_min"
+                    android:layout_below="@+id/tv_temp_max"
+                    android:layout_marginTop="8dp"
+                    android:textSize="26sp"
+                    android:text="10"
+                    android:fontFamily="sans-serif-light"
+                    />
+
+                <!--날씨 아이콘-->
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/iv_image"
+                    android:layout_below="@+id/tv_day"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/art_clear"
+                    />
+
+                <!--날씨 설명-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_weather_type"
+                    android:layout_below="@+id/iv_image"
+                    android:text="맑음"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="26dp"
+                    android:textSize="22sp"
+                    style="@style/CodeFont"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="26dp" />
+
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/in_weekly_weather_toolbar"
+                layout="@layout/toolbar_weekly_weather"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_collapseMode="pin" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/content_time_weather_forecast" />
+   <!-- <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="36dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="e1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="e2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="e3" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>-->
+
+<!--
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_android_black_36dp"
+        android:layout_margin="16dp"
+        android:theme="@style/FabTheme"
+        app:layout_anchor="@+id/app_bar"
+        app:layout_anchorGravity="bottom|right|end"
+        />
+-->
+
+    <FrameLayout
+        android:id="@+id/fl_weekly_weather_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/bottom_sheet_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>
+
+

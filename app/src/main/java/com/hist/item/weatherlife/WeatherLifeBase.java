@@ -1,67 +1,55 @@
 package com.hist.item.weatherlife;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-/***
- *  Author : JJW
- *  Date : 20180208
- *  Desc : 생활 기상 관련 아이템 Base 클래스
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "code",
+        "data"
+})
+public class WeatherLifeBase {
 
-public abstract class WeatherLifeBase {
-    public WeatherLifeType weatherLifeType;
-    public String code;
-    public String areaNo;
-    public String date;
+    @JsonProperty("code")
+    private Integer code;
+    @JsonProperty("data")
+    private WeatherLifeBaseData data;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public WeatherLifeBase() {
-
-    }
-
-    public WeatherLifeBase(WeatherLifeType weatherLifeType)
-    {
-        this.weatherLifeType = weatherLifeType;
-    }
-
-    public WeatherLifeBase(WeatherLifeType weatherLifeType, String code, String areaNo, String date) {
-        this.weatherLifeType = weatherLifeType;
-        this.code = code;
-        this.areaNo = areaNo;
-        this.date = date;
-    }
-
-    public WeatherLifeType getWeatherLifeType() {
-        return weatherLifeType;
-    }
-
-    public void setWeatherLifeType(WeatherLifeType weatherLifeType) {
-        this.weatherLifeType = weatherLifeType;
-    }
-
-    public String getCode() {
+    @JsonProperty("code")
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    @JsonProperty("code")
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    public String getAreaNo() {
-        return areaNo;
+    @JsonProperty("data")
+    public WeatherLifeBaseData getData() {
+        return data;
     }
 
-    public void setAreaNo(String areaNo) {
-        this.areaNo = areaNo;
+    @JsonProperty("data")
+    public void setData(WeatherLifeBaseData data) {
+        this.data = data;
     }
 
-    public String getDate() {
-        return date;
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
-
-    // 추상 메서드화
-    public abstract ArrayList<WeatherLifeItem> GetWeatherLifeItems();
 }

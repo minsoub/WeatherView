@@ -1,6 +1,7 @@
 package com.hist.weatherview.weeklyweather.main.fragment.forecast.view;
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weeklyweather.WeeklyWeatherBaseItem;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 
 import java.util.List;
 
@@ -20,11 +21,16 @@ public interface WeeklyWeatherForecastView {
 
     void showMessage(String message);
 
-    void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeather> weeklyWeatherList);
+    //void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeatherBase> weeklyWeatherList);
 
-    void setWeeklyWeatherToday(WeeklyWeather today);       //오늘 날짜 정보 설정
+    void setWeeklyWeatherToday(WeeklyWeatherBase today);       //오늘 날짜 정보 설정
 
     void clearWeeklyWeatherAdapter();   // 어뎁터 설정 초기화
 
     void showEmptyWeeklyWeatherView();  // 빈 리스트뷰 현시
+
+    void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeatherBaseItem> data);
+
+    // 중기 예보 설정
+    void setWeeklyWeatherMiddleForecast(WeeklyWeatherBase weeklyWeathersBase);
 }

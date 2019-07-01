@@ -23,21 +23,20 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyD6DojP4rUfKBlwFRkVdZ49ssI66zjdDD8" />
 
         <activity android:name=".weatherlife.main.base.WeatherLifeActivity" />
-        <activity android:name=".weatherlife.area.base.WeatherLifeAreaActivity"></activity>
+        <activity android:name=".weatherlife.area.base.WeatherLifeAreaActivity" />
         <activity
-            android:theme="@style/AppTheme2"
             android:name=".weeklyweather.main.base.WeeklyWeatherActivity"
-
-            />
+            android:theme="@style/AppTheme2" />
         <activity
-            android:theme="@style/AppTheme2"
-            android:name=".weeklyweather.area.base.WeeklyWeatherAreaActivity"
-
-
-            />
+            android:name=".timeweather.main.base.TimeWeatherActivity"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".common.area.base.WeeklyWeatherAreaActivity"
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".weeklyweather.main.base.TestActivity"></activity>
     </application>
 
 </manifest>

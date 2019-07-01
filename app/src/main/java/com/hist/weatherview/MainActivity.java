@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.hist.weatherview.thunderstroke.ThunderStrokeDetailActivity;
+import com.hist.weatherview.timeweather.main.base.TimeWeatherActivity;
 import com.hist.weatherview.weatherlife.main.base.WeatherLifeActivity;
 import com.hist.weatherview.weeklyweather.main.base.WeeklyWeatherActivity;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_balance_wallet_black_36dp),
                 "낙뢰 정보", "낙뢰정보를 안내합니다", "0002");
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_account_box_black_36dp),
-                "날시 정보", "날시정보를 안내합니다", "0003");
+                "날씨 정보", "날시정보를 안내합니다", "0003");
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_alarm_add_black_36dp),
                 "주간 날씨", "주간날씨 정보를 안내합니다", "0004");
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_alarm_black_36dp),
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(MainActivity.this, ThunderStrokeDetailActivity.class);
                         break;
                     case "0003":   // 날씨 정보
+                        intent = new Intent(MainActivity.this, TimeWeatherActivity.class);
                         break;
                     case "0004":   // 주간 날씨
                         intent = new Intent(MainActivity.this, WeeklyWeatherActivity.class);

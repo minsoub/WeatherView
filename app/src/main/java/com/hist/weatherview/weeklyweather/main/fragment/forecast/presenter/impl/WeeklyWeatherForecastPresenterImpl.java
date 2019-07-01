@@ -1,15 +1,22 @@
 package com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.impl;
 
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weeklyweather.WeeklyWeatherBaseItem;
+import com.hist.item.weeklyweather.WeeklyWeatherData;
+import com.hist.item.weeklyweather.WeeklyWeatherItem;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
+import com.hist.item.weeklyweather.dto.WeeklyWeatherDto;
 import com.hist.repository.util.HttpError;
+import com.hist.weatherview.common.util.DateUtil;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.interactor.WeeklyWeatherForecastInteractor;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.interactor.impl.WeeklyWeatherForecastInteractorImpl;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.WeeklyWeatherForecastPresenter;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.view.WeeklyWeatherForecastView;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,13 +29,11 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     private WeeklyWeatherForecastView weeklyWeatherForecastView;
     private WeeklyWeatherForecastInteractor weeklyWeatherForecastInteractor;
 
-    // private MarketMainInteractor marketMainInteractor;
-
     public WeeklyWeatherForecastPresenterImpl(WeeklyWeatherForecastView weeklyWeatherForecastView) {
         this.weeklyWeatherForecastView = weeklyWeatherForecastView;
         this.weeklyWeatherForecastInteractor = new WeeklyWeatherForecastInteractorImpl(this);
-       // this.marketMainInteractor = new MarketMainInteractorImpl(this);
     }
+
 
 
 
@@ -36,29 +41,39 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     public void init(WeeklyWeatherArea area) {
         weeklyWeatherForecastView.showProgressDialog();
         //repository 등록
+        weeklyWeatherForecastInteractor.setWeeklyWeatherRepository();
     }
 
     @Override
     public void onCreateView() {
         // db onnect
-        weeklyWeatherForecastView.showProgressDialog();
-        //marketStoryView.setScrollViewOnScrollChangeListener();
-        //WeeklyWeatherArea area = weeklyWeatherForecastInteractor.getWeeklyWeatherArea();    //Area 겟
+        //weeklyWeatherForecastView.showProgressDialog();
+        String dayTime = getTodayDate();
+        String landRegId = "11B00000";
+        String tempRegId = "11B10101";
+        String stnId = "133";
+
+        String time = DateUtil.getCurrentDateByYYYYMMDD() + "0600";
+
+        weeklyWeatherForecastInteractor.getWeeklyWeatherAll(time,landRegId,tempRegId,stnId);
+
+
+/*
         WeeklyWeatherArea area = new WeeklyWeatherArea();
         area.setAreaName("등촌1동");   // 테스트
         //weeklyWeatherForecastInteractor.getWeeklyWeatherByAreaID(area);   // 서버 연동
 
-        List<WeeklyWeather> weeklyWeathers = new ArrayList<>();
-        WeeklyWeather a1 = new WeeklyWeather();
-        WeeklyWeather a2 = new WeeklyWeather();
-        WeeklyWeather a3 = new WeeklyWeather();
-        WeeklyWeather a4 = new WeeklyWeather();
-        WeeklyWeather a5 = new WeeklyWeather();
-        WeeklyWeather a6 = new WeeklyWeather();
-        WeeklyWeather a7 = new WeeklyWeather();
-        WeeklyWeather a8 = new WeeklyWeather();
-        WeeklyWeather a9 = new WeeklyWeather();
-        WeeklyWeather a10 = new WeeklyWeather();
+        List<WeeklyWeatherBase> weeklyWeathers = new ArrayList<>();
+        WeeklyWeatherBase a1 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a2 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a3 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a4 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a5 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a6 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a7 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a8 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a9 = new WeeklyWeatherBase();
+        WeeklyWeatherBase a10 = new WeeklyWeatherBase();
 
         weeklyWeathers.add(a1);
         weeklyWeathers.add(a2);
@@ -74,7 +89,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
         this.weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathers);
 
         // 투데이 날씨를 base activity로 넘긴다.
-        this.weeklyWeatherForecastView.setWeeklyWeatherToday(a1);
+        this.weeklyWeatherForecastView.setWeeklyWeatherToday(a1);*/
 
     }
 
@@ -91,23 +106,114 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     }
 
     @Override
-    public void onSuccessGetWeeklyWeatherByAreaID(List<WeeklyWeather> weeklyWeathers) {
+    public void onSuccessGetWeeklyWeatherByAreaID(WeeklyWeatherBase weeklyWeathersBase) {
         // 네트워크 성공 후 API 서버로 부터 주간 기상 정보를 받아온다.
-        int size = weeklyWeathers.size();
-        List<WeeklyWeather> oldWeeklyWeathers = weeklyWeatherForecastInteractor.getWeeklyWeather();
-        int oldSize = oldWeeklyWeathers.size();
+        int size = weeklyWeathersBase.getData().getItems().size();
+        List<WeeklyWeatherBaseItem> oldWeeklyWeatherItems = weeklyWeatherForecastInteractor.getWeeklyWeatherBaseList().getData().getItems();
+        int oldSize = (oldWeeklyWeatherItems == null) ? 0 : oldWeeklyWeatherItems.size();
 
-        if (size > 0) {
-            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathers);
+        // 기존에 데이터가 없는 경우
+        if (oldSize == 0) {
+            //1. 신규 데이터를 Interactor에 설정 한다.
+            //weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            //2. 어뎁타를 초기화한다.
+            //weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            //3. 데이터를 어답에 등록한다.
+            //weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase);
+            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
             weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
-            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathers);
+            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
         } else {
-            if(oldSize == 0){
-                weeklyWeatherForecastView.showEmptyWeeklyWeatherView();
-            }
+            // 기존 데이터가 있는 경우..
+            // 1. 추가 하지 않고 갱신한다.
+           // weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            // 1.1 만약 Add 인경우
+            //weeklyWeatherForecastInteractor.setWeeklyWeatherAddAll(weeklyWeathersBase);
+            // 2.1 만약 NotifyItemChanged 필요한경우
+            //weeklyWeatherForecastInteractor.AdapterNotifyItemRangeInserted(oldSize, newData);
+            // 2.2 단순히 새로운 데이터 업데이트 시
+            //2. 어뎁타를 초기화한다.
+            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
+            //3. 데이터를 어답에 등록한다.
+           // weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase);
         }
 
-        weeklyWeatherForecastView.goneProgressDialog();
+        //weeklyWeatherForecastView.goneProgressDialog();
+    }
+
+    @Override
+    public void onSuccessGetWeeklyWeatherByDateAndTimeAndArea(WeeklyWeatherBase weeklyWeathersBase) {
+        // 네트워크 성공 후 API 서버로 부터 주간 기상 정보를 받아온다.
+        int size = weeklyWeathersBase.getData().getItems().size();
+        List<WeeklyWeatherBaseItem> oldWeeklyWeatherItems = weeklyWeatherForecastInteractor.getWeeklyWeatherBaseList().getData().getItems();
+        int oldSize = (oldWeeklyWeatherItems == null) ? 0 : oldWeeklyWeatherItems.size();
+
+        // 기존에 데이터가 없는 경우
+        if (oldSize == 0) {
+            //1. 신규 데이터를 Interactor에 설정 한다.
+            //weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            //2. 어뎁타를 초기화한다.
+            //weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            //3. 데이터를 어답에 등록한다.
+            //weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase);
+            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
+        } else {
+            // 기존 데이터가 있는 경우..
+            // 1. 추가 하지 않고 갱신한다.
+            // weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            // 1.1 만약 Add 인경우
+            //weeklyWeatherForecastInteractor.setWeeklyWeatherAddAll(weeklyWeathersBase);
+            // 2.1 만약 NotifyItemChanged 필요한경우
+            //weeklyWeatherForecastInteractor.AdapterNotifyItemRangeInserted(oldSize, newData);
+            // 2.2 단순히 새로운 데이터 업데이트 시
+            //2. 어뎁타를 초기화한다.
+            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            //3. 데이터를 어답에 등록한다.
+            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
+        }
+    }
+
+    @Override
+    public void onSuccessGetWeeklyWeatherMiddleForecastAllByTimeAndRegIdAndStnId(WeeklyWeatherBase weeklyWeathersBase) {
+        // 네트워크 성공 후 API 서버로 부터 주간 기상 정보를 받아온다.
+        int size = weeklyWeathersBase.getData().getItems().size();
+        /*List<WeeklyWeatherBaseItem> oldWeeklyWeatherItems = weeklyWeatherForecastInteractor.getWeeklyWeatherBaseList().getData().getItems();
+        int oldSize = (oldWeeklyWeatherItems == null) ? 0 : oldWeeklyWeatherItems.size();*/
+
+        int oldSize = 0;
+        // 기존에 데이터가 없는 경우
+        if (oldSize == 0) {
+            //1. 신규 데이터를 Interactor에 설정 한다.
+            //weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            //2. 어뎁타를 초기화한다.
+            //weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            //3. 데이터를 어답에 등록한다.
+            //weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase);
+            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            weeklyWeatherForecastView.setWeeklyWeatherMiddleForecast(weeklyWeathersBase);
+            weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
+        } else {
+            // 기존 데이터가 있는 경우..
+            // 1. 추가 하지 않고 갱신한다.
+            // weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            // 1.1 만약 Add 인경우
+            //weeklyWeatherForecastInteractor.setWeeklyWeatherAddAll(weeklyWeathersBase);
+            // 2.1 만약 NotifyItemChanged 필요한경우
+            //weeklyWeatherForecastInteractor.AdapterNotifyItemRangeInserted(oldSize, newData);
+            // 2.2 단순히 새로운 데이터 업데이트 시
+            //2. 어뎁타를 초기화한다.
+
+            weeklyWeatherForecastInteractor.setWeeklyWeather(weeklyWeathersBase);
+            weeklyWeatherForecastView.setWeeklyWeatherMiddleForecast(weeklyWeathersBase);
+            weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
+            weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
+        }
     }
 
     /*@Override
@@ -121,4 +227,12 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     public void onSuccessGetGuiderList(List<Guider> guiderList) {
 
     }*/
+    public String getTodayDate()
+    {
+
+        Date currentTime = Calendar.getInstance().getTime();
+        String currentDate = DateFormat.getDateTimeInstance().format(new Date());
+
+        return currentDate;
+    }
 }

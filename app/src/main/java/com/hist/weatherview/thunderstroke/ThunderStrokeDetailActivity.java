@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class ThunderStrokeDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
     private MapView mapView;
     private GoogleMap gmap;
-    private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyAWMwxCCZVniziKPb7ciknuuYRxoum0Pdg";
+    private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyCtiYft9f3JWTbBICeXInsM0zFUhvPEOFc";
     private double lat;
     private double lon;
 
@@ -114,7 +114,7 @@ public class ThunderStrokeDetailActivity extends AppCompatActivity implements On
     public void onMapReady(GoogleMap googleMap) {
         gmap = googleMap;
         gmap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(lat, lon);  // 40.7143528, -74.0059731);
+        LatLng ny = new LatLng(35.854, 126.555);  // 40.7143528, -74.0059731);
         gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
     }
 

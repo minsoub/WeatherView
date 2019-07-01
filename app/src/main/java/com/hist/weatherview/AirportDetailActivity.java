@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class AirportDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
     private MapView mapView;
     private GoogleMap gmap;
-    private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyAWMwxCCZVniziKPb7ciknuuYRxoum0Pdg";
+    private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyCtiYft9f3JWTbBICeXInsM0zFUhvPEOFc";
     private double lat;
     private double lon;
 

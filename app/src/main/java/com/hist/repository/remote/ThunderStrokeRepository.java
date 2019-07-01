@@ -1,7 +1,7 @@
 package com.hist.repository.remote;
 
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 
 import java.util.List;
 
@@ -19,6 +19,6 @@ public interface ThunderStrokeRepository {
      * GET 요청메소드
      */
     @GET("{area}")
-    Call<List<WeeklyWeather>> findWeeklyWeatherListByArea(@Path("area") String area);
+    Call<List<WeeklyWeatherBase>> findWeeklyWeatherListByArea(@Path("area") String area);
 
 }

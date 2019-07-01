@@ -59,8 +59,13 @@ public class WeatherLifePagerAdapter extends PagerAdapter {
         currentView = (View)object;
         Log.d(TAG, "position : " + position);
         // Type을 가져온다.
-        WeatherLifeListViewArrayAdapter arrayAdapter = (WeatherLifeListViewArrayAdapter) ((ListView)currentView).getAdapter();
-        String type = arrayAdapter.getWeatherLifeItemTypName();
-        listener.onChangeWeatherLifeType(type);
+        try {
+            WeatherLifeListViewArrayAdapter arrayAdapter = (WeatherLifeListViewArrayAdapter) ((ListView) currentView).getAdapter();
+            String type = arrayAdapter.getWeatherLifeItemTypName();
+            listener.onChangeWeatherLifeType(type);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

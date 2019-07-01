@@ -9,7 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hist.item.weatherlife.WeatherLifeItem;
+import com.hist.item.weatherlife.WeatherLifeBase;
+import com.hist.item.weatherlife.old.WeatherLifeItem;
 import com.hist.weatherview.R;
 
 import java.util.ArrayList;
@@ -22,14 +23,17 @@ import java.util.ArrayList;
  *  Remark : 현재사용안함
  */
 public class WeatherLifeListViewAdapter extends BaseAdapter{
+
     private ArrayList<WeatherLifeItem> list = new ArrayList<WeatherLifeItem>();
+    private ArrayList<String> stringArrayList;
     private Context ctx;
 
     public WeatherLifeListViewAdapter(){}
 
-    public WeatherLifeListViewAdapter(Context ctx, ArrayList<WeatherLifeItem> items){
-        this.list = items;
+    public WeatherLifeListViewAdapter(Context ctx, ArrayList<String> stringArrayList){
+        this.stringArrayList = stringArrayList;
         this.ctx = ctx;
+
     }
 
     // 아이템 개수를 리턴한다.

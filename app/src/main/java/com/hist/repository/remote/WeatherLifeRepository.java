@@ -1,7 +1,8 @@
 package com.hist.repository.remote;
 
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weatherlife.WeatherLifeBase;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 
 import java.util.List;
 
@@ -19,6 +20,17 @@ public interface WeatherLifeRepository {
      * GET 요청메소드
      */
     @GET("{area}")
-    Call<List<WeeklyWeather>> findWeeklyWeatherListByArea(@Path("area") String area);
+    Call<List<WeeklyWeatherBase>> findWeeklyWeatherListByArea(@Path("area") String area);
 
+    @GET("fsnlife/{area}/{date}")
+    Call<WeatherLifeBase> findWeatherLifeFsnLifeListByAreaAndDate(@Path("area") String area,
+                                                                        @Path("date") String date);
+
+    @GET("fsnlife/{area}/{date}")
+    Call<WeatherLifeBase> findWeatherLifeSensorytemLifeListByAreaAndDate(@Path("area") String area,
+                                                                  @Path("date") String date);
+
+    @GET("all/{area}/{date}")
+    Call<WeatherLifeBase> findWeatherLifeAllLifeListByAreaAndDate(@Path("area") String area,
+                                                                  @Path("date") String date);
 }

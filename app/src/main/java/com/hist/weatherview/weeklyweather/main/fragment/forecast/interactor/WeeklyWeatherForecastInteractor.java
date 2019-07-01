@@ -1,8 +1,8 @@
 package com.hist.weatherview.weeklyweather.main.fragment.forecast.interactor;
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
-import java.util.List;
+import com.hist.item.weeklyweather.dto.WeeklyWeatherDto;
 
 /**
  * 주간 날씨 정보 예보 정보 인터렉터 인터페이스
@@ -13,14 +13,23 @@ import java.util.List;
 
 public interface WeeklyWeatherForecastInteractor {
 
+
+    void setWeeklyWeatherBaseList(WeeklyWeatherBase weeklyWeatherBaseList);
+
+    WeeklyWeatherBase getWeeklyWeatherBaseList();
+
     void setWeeklyWeatherRepository(WeeklyWeatherArea area);
 
-    List<WeeklyWeather> getWeeklyWeather();
+    void getWeeklyWeather(String day, String time, String nx, String ny);
 
-    void setWeeklyWeather(List<WeeklyWeather> weeklyWeather);
+    void setWeeklyWeather(WeeklyWeatherBase weeklyWeatherBase);
 
     void setWeeklyWeatherRepository(String accessToken);
     WeeklyWeatherArea getWeeklyWeatherArea();
 
     void getWeeklyWeatherByAreaID(WeeklyWeatherArea area);
+
+    void setWeeklyWeatherRepository();
+
+    void getWeeklyWeatherAll(String time, String landRegId, String tempRegId, String stnId);
 }

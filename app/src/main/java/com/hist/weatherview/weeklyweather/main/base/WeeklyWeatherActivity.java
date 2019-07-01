@@ -7,15 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -23,10 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.weatherview.R;
-import com.hist.weatherview.weeklyweather.area.base.WeeklyWeatherAreaActivity;
+import com.hist.weatherview.common.area.base.WeeklyWeatherAreaActivity;
 import com.hist.weatherview.weeklyweather.comm.WeeklyWeatherActivityResultFlag;
 import com.hist.weatherview.weeklyweather.comm.dialog.WeeklyWeatherDialog;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.base.WeeklyWeatherForecastFragment;
@@ -34,9 +26,6 @@ import com.hist.weatherview.weeklyweather.main.presenter.WeeklyWeatherPresenter;
 import com.hist.weatherview.weeklyweather.main.presenter.impl.WeeklyWeatherPresenterImpl;
 import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
 
-import java.util.List;
-
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,18 +52,15 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     View InWeeklyWeatherToolbar;
     @BindView(R.id.fl_weekly_weather_bottom_sheet)
     FrameLayout FlWeeklyWeatherBottomSheet;
-    @BindView(R.id.tv_area)
-    TextView TvArea;
-    @BindView(R.id.tv_weather_type)
-    TextView TvWeatherType;
-    @BindView(R.id.tv_temp_max)
-    TextView TvTempMax;
-    @BindView(R.id.tv_temp_min)
-    TextView TvTempMin;
 
 
-    /*@BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;*/
+    @BindView(R.id.tv_forecast_title)
+    TextView TvForecastTitle;
+    @BindView(R.id.tv_forecast_description)
+    TextView TvForecastDescription;
+    @BindView(R.id.tv_forecast_area)
+    TextView TvForecastArea;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,9 +214,9 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
 
     @Override
     public void weeklyWeatherAreaChanged(WeeklyWeatherArea area) {
-        // WeeklyWeather 지역 변경
+        // WeeklyWeatherBase 지역 변경
         // 0. 지역정보 변경
-        TvArea.setText(area.getAreaName());
+        TvForecastArea.setText(area.getAreaName());
         // 1. List Fragment를 새롭게 생성한다.
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_weekly_weather, new WeeklyWeatherForecastFragment(this, area))
@@ -240,6 +226,23 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     @Override
     public void deleteWeeklyWeatherFavoriteArea(String area) {
         // 선택한 즐겨찾기 지역을 삭제 한다.
+    }
+
+    @Override
+    public void setWeeklyWeatherMiddleForecast(WeeklyWeatherBase weeklyWeatherMiddleForecast) {
+
+        // 오늘날짜 날씨를 업데이트 한다.
+        // 1. 지역 설정
+        /*TvArea.setText("서울특별시 강서구 가양동");
+        // 2. 온도 설정
+        TvTempMax.setText(getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
+        TvTempMin.setText(getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
+        // 3. 이미지 설정
+        IvImage.setImageResource(getSkyImageByValue(getTimeWeatherResultTimeValueByCategory(today, "SKY")));
+        // 4. 날씨 타입 설정
+        TvWeatherType.setText("맑음");*/
+        TvForecastTitle.setText(weeklyWeatherMiddleForecast.getData().getItems().get(0).getItem().getResult().get(0).getValue());
+
     }
 
     @Override
@@ -261,16 +264,17 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     }
 
     @Override
-    public void setWeeklyWeatherTodayForecast(WeeklyWeather today) {
+    public void setWeeklyWeatherTodayForecast(WeeklyWeatherBase today) {
         // 오늘날짜 날씨를 업데이트 한다.
         // 1. 지역 설정
-        TvArea.setText("서울특별시 강서구 가양동");
+/*        TvArea.setText("서울특별시 강서구 가양동");
         // 2. 온도 설정
         TvTempMax.setText(getString(R.string.format_temperature, 31.1));
         TvTempMin.setText(getString(R.string.format_temperature, 11.1));
         // 3. 이미지 설정
         // 4. 날씨 타입 설정
-        TvWeatherType.setText("맑음");
+        TvWeatherType.setText("맑음");*/
+        TvForecastDescription.setText("");
 
     }
 

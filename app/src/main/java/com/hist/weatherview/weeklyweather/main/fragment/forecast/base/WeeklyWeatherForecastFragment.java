@@ -3,7 +3,6 @@ package com.hist.weatherview.weeklyweather.main.fragment.forecast.base;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.hist.item.weeklyweather.WeeklyWeather;
+import com.hist.item.weeklyweather.WeeklyWeatherBaseItem;
+import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.weatherview.R;
-import com.hist.weatherview.weeklyweather.area.view.WeeklyWeatherAreaView;
 import com.hist.weatherview.weeklyweather.main.base.WeeklyWeatherActivity;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.adapter.WeeklyWeatherForecastRecycleViewAdapter;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.WeeklyWeatherForecastPresenter;
@@ -30,7 +29,6 @@ import com.hist.weatherview.weeklyweather.main.fragment.forecast.view.WeeklyWeat
 import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -129,13 +127,14 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeather> weeklyWeatherList) {
+/*    @Override
+    public void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeatherBase> weeklyWeatherList) {
         // 어뎁터 설정 하기
         weeklyWeatherForecastRecycleViewAdapter = new WeeklyWeatherForecastRecycleViewAdapter(weeklyWeatherForecastPresenter, weeklyWeatherList, context);
         RvWeeklyWeatherForecast.setAdapter(weeklyWeatherForecastRecycleViewAdapter);
         RvWeeklyWeatherForecast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-    }
+    }*/
+// 일단 주석
 
     @Override
     public void clearWeeklyWeatherAdapter() {
@@ -147,7 +146,7 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
 
 
     @Override
-    public void setWeeklyWeatherToday(WeeklyWeather today) {
+    public void setWeeklyWeatherToday(WeeklyWeatherBase today) {
         // 오늘날짜 정보를 Activity로 넘긴다.
         ((WeeklyWeatherView)context).setWeeklyWeatherTodayForecast(today);
     }
@@ -156,5 +155,19 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
     public void showEmptyWeeklyWeatherView() {
         // 빈 리스트뷰 현시
         LlWeeklyWeatherForecastEmpty.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setWeeklyWeatherListRecycleViewAdapterItem(List<WeeklyWeatherBaseItem> data) {
+        // 어뎁터 설정 하기
+        weeklyWeatherForecastRecycleViewAdapter = new WeeklyWeatherForecastRecycleViewAdapter(weeklyWeatherForecastPresenter, data, context);
+        RvWeeklyWeatherForecast.setAdapter(weeklyWeatherForecastRecycleViewAdapter);
+        RvWeeklyWeatherForecast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @Override
+    public void setWeeklyWeatherMiddleForecast(WeeklyWeatherBase weeklyWeathersBase) {
+        ((WeeklyWeatherView)context).setWeeklyWeatherMiddleForecast(weeklyWeathersBase);
+
     }
 }
