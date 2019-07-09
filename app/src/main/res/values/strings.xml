@@ -4,7 +4,8 @@
         스크롤링 behavior와 중복되서 우선 제거함 - JJW
     -->
     <string name="title_activity_airport_detail">AirportDetailActivity</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAWMwxCCZVniziKPb7ciknuuYRxoum0Pdg</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">""</string>
+    <string name="google_maps_api_key">APIKEY</string>
 
     <!--낙뢰정보-->
     <string name="thunderstroke_time">낙뢰시간</string>

@@ -34,4 +34,6 @@ public interface TimeWeatherForecastInteractor {
     void setTimeWeatherRepository();
 
     List<TimeWeatherResult> getTimeWeatherResult();
+
+    void getPlaceInfoByAreaCode(String areaCode);
 }

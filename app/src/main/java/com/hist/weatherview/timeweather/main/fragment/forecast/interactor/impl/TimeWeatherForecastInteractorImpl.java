@@ -1,9 +1,11 @@
 package com.hist.weatherview.timeweather.main.fragment.forecast.interactor.impl;
 
+import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.timeweather.TimeWeatherBase;
 import com.hist.item.timeweather.TimeWeatherResult;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
+import com.hist.repository.remote.PlaceInfoRepository;
 import com.hist.repository.remote.TimeWeatherRepository;
 import com.hist.repository.remote.WeeklyWeatherRepository;
 import com.hist.repository.util.ErrorInterceptor;
@@ -31,6 +33,7 @@ public class TimeWeatherForecastInteractorImpl implements TimeWeatherForecastInt
     private WeeklyWeatherArea area;
     private TimeWeatherBase timeWeatherBase;
     private TimeWeatherRepository timeWeatherRepository;
+    private PlaceInfoRepository placeInfoRepository;
 
     public TimeWeatherForecastInteractorImpl(TimeWeatherForecastPresenter timeWeatherForecastPresenter) {
         this.timeWeatherForecastPresenter = timeWeatherForecastPresenter;
@@ -97,6 +100,7 @@ public class TimeWeatherForecastInteractorImpl implements TimeWeatherForecastInt
     public void setTimeWeatherRepository(String accessToken) {
         // 레포지토리 연결
         this.timeWeatherRepository = new NetworkInterceptor(accessToken).getTimeWeatherRepository().create(TimeWeatherRepository.class);
+        this.placeInfoRepository = new NetworkInterceptor().getPlaceInfoRepository().create(PlaceInfoRepository.class);
     }
 
     @Override
@@ -130,6 +134,7 @@ public class TimeWeatherForecastInteractorImpl implements TimeWeatherForecastInt
     @Override
     public void setTimeWeatherRepository() {
         this.timeWeatherRepository = new NetworkInterceptor().getTimeWeatherRepository().create(TimeWeatherRepository.class);
+        this.placeInfoRepository = new NetworkInterceptor().getPlaceInfoRepository().create(PlaceInfoRepository.class);
     }
 
     @Override
@@ -139,5 +144,32 @@ public class TimeWeatherForecastInteractorImpl implements TimeWeatherForecastInt
             return null;
         }
         return timeWeatherBase.getData().getItem().getResult();
+    }
+
+    @Override
+    public void getPlaceInfoByAreaCode(String areaCode) {
+        try {
+            Call<PlaceInfoResult> callGetPlaceInfoByAreaCodeApi = placeInfoRepository.findPlaceInfoByArea(areaCode);
+            callGetPlaceInfoByAreaCodeApi.enqueue(new Callback<PlaceInfoResult>() {
+                @Override
+                public void onResponse(Call<PlaceInfoResult> call, Response<PlaceInfoResult> response) {
+                    if (response.isSuccessful()) {
+                        PlaceInfoResult placeInfoResult = response.body();
+                        timeWeatherForecastPresenter.onSuccessGetPlaceInfoByAreaCode(placeInfoResult);
+                    } else {
+                        timeWeatherForecastPresenter.onNetworkError(new ErrorInterceptor(getClass()).parseError(response));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PlaceInfoResult> call, Throwable t) {
+                    //log(t);
+                    timeWeatherForecastPresenter.onNetworkError(null);
+                }
+            });
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

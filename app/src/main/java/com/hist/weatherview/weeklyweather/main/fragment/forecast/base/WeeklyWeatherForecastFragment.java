@@ -170,4 +170,10 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
         ((WeeklyWeatherView)context).setWeeklyWeatherMiddleForecast(weeklyWeathersBase);
 
     }
+
+    public void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode)
+    {
+        //presenter로 넘김
+        this.weeklyWeatherForecastPresenter.getWeeklyWeatherMiddleForecastByAreaAndDate(areaCode);
+    }
 }

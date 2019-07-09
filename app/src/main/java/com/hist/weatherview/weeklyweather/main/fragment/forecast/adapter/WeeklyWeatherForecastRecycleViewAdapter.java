@@ -63,9 +63,11 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
 
     @Override
     public WeeklyWeatherForecastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        WeeklyWeatherForecastViewHolder guiderListViewHolder = null;
-        guiderListViewHolder = new WeeklyWeatherForecastViewHolder(weeklyWeatherForecastPresenter, weeklyWeatherItemResultOfMiddleTemp, weeklyWeatherItemResultOfMiddleLand, LayoutInflater.from(context).inflate(R.layout.list_item_weekly_weather_forecast, parent, false));
-/*        if(viewType == 0){
+        WeeklyWeatherForecastViewHolder weeklyWeatherForecastViewHolder = null;
+        weeklyWeatherForecastViewHolder = new WeeklyWeatherForecastViewHolder(weeklyWeatherForecastPresenter, weeklyWeatherItemResultOfMiddleTemp, weeklyWeatherItemResultOfMiddleLand, LayoutInflater.from(context).inflate(R.layout.list_item_weekly_weather_forecast, parent, false));
+
+        // 아래는 아이템 인덱스에 따라 다른 view를 현시한다.
+        /*        if(viewType == 0){
             guiderListViewHolder = new WeeklyWeatherForecastViewHolder(weeklyWeatherForecastPresenter, days, LayoutInflater.from(context).inflate(R.layout.list_item_weekly_weather_forecast_today, parent, false));
         }else
         {
@@ -73,7 +75,7 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
         }*/
 
 
-        return guiderListViewHolder;
+        return weeklyWeatherForecastViewHolder;
     }
 
     @Override
@@ -88,7 +90,7 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
         WeeklyWeatherResult weatherResultOfLand2 = weeklyWeatherItemResultOfMiddleLand.get((secondIdx >= weeklyWeatherItemResultOfMiddleLand.size()) ? 0 : secondIdx);
 
 
-
+        
         viewHolder.IvImage.setImageResource(R.drawable.art_clear);
         viewHolder.IvImageAfternoon.setImageResource(R.drawable.art_clear);
 

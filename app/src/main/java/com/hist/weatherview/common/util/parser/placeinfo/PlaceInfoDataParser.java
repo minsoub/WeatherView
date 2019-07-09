@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class PlaceInfoDataParser {
 
-    private Context mContext;
+   private Context mContext;
     private HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
     private HashMap<String, List<String>> expandableKeyListDetail = new HashMap<String, List<String>>();
     private List<String> list;
@@ -31,6 +31,13 @@ public class PlaceInfoDataParser {
     public PlaceInfoDataParser(Context mContext) {
         this.mContext = mContext;
         this.listener = (PlaceInfoDataParserListener)mContext;
+        //this.listener = mContext;
+    }
+
+    public PlaceInfoDataParser(PlaceInfoDataParserListener listener, Context context) {
+        this.mContext = context;
+        this.listener = listener;
+        //this.listener = mContext;
     }
 
     public void LoadWeatherLifePlaceInfo()

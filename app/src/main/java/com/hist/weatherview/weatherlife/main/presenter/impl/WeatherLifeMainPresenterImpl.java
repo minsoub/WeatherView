@@ -40,7 +40,7 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
      */
     @Override
     public void init(WeeklyWeatherArea area) {
-        weatherLifeMainView.showProgressDialog();
+       // weatherLifeMainView.showProgressDialog();
         //repository 등록
         weatherLifeMainInteractor.setWeatherLifeRepository();
     }
@@ -179,7 +179,8 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
 
     @Override
     public void onChangeArea(String area) {
-        weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate(area, "2019061206" );
+        String date = DateUtil.getCurrentDateByYYYYMMDD() + "06";
+        weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate(area, date );
     }
 
     @Override
@@ -189,7 +190,8 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
 
     @Override
     public void onActivityResultForWeatherLifeAreaResultOk(String areaCode, String areaName) {
-        weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate(areaCode, "2019061206" );
+        String date = DateUtil.getCurrentDateByYYYYMMDD() + "06";
+        weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate(areaCode, date );
     }
 
     /*@Override

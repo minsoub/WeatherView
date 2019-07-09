@@ -64,7 +64,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="25dp"
                     android:textSize="18sp"
-                    android:text="서울특별시 등촌동"
+                    android:text="지역명"
                     android:layout_alignParentLeft="true" />
 
                 <TextView

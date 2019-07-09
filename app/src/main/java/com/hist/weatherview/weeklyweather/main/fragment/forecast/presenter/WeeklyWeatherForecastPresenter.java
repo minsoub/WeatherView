@@ -1,5 +1,6 @@
 package com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter;
 
+import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.repository.util.HttpError;
@@ -27,4 +28,7 @@ public interface WeeklyWeatherForecastPresenter {
     //void onClickImage(PlaceAttraction guider, int position);
 
     //void onSuccessGetGuiderList(List<Guider> guiderList);
+    void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode);
+
+    void onSuccessGetPlaceInfoByAreaCode(PlaceInfoResult placeInfoResult);      //지역코드 성공 시
 }

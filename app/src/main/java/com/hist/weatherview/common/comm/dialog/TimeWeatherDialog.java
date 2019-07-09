@@ -14,11 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hist.item.common.SharedPlaceInfo;
 import com.hist.weatherview.R;
-import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
-
-import java.util.ArrayList;
+import com.hist.weatherview.timeweather.main.view.TimeWeatherView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,31 +31,29 @@ import butterknife.OnClick;
  */
 
 
-public class WeeklyWeatherDialog extends BottomSheetDialog {
+public class TimeWeatherDialog extends BottomSheetDialog {
 
     private Context context;
-    private WeeklyWeatherView weeklyWeatherView;
-    private ArrayList<SharedPlaceInfo> placeInfos;
+    private TimeWeatherView timeWeatherView;
     final String areas[] = {"등촌1동", "염창1동", "가양1동"};
 
     @BindView(R.id.ll_dialog_weekly_weather)
     LinearLayout llDialogWeeklyWeather;
 
-    public WeeklyWeatherDialog(@NonNull Context context, ArrayList<SharedPlaceInfo> placeInfos) {
+    public TimeWeatherDialog(@NonNull Context context) {
         super(context);
         this.context = context;
-        this.weeklyWeatherView = (WeeklyWeatherView)context;
-        this.placeInfos = placeInfos;
+        this.timeWeatherView = (TimeWeatherView)context;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_weekly_weather);
         ButterKnife.bind(this);
-        refreshWeeklyWeatherFavoritePlaceList();
+        init();
     }
 
     public void init()
@@ -67,26 +62,12 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
 
         // 즐겨찾기 버튼 생성
         // 랜덤 생성
-    }
-
-    public void refreshWeeklyWeatherFavoritePlaceList()
-    {
-
-        if(llDialogWeeklyWeather != null) {
-            if (llDialogWeeklyWeather.getChildCount() > 0) {
-                llDialogWeeklyWeather.removeAllViews();
-            }
-        }
-        if(placeInfos != null) {
-            for (int i = 0; i < placeInfos.size(); i++) {
-                RelativeLayout relativeLayout = createRelativeLayout();
-                SharedPlaceInfo placeInfo = placeInfos.get(i);
-                createFavoriteTextViews(relativeLayout, i, placeInfo.getPlaceName());
-                llDialogWeeklyWeather.addView(relativeLayout);
-            }
+        for(int i = 0 ; i < 3 ; i++) {
+            RelativeLayout relativeLayout = createRelativeLayout();
+            createFavoriteTextViews(relativeLayout, i);
+            llDialogWeeklyWeather.addView(relativeLayout);
         }
     }
-
 
     public LinearLayout createLinearLayout() {
         LinearLayout ll = new LinearLayout(context);
@@ -105,12 +86,12 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         return  rl;
     }
 
-    public void createFavoriteTextViews(RelativeLayout relativeLayout, int i, String name)
+    public void createFavoriteTextViews(RelativeLayout relativeLayout, int i)
     {
         // dummy로 사용
         final int temp = i;
         TextView tv = new TextView(context);
-        tv.setText(name);
+        tv.setText(areas[i]);
         tv.setId(i);
         tv.setTextColor(Color.GRAY);
         tv.setTextSize(25);
@@ -146,7 +127,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weeklyWeatherView.setWeeklyWeatherFavoriteArea(areas[temp]);
+                timeWeatherView.setWeeklyWeatherFavoriteArea(areas[temp]);
                 dismiss();
             }
         });
@@ -154,7 +135,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weeklyWeatherView.deleteWeeklyWeatherFavoriteArea(areas[temp]);
+                timeWeatherView.deleteWeeklyWeatherFavoriteArea(areas[temp]);
                 dismiss();
             }
         });
@@ -162,12 +143,12 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
 
     @OnClick(R.id.tv_dialog_weekly_weather)
     public void onClickWeeklyWeatherSearchArea() {
-        weeklyWeatherView.navigateToWeeklyWeatherSearchArea();
+        timeWeatherView.navigateToWeeklyWeatherSearchArea();
     }
 
     @OnClick(R.id.tv_dialog_weekly_weather_favorite)
     public void onClickWeeklyWeatherFavoriteArea() {
-        weeklyWeatherView.navigateToWeeklyWeatherFavoriteArea();
+        timeWeatherView.navigateToWeeklyWeatherFavoriteArea();
     }
 
     @OnClick(R.id.tv_dialog_weekly_weather_cancel)
@@ -175,12 +156,4 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         dismiss();
     }
 
-    /**
-     *  즐겨찾기 항목을 가져온다.
-     * @param placeInfos
-     */
-    public void setWeeklyWeatherFavoritePlaceList(ArrayList<SharedPlaceInfo> placeInfos) {
-        this.placeInfos = placeInfos;
-        this.refreshWeeklyWeatherFavoritePlaceList();
-    }
 }

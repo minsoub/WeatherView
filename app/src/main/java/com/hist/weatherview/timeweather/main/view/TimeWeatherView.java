@@ -47,4 +47,8 @@ public interface TimeWeatherView {
     void weeklyWeatherAreaChanged(WeeklyWeatherArea area);              // 지역 설정 또는 즐겨찾기를 통해 지역이 변경된것을 알리기
 
     void deleteWeeklyWeatherFavoriteArea(String area);                  // 즐겨찾기 지역 삭제 하기
+
+    //void setTimeWeatherForecast(WeeklyWeatherBase weeklyWeatherMiddleForecast);
+
+    void getTimeWeatherForecastByAreaAndDate(String areaCode, String s);        //시간별 조회
 }

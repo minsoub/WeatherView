@@ -160,4 +160,9 @@ public class TimeWeatherForecastFragment extends Fragment implements TimeWeather
         RvWeeklyWeatherForecast.setAdapter(timeWeatherForecastRecycleViewAdapter);
         RvWeeklyWeatherForecast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
     }
+
+    public void getTimeWeatherForecastByAreaAndDate(String areaCode) {
+        //presenter로 넘김
+        this.timeWeatherForecastPresenter.getTimeWeatherForecastByAreaAndDate(areaCode);
+    }
 }

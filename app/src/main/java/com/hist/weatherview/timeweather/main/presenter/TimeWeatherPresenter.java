@@ -20,4 +20,7 @@ public interface TimeWeatherPresenter {
 
     // 지역 변경 요청 결과 처리
     void onActivityResultTimeWeatherSearchAreaResultOK(WeeklyWeatherArea weeklyWeather, int position);
+
+
+    void onActivityResultForTimeWeatherAreaResultOk(String areaCode, String areaName);
 }

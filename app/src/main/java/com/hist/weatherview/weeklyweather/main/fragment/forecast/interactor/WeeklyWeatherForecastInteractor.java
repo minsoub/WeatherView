@@ -32,4 +32,6 @@ public interface WeeklyWeatherForecastInteractor {
     void setWeeklyWeatherRepository();
 
     void getWeeklyWeatherAll(String time, String landRegId, String tempRegId, String stnId);
+
+    void getPlaceInfoByAreaCode(String areaCode);           // 지역정보 상세 조회
 }

@@ -49,4 +49,6 @@ public interface WeeklyWeatherView {
     void deleteWeeklyWeatherFavoriteArea(String area);                  // 즐겨찾기 지역 삭제 하기
 
     void setWeeklyWeatherMiddleForecast(WeeklyWeatherBase weeklyWeatherMiddleForecast);
+
+    void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode, String s);
 }

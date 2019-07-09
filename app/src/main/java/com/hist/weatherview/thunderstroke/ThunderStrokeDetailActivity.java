@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class ThunderStrokeDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
     private MapView mapView;
     private GoogleMap gmap;
-    private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyCtiYft9f3JWTbBICeXInsM0zFUhvPEOFc";
+    private static final String MAP_VIEW_BUNDLE_KEY = "API_KEY";
     private double lat;
     private double lon;
 

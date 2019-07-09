@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.hist.weatherview.common.placeinfo.base.PlaceInfoActivity;
 import com.hist.weatherview.common.placeinfo.presenter.PlaceInfoPresenter;
 import com.hist.weatherview.common.placeinfo.view.PlaceInfoView;
 import com.hist.weatherview.common.util.parser.placeinfo.PlaceInfoDataParser;
@@ -37,12 +38,13 @@ public class PlaceInfoPresenterImpl implements PlaceInfoPresenter, PlaceInfoData
     private HashMap<String, List<String>> mCityListDetail;
     private HashMap<String, List<String>> mCityKeyListDetail;
     private ExpandableListView mExpandableListView;
-    PlaceInfoDataParser parser = new PlaceInfoDataParser((Context)placeInfoView);
+    PlaceInfoDataParser parser;
 
 
 
-    public PlaceInfoPresenterImpl(PlaceInfoView placeInfoView){
+    public PlaceInfoPresenterImpl(PlaceInfoView placeInfoView, PlaceInfoActivity activity){
         this.placeInfoView = placeInfoView;
+        this.parser = new PlaceInfoDataParser(this, (PlaceInfoActivity)placeInfoView);
     }
 
 
@@ -63,12 +65,13 @@ public class PlaceInfoPresenterImpl implements PlaceInfoPresenter, PlaceInfoData
 
     @Override
     public void OnStartParsing() {
-        placeInfoView.showProgressDialog();
+
+        //placeInfoView.showProgressDialog();
     }
 
     @Override
     public void OnFinishParsing(HashMap<String, List<String>> expandableListDetail, HashMap<String, List<String>> expandableKeyListDetail) {
-        placeInfoView.goneProgressDialog();
+        //placeInfoView.goneProgressDialog();
         mCityListDetail = expandableListDetail;
         mCityKeyListDetail = expandableKeyListDetail;
         mCityList = new ArrayList<String>(this.mCityListDetail.keySet());

@@ -1,8 +1,10 @@
 package com.hist.weatherview.weeklyweather.main.fragment.forecast.interactor.impl;
 
+import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.item.weeklyweather.dto.WeeklyWeatherDto;
+import com.hist.repository.remote.PlaceInfoRepository;
 import com.hist.repository.remote.WeeklyWeatherRepository;
 import com.hist.repository.util.ErrorInterceptor;
 import com.hist.repository.util.NetworkInterceptor;
@@ -25,6 +27,8 @@ public class WeeklyWeatherForecastInteractorImpl implements WeeklyWeatherForecas
     private WeeklyWeatherArea area;
     private WeeklyWeatherBase weeklyWeatherBaseList;
     private WeeklyWeatherRepository weeklyWeatherRepository;
+    //지역코드 레파지토리
+    private PlaceInfoRepository placeInfoRepository;
 
     public WeeklyWeatherForecastInteractorImpl(WeeklyWeatherForecastPresenter weeklyWeatherForecastPresenter) {
         this.weeklyWeatherForecastPresenter = weeklyWeatherForecastPresenter;
@@ -120,9 +124,13 @@ public class WeeklyWeatherForecastInteractorImpl implements WeeklyWeatherForecas
         });*/
     }
 
+    /**
+     *  레파지토리 등록
+     */
     @Override
     public void setWeeklyWeatherRepository() {
         this.weeklyWeatherRepository = new NetworkInterceptor().getWeeklyWeatherRepository().create(WeeklyWeatherRepository.class);
+        this.placeInfoRepository = new NetworkInterceptor().getPlaceInfoRepository().create(PlaceInfoRepository.class);
     }
 
     @Override
@@ -146,6 +154,37 @@ public class WeeklyWeatherForecastInteractorImpl implements WeeklyWeatherForecas
 
                 @Override
                 public void onFailure(Call<WeeklyWeatherBase> call, Throwable t) {
+                    //log(t);
+                    weeklyWeatherForecastPresenter.onNetworkError(null);
+                }
+            });
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *  지역 정보를 상세 조회 한다.
+     * @param areaCode
+     */
+    @Override
+    public void getPlaceInfoByAreaCode(String areaCode) {
+        try {
+            Call<PlaceInfoResult> callGetPlaceInfoByAreaCodeApi = placeInfoRepository.findPlaceInfoByArea(areaCode);
+            callGetPlaceInfoByAreaCodeApi.enqueue(new Callback<PlaceInfoResult>() {
+                @Override
+                public void onResponse(Call<PlaceInfoResult> call, Response<PlaceInfoResult> response) {
+                    if (response.isSuccessful()) {
+                        PlaceInfoResult placeInfoResult = response.body();
+                        weeklyWeatherForecastPresenter.onSuccessGetPlaceInfoByAreaCode(placeInfoResult);
+                    } else {
+                        weeklyWeatherForecastPresenter.onNetworkError(new ErrorInterceptor(getClass()).parseError(response));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PlaceInfoResult> call, Throwable t) {
                     //log(t);
                     weeklyWeatherForecastPresenter.onNetworkError(null);
                 }

@@ -1,6 +1,7 @@
 package com.hist.weatherview.timeweather.main.fragment.forecast.presenter.impl;
 
 
+import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.timeweather.TimeWeatherBase;
 import com.hist.item.timeweather.TimeWeatherResult;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
@@ -154,6 +155,23 @@ public class TimeWeatherForecastPresenterImpl implements TimeWeatherForecastPres
             timeWeatherForecastView.setTimeWeatherListRecycleViewAdapterItem(timeWeatherBase.getData().getItem().getResult());
             timeWeatherForecastView.setTimeWeatherToday(timeWeatherBase.getData().getItem().getResult().get(0));
         }
+    }
+
+    @Override
+    public void getTimeWeatherForecastByAreaAndDate(String areaCode) {
+        timeWeatherForecastInteractor.getPlaceInfoByAreaCode(areaCode);
+    }
+
+    @Override
+    public void onSuccessGetPlaceInfoByAreaCode(PlaceInfoResult placeInfoResult) {
+        String time = "0500";
+        String nx = placeInfoResult.getNx();
+        String ny = placeInfoResult.getNy();
+
+        String day = DateUtil.getCurrentDateByYYYYMMDD();
+
+        //날짜, 중기 지역 코드, 중기 온도 코드,
+        timeWeatherForecastInteractor.getTimeWeather(day,time,nx,ny);
     }
 
     public String getTodayDate()

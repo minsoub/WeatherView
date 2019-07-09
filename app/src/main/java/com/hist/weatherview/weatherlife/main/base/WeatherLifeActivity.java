@@ -98,6 +98,7 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
         //itemAdapaterAdd();
         //InitLayout();
 
+        this.mLifeWeatherAreaSearch.setText("서울특별시");
         this.context = this;
         this.progressDialog = new ProgressDialog(context);
         this.progressDialogHandler = new Handler();
