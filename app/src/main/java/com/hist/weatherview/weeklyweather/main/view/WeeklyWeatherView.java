@@ -1,8 +1,11 @@
 package com.hist.weatherview.weeklyweather.main.view;
 
 
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
+
+import java.util.ArrayList;
 
 /**
  * 주간 날씨 정보 예보 정보 뷰 인터페이스
@@ -46,9 +49,11 @@ public interface WeeklyWeatherView {
     //
     void weeklyWeatherAreaChanged(WeeklyWeatherArea area);              // 지역 설정 또는 즐겨찾기를 통해 지역이 변경된것을 알리기
 
-    void deleteWeeklyWeatherFavoriteArea(String area);                  // 즐겨찾기 지역 삭제 하기
+    void deleteWeeklyWeatherFavoriteArea(ArrayList<SharedPlaceInfo> placeInfoArrayList, int index);                  // 즐겨찾기 지역 삭제 하기
 
     void setWeeklyWeatherMiddleForecast(WeeklyWeatherBase weeklyWeatherMiddleForecast);
 
     void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode, String s);
+
+    void navigateToWeeklyWeatherFavoriteAreaFail();                     // 즐겨 찾기 Fail 인 경우 dismiss 한다.
 }

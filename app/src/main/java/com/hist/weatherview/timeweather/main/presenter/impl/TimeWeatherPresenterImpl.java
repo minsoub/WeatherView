@@ -39,10 +39,10 @@ public class TimeWeatherPresenterImpl implements TimeWeatherPresenter{
     }
 
     @Override
-    public void onActivityResultTimeWeatherFavoriteAreaResultOK(WeeklyWeatherArea weeklyWeather, int position) {
+    public void onActivityResultTimeWeatherFavoriteAreaResultOK(String areaCode, String areaName) {
         // 즐겨 찾기 결과 후
         // 1. 디비를 호출 후 결과를 받아 온다.
-        this.timeWeatherView.weeklyWeatherAreaChanged(weeklyWeather);
+        this.timeWeatherView.getTimeWeatherForecastByAreaAndDate(areaCode, "2019061206" );
     }
 
     @Override

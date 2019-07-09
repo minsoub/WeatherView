@@ -15,9 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.timeweather.TimeWeatherResult;
 import com.hist.item.timeweather.TimeWeatherResultTime;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
+import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
 import com.hist.weatherview.common.area.base.WeeklyWeatherAreaActivity;
 import com.hist.weatherview.common.comm.dialog.TimeWeatherDialog;
@@ -29,6 +31,8 @@ import com.hist.weatherview.weatherlife.area.base.WeatherLifeAreaActivity;
 import com.hist.weatherview.weatherlife.main.adapter.WeatherLifeTypeListener;
 import com.hist.weatherview.weeklyweather.comm.WeeklyWeatherActivityResultFlag;
 
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +54,7 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     private IncludedToolbarLayout includedToolbarLayout;            //탭 레이아웃
     private ProgressDialog progressDialog;
     private Handler progressDialogHandler;
+    private SharedPrefersManager sharedPrefersManager;
 
     private TimeWeatherForecastFragment timeWeatherForecastFragment;
 
@@ -89,6 +94,7 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
         ButterKnife.bind(this);
         this.progressDialog = new ProgressDialog(this);
         this.progressDialogHandler = new Handler();
+        this.sharedPrefersManager = new SharedPrefersManager(this);
 
         this.timeWeatherPresenter.init();     //View Init
         this.timeWeatherPresenter.onCreateView();
@@ -125,10 +131,26 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
                         // 추가 등록 OK 시 프로세스
                         // 1. 즐겨찾기에 지역 저장
                         // 2. 해당 지역에 대해서 정보 요청
-                        int position = data.getIntExtra("position", 0);
-                        WeeklyWeatherArea weeklyWeather = (WeeklyWeatherArea) data.getSerializableExtra("weeklyweather");
+                        //int position = data.getIntExtra("position", 0);
+                        //WeeklyWeatherArea weeklyWeather = (WeeklyWeatherArea) data.getSerializableExtra("weeklyweather");
+                        String areaCode = data.getStringExtra("areaCode");
+                        String areaName = data.getStringExtra("areaName");
+                        // SharedPreference 등록 하고 조회 한다.
+
+                        ArrayList<SharedPlaceInfo> placeInfos = this.sharedPrefersManager.getTimeWeatherFavoritePlaceArrayListPref();
+                        if(placeInfos == null)
+                        {
+                            ArrayList<SharedPlaceInfo> tmp = new ArrayList<>();
+                            tmp.add(new SharedPlaceInfo(areaCode, areaName));
+                            this.sharedPrefersManager.setTimeWeatherFavoritePlaceArrayListPref(tmp);
+                        }else {
+                            placeInfos.add(new SharedPlaceInfo(areaCode, areaName));
+                            this.sharedPrefersManager.setTimeWeatherFavoritePlaceArrayListPref(placeInfos);
+                        }
+
+
                         // 프리젠터 요청
-                        this.timeWeatherPresenter.onActivityResultTimeWeatherFavoriteAreaResultOK(weeklyWeather, position);
+                        this.timeWeatherPresenter.onActivityResultTimeWeatherFavoriteAreaResultOK(areaCode, areaName);
                         //searchTagPresenter.onActivityResultForStoryResultEdit(position, story);
                         break;
                     case WeeklyWeatherActivityResultFlag.RESULT_DELETE:
@@ -240,8 +262,10 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     }
 
     @Override
-    public void deleteWeeklyWeatherFavoriteArea(String area) {
+    public void deleteWeeklyWeatherFavoriteArea(ArrayList<SharedPlaceInfo> placeInfoArrayList, int index) {
         // 선택한 즐겨찾기 지역을 삭제 한다.
+        placeInfoArrayList.remove(index);
+        this.sharedPrefersManager.setTimeWeatherFavoritePlaceArrayListPref(placeInfoArrayList);
     }
 
     @Override
@@ -364,7 +388,8 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     @OnClick(R.id.ib_toolbar_weekly_weather_more)
     public void onClickMore() {
         //drawerLayout.openDrawer(GravityCompat.START);
-        final TimeWeatherDialog weeklyWeatherDialog = new TimeWeatherDialog(this);
+        ArrayList<SharedPlaceInfo> placeInfos = this.sharedPrefersManager.getTimeWeatherFavoritePlaceArrayListPref();
+        final TimeWeatherDialog weeklyWeatherDialog = new TimeWeatherDialog(this, placeInfos);
         weeklyWeatherDialog.show();
         weeklyWeatherDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override public void onDismiss(DialogInterface dialog) {

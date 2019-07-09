@@ -14,8 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.weatherview.R;
 import com.hist.weatherview.timeweather.main.view.TimeWeatherView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,15 +38,17 @@ public class TimeWeatherDialog extends BottomSheetDialog {
 
     private Context context;
     private TimeWeatherView timeWeatherView;
+    private ArrayList<SharedPlaceInfo> placeInfos;
     final String areas[] = {"등촌1동", "염창1동", "가양1동"};
 
     @BindView(R.id.ll_dialog_weekly_weather)
     LinearLayout llDialogWeeklyWeather;
 
-    public TimeWeatherDialog(@NonNull Context context) {
+    public TimeWeatherDialog(@NonNull Context context, ArrayList<SharedPlaceInfo> placeInfos) {
         super(context);
         this.context = context;
         this.timeWeatherView = (TimeWeatherView)context;
+        this.placeInfos = placeInfos;
     }
 
     @Override
@@ -62,10 +67,23 @@ public class TimeWeatherDialog extends BottomSheetDialog {
 
         // 즐겨찾기 버튼 생성
         // 랜덤 생성
-        for(int i = 0 ; i < 3 ; i++) {
-            RelativeLayout relativeLayout = createRelativeLayout();
-            createFavoriteTextViews(relativeLayout, i);
-            llDialogWeeklyWeather.addView(relativeLayout);
+    }
+
+    public void refreshWeeklyWeatherFavoritePlaceList()
+    {
+
+        if(llDialogWeeklyWeather != null) {
+            if (llDialogWeeklyWeather.getChildCount() > 0) {
+                llDialogWeeklyWeather.removeAllViews();
+            }
+        }
+        if(placeInfos != null) {
+            for (int i = 0; i < placeInfos.size(); i++) {
+                RelativeLayout relativeLayout = createRelativeLayout();
+                SharedPlaceInfo placeInfo = placeInfos.get(i);
+                createFavoriteTextViews(relativeLayout, i, placeInfo.getPlaceName());
+                llDialogWeeklyWeather.addView(relativeLayout);
+            }
         }
     }
 
@@ -86,12 +104,12 @@ public class TimeWeatherDialog extends BottomSheetDialog {
         return  rl;
     }
 
-    public void createFavoriteTextViews(RelativeLayout relativeLayout, int i)
+    public void createFavoriteTextViews(RelativeLayout relativeLayout, int i, String name)
     {
         // dummy로 사용
         final int temp = i;
         TextView tv = new TextView(context);
-        tv.setText(areas[i]);
+        tv.setText(name);
         tv.setId(i);
         tv.setTextColor(Color.GRAY);
         tv.setTextSize(25);
@@ -135,7 +153,7 @@ public class TimeWeatherDialog extends BottomSheetDialog {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timeWeatherView.deleteWeeklyWeatherFavoriteArea(areas[temp]);
+                timeWeatherView.deleteWeeklyWeatherFavoriteArea(placeInfos, temp);
                 dismiss();
             }
         });

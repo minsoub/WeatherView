@@ -154,7 +154,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weeklyWeatherView.deleteWeeklyWeatherFavoriteArea(areas[temp]);
+                weeklyWeatherView.deleteWeeklyWeatherFavoriteArea(placeInfos, temp);
                 dismiss();
             }
         });
@@ -167,7 +167,13 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
 
     @OnClick(R.id.tv_dialog_weekly_weather_favorite)
     public void onClickWeeklyWeatherFavoriteArea() {
-        weeklyWeatherView.navigateToWeeklyWeatherFavoriteArea();
+        //5개의 개수이상일때, 알람 표시
+        if(placeInfos.size() > 4)
+        {
+            weeklyWeatherView.navigateToWeeklyWeatherFavoriteAreaFail();
+        }else {
+            weeklyWeatherView.navigateToWeeklyWeatherFavoriteArea();
+        }
     }
 
     @OnClick(R.id.tv_dialog_weekly_weather_cancel)

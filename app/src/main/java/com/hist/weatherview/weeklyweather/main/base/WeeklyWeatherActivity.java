@@ -93,22 +93,7 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
 
         this.weeklyWeatherPresenter.init();     //View Init
         this.weeklyWeatherPresenter.onCreateView();
-        /*//this.sharedPrefersManager.getWeeklyWeatherPlaceArrayListPref("tt");
 
-
-        //test
-        ArrayList<SharedPlaceInfo> placeInfoArrayList = new ArrayList<>();
-        SharedPlaceInfo p1 = new SharedPlaceInfo();
-        p1.setPlaceCode("1234");
-        p1.setPlaceName("테스트");
-        SharedPlaceInfo p2 = new SharedPlaceInfo();
-        p2.setPlaceCode("1234");
-        p2.setPlaceName("테스트2");
-        placeInfoArrayList.add(p1);
-        placeInfoArrayList.add(p2);
-
-        this.sharedPrefersManager.setWeeklyWeatherPlaceArrayListPref(placeInfoArrayList);
-        this.sharedPrefersManager.getWeeklyWeatherPlaceArrayListPref("tt");*/
 
     }
 
@@ -274,8 +259,11 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     }
 
     @Override
-    public void deleteWeeklyWeatherFavoriteArea(String area) {
+    public void deleteWeeklyWeatherFavoriteArea(ArrayList<SharedPlaceInfo> placeInfoArrayList, int index) {
         // 선택한 즐겨찾기 지역을 삭제 한다.
+        placeInfoArrayList.remove(index);
+        this.sharedPrefersManager.setWeeklyWeatherFavoritePlaceArrayListPref(placeInfoArrayList);
+        this.weeklyWeatherDialog.dismiss();
     }
 
     @Override
@@ -293,7 +281,7 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
         TvWeatherType.setText("맑음");*/
         try {
             TvForecastTitle.setText(weeklyWeatherMiddleForecast.getData().getItems().get(0).getItem().getResult().get(0).getValue());
-        }catch (NullPointerException e)
+        }catch (Exception e)
         {
             TvForecastTitle.setText("오류!");
         }
@@ -309,6 +297,12 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     public void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode, String s) {
         // fragment로 보낸다.
         weeklyWeatherForecastFragment.getWeeklyWeatherMiddleForecastByAreaAndDate(areaCode);
+    }
+
+    @Override
+    public void navigateToWeeklyWeatherFavoriteAreaFail() {
+        this.showMessage("즐겨찾기 장소를 더 이상 추가 할 수 없습니다.");
+        this.weeklyWeatherDialog.dismiss();
     }
 
     /**
