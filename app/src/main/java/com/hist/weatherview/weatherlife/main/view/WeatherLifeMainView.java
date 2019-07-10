@@ -2,6 +2,7 @@ package com.hist.weatherview.weatherlife.main.view;
 
 import com.hist.item.weatherlife.WeatherLifeBase;
 import com.hist.item.weatherlife.WeatherLifeBaseItem;
+import com.hist.item.weatherlife.WeatherLifeItem;
 
 /**
  * 생활 기상 뷰 인터페이스
@@ -32,7 +33,7 @@ public interface WeatherLifeMainView {
 
     void setTabLayoutWithViewPager(int size);
 
-    void setOnChangeWeatherLifeTypeText(String text);
+    void setOnChangeWeatherLifeType(String text, WeatherLifeItem itemCount);       // 뷰 페이저 변경 시 타이틀 변경
 
     void clearListViewArrayAdapter();
 
@@ -45,4 +46,6 @@ public interface WeatherLifeMainView {
     void clearListViewsAndPages();
 
     void setListViewsAndPages(int size);
+
+    void setWeatherLifePlaceTilte(String placeName);
 }

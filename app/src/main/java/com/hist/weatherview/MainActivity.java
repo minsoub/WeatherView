@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_alarm_black_36dp),
                 "생활 기상", "생활기상 정보를 안내합니다", "0005");
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_assessment_black_36dp),
-                "지진 정보", "지진정보를 안내합니다", "0006");
+                "미세먼지 정보", "미세먼지 정보를 안내합니다", "0006");
 
         // 이벤트 처리
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

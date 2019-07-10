@@ -1,8 +1,8 @@
 package com.hist.weatherview.weatherlife.main.presenter;
 
 import com.hist.item.weatherlife.WeatherLifeBase;
+import com.hist.item.weatherlife.WeatherLifeItem;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
-import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.repository.util.HttpError;
 
 /**
@@ -33,7 +33,7 @@ public interface WeatherLifeMainPresenter {
 
     //void onSuccessGetGuiderList(List<Guider> guiderList);
 
-    void onChangeWeatherLifeType(String type);
+    void onChangeWeatherLifeType(WeatherLifeItem weatherLifeItem, String type);
 
     void onChangeArea(String area);
 

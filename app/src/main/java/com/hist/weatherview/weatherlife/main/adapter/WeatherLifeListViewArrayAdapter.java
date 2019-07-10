@@ -38,7 +38,7 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeRes
 
 
     public WeatherLifeListViewArrayAdapter(Context c, int textViewResourceId,
-                             WeatherLifeItem item) {
+                                           WeatherLifeItem item) {
 
         super(c, textViewResourceId, item.getResult());
         this.inflater = LayoutInflater.from(c);
@@ -87,6 +87,7 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeRes
             viewHolder.txtValue = (TextView)v.findViewById(R.id.txt_lifeweather_item_value);
             viewHolder.txtDesc = (TextView)v.findViewById(R.id.txt_lifeweather_item_desc);
             viewHolder.imgView = (ImageView)v.findViewById(R.id.lifeweather_item_imgview);
+            viewHolder.llItem = (LinearLayout) v.findViewById(R.id.ll_item);
             v.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)v.getTag();
@@ -170,6 +171,10 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeRes
         return retVal;
     }
 
+    public WeatherLifeItem getWeatherLifeItem() {
+        return weatherLifeItem;
+    }
+
     /*private View.OnClickListener buttonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -224,6 +229,8 @@ public class WeatherLifeListViewArrayAdapter extends ArrayAdapter<WeatherLifeRes
         public TextView txtDesc = null;
         //@BindView(R.id.lifeweather_item_imgview)
         public TextView txtValue = null;
+        public LinearLayout llNoItem = null;
+        public LinearLayout llItem = null;
         //public Button btn_button = null;
         //public CheckBox cb_box = null;
     }

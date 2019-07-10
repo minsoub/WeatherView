@@ -18,10 +18,10 @@ import android.widget.Toast;
 import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.timeweather.TimeWeatherResult;
 import com.hist.item.timeweather.TimeWeatherResultTime;
+import com.hist.item.weatherlife.WeatherLifeItem;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
-import com.hist.weatherview.common.area.base.WeeklyWeatherAreaActivity;
 import com.hist.weatherview.common.comm.WeeklyWeatherActivityResultFlag;
 import com.hist.weatherview.common.comm.dialog.TimeWeatherDialog;
 import com.hist.weatherview.timeweather.main.fragment.forecast.base.TimeWeatherForecastFragment;
@@ -430,7 +430,7 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     }
 
     @Override
-    public void onChangeWeatherLifeType(String type) {
+    public void onChangeWeatherLifeType(WeatherLifeItem weatherLifeItem, String type) {
 
     }
 

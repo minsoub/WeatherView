@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.hist.item.weatherlife.WeatherLifeItem;
+
 import java.util.Vector;
 
 import static android.support.constraint.Constraints.TAG;
@@ -53,19 +55,27 @@ public class WeatherLifePagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
+    /**
+     *  뷰 페이저 이동 시 발생 이벤트
+     * @param container
+     * @param position
+     * @param object
+     */
     @Override
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         super.setPrimaryItem(container, position, object);
         currentView = (View)object;
         Log.d(TAG, "position : " + position);
         // Type을 가져온다.
-        try {
-            WeatherLifeListViewArrayAdapter arrayAdapter = (WeatherLifeListViewArrayAdapter) ((ListView) currentView).getAdapter();
-            String type = arrayAdapter.getWeatherLifeItemTypName();
-            listener.onChangeWeatherLifeType(type);
-        }catch(Exception e)
-        {
-            e.printStackTrace();
+        if(((ListView) currentView).getAdapter() != null) {
+            try {
+                WeatherLifeListViewArrayAdapter arrayAdapter = (WeatherLifeListViewArrayAdapter) ((ListView) currentView).getAdapter();
+                String type = arrayAdapter.getWeatherLifeItemTypName();
+                WeatherLifeItem weatherLifeItem = arrayAdapter.getWeatherLifeItem();
+                listener.onChangeWeatherLifeType(weatherLifeItem, type);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

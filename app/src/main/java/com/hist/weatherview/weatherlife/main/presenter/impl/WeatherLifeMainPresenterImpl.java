@@ -1,22 +1,20 @@
 package com.hist.weatherview.weatherlife.main.presenter.impl;
 
 
+import android.content.Context;
+
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.weatherlife.WeatherLifeBase;
 import com.hist.item.weatherlife.WeatherLifeBaseData;
-import com.hist.item.weatherlife.WeatherLifeBaseItem;
-import com.hist.item.weeklyweather.WeeklyWeatherData;
-import com.hist.item.weeklyweather.WeeklyWeatherItem;
+import com.hist.item.weatherlife.WeatherLifeItem;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
-import com.hist.item.weeklyweather.WeeklyWeatherBase;
-import com.hist.item.weeklyweather.dto.WeeklyWeatherDto;
+import com.hist.repository.local.SharedPrefersManager;
 import com.hist.repository.util.HttpError;
 import com.hist.weatherview.common.util.DateUtil;
 import com.hist.weatherview.weatherlife.main.interactor.WeatherLifeMainInteractor;
 import com.hist.weatherview.weatherlife.main.interactor.impl.WetherLifeMainInteractorImpl;
 import com.hist.weatherview.weatherlife.main.presenter.WeatherLifeMainPresenter;
 import com.hist.weatherview.weatherlife.main.view.WeatherLifeMainView;
-
-import java.util.List;
 
 /**
  * 주간 날씨 정보 예보 정보 프레젠터 인터페이스 구현
@@ -27,11 +25,13 @@ import java.util.List;
 public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
     private WeatherLifeMainView weatherLifeMainView;
     private WeatherLifeMainInteractor weatherLifeMainInteractor;
+    private SharedPlaceInfo startPlaceInfo;
+    private SharedPrefersManager sharedPrefersManager;
 
     public WeatherLifeMainPresenterImpl(WeatherLifeMainView weatherLifeMainView) {
         this.weatherLifeMainView = weatherLifeMainView;
-        this.weatherLifeMainInteractor = new WetherLifeMainInteractorImpl(this) {
-        };
+        this.weatherLifeMainInteractor = new WetherLifeMainInteractorImpl(this);
+        this.sharedPrefersManager = new SharedPrefersManager((Context)weatherLifeMainView);
     }
 
     /**
@@ -54,7 +54,13 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
         String date = DateUtil.getCurrentDateByYYYYMMDD() + "06";
 
         // weatherLifeMainInteractor.getWeatherLifeFsnLifeListByAreaAndDate("1100000000", "2019061206" );
-        weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate("1100000000", date );
+        this.startPlaceInfo = this.sharedPrefersManager.getWeatherLifeStartPlace();
+        if(this.startPlaceInfo == null)
+        {
+            this.startPlaceInfo = new SharedPlaceInfo("1100000000", "서울특별시");
+        }
+        weatherLifeMainView.setWeatherLifePlaceTilte(this.startPlaceInfo.getPlaceName());
+        weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate(this.startPlaceInfo.getPlaceCode(), date );
     }
 
     @Override
@@ -144,7 +150,7 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
     }
 
     @Override
-    public void onChangeWeatherLifeType(String type) {
+    public void onChangeWeatherLifeType(WeatherLifeItem weatherLifeItem, String type) {
         String retVal = "";
         if("fsnLifeItem".equals(type))
         {
@@ -174,7 +180,9 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
             retVal = "자외선 지수";
         }
 
-        weatherLifeMainView.setOnChangeWeatherLifeTypeText(retVal);
+        //int itemCount = weatherLifeItem.getResult().size();
+
+        weatherLifeMainView.setOnChangeWeatherLifeType(retVal, weatherLifeItem);
     }
 
     @Override
@@ -191,6 +199,16 @@ public class WeatherLifeMainPresenterImpl implements WeatherLifeMainPresenter {
     @Override
     public void onActivityResultForWeatherLifeAreaResultOk(String areaCode, String areaName) {
         String date = DateUtil.getCurrentDateByYYYYMMDD() + "06";
+        if(this.startPlaceInfo == null)
+        {
+            this.startPlaceInfo = new SharedPlaceInfo(areaCode, areaName);
+        }else
+        {
+            this.startPlaceInfo.setPlaceName(areaName);
+            this.startPlaceInfo.setPlaceCode(areaCode);
+        }
+        this.sharedPrefersManager.setWeatherLifeStartPlace(startPlaceInfo);
+
         weatherLifeMainInteractor.getWeatherLifeAllLifeListByAreaAndDate(areaCode, date );
     }
 

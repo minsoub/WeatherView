@@ -14,13 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hist.item.weatherlife.WeatherLifeBase;
 import com.hist.item.weatherlife.WeatherLifeBaseData;
 import com.hist.item.weatherlife.WeatherLifeBaseItem;
+import com.hist.item.weatherlife.WeatherLifeItem;
 import com.hist.weatherview.weatherlife.main.adapter.WeatherLifePagerAdapter;
 import com.hist.weatherview.weatherlife.main.adapter.WeatherLifeListViewAdapter;
 import com.hist.weatherview.weatherlife.main.adapter.WeatherLifeListViewArrayAdapter;
@@ -51,10 +54,9 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
 
     private Context context;
     private WeatherLifeMainPresenter weatherLifeMainPresenter;
-    //private WeeklyWeatherForecastRecycleViewAdapter weeklyWeatherForecastRecycleViewAdapter;
-
     private ProgressDialog progressDialog;
     private Handler progressDialogHandler;
+
 
     private WeatherLifeListViewAdapter[] listViewAdapter;
     private WeatherLifeListViewArrayAdapter[] listViewArrayAdapter;
@@ -82,6 +84,15 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
+    @BindView(R.id.ll_weather_life_no_data)
+    LinearLayout mLlWeatherLifeNoDataContainer;
+
+    @BindView(R.id.rl_weather_life_data_container)
+    RelativeLayout mRlWeatherLifeDataContainer;
+
+    @BindView(R.id.txt_weather_life_no_data)
+    TextView mTxtWeatherLifeNoData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,16 +100,6 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //mTabLayout = (TabLayout) findViewById(R.id.tabDots);
-
-        //mLifewatherType = (TextView) findViewById(R.id.lifewather_type);
-        //mLifeWeatherAreaSearch = (EditText) findViewById(R.id.edit_weatherlife_area_search);
-        //MakeListView();
-        // 테스트 아이템 생성하기
-        //itemAdapaterAdd();
-        //InitLayout();
-
-        this.mLifeWeatherAreaSearch.setText("서울특별시");
         this.context = this;
         this.progressDialog = new ProgressDialog(context);
         this.progressDialogHandler = new Handler();
@@ -108,79 +109,6 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
     }
 
 
-
-
-
-    private void InitLayout(){
-        //ListView 생성하기
-
-        for(int i = 0 ; i < 7 ; i++)
-        {
-            listViews[i] = new ListView(this);
-            pages.add(listViews[i]);
-        }
-        mViewPager = (ViewPager)findViewById(R.id.viewpager);
-        WeatherLifePagerAdapter adapter = new WeatherLifePagerAdapter(this,pages);
-        mViewPager.setAdapter(adapter);
-
-        //ViewSetup
-        //Test();
-
-     /*   for(int i = 0 ; i < 7 ; i++)
-        {
-            ListView listView = listViews[i];
-            //listView.setAdapter(listViewAdapter[i]);          //BaseAdapter 사용
-            listView.setAdapter(listViewArrayAdapter[i]);       //ArrayAdapter 사용
-        }*/
-
-    }
-
-    private void RequestWeatherLifeInfo(){
-        // no jobs
-    }
-
-
-    /**
-     *  생활기상 정보 리스트 뷰를 생성한다.
-     */
-    private void Test()
-    {
-        // 총 7개의 생활기상 정보를 생성한다.
-        //Dummy 넣는다.
-
-       /* WeatherLifeBase[] items = new WeatherLifeBase[7];
-        items[0] = new WeatherLifeItemType1(WeatherLifeType.FOOD_POISONING, "00", "1100", "2017061206", "71", "74", "63");
-        items[1] = new WeatherLifeItemType1(WeatherLifeType.UV_INDEX, "00", "1100", "2017061206", "71", "74", "63");
-
-        ArrayList<WeatherLifePredictionItem> items1 = new ArrayList<WeatherLifePredictionItem>();
-
-        WeatherLifePredictionItem a1 = new WeatherLifePredictionItem("h1", "30");
-        WeatherLifePredictionItem a2 = new WeatherLifePredictionItem("h2", "40");
-        WeatherLifePredictionItem a3 = new WeatherLifePredictionItem("h3", "50");
-        WeatherLifePredictionItem a4 = new WeatherLifePredictionItem("h4", "60");
-        WeatherLifePredictionItem a5 = new WeatherLifePredictionItem("h6", "70");
-        items1.add(a1);
-        items1.add(a2);
-        items1.add(a3);
-        items1.add(a4);
-        items1.add(a5);
-
-        items[2] = new WeatherLifeItemType2(WeatherLifeType.AIR_POLLUTANT_INDEX, items1);
-        items[3] = new WeatherLifeItemType2(WeatherLifeType.FREEZING_INDEX, items1);
-        items[4] = new WeatherLifeItemType2(WeatherLifeType.HEAT_INDEX, items1);
-        items[5] = new WeatherLifeItemType2(WeatherLifeType.SENSORY_TEMPERATURE, items1);
-        items[6] = new WeatherLifeItemType2(WeatherLifeType.HUMIDEX, items1);
-
-
-        //Adapter 등록하기
-        for(int i = 0 ; i < 7 ; i++)
-        {
-            WeatherLifeBase base = items[i];
-            listViewAdapter[i] = new WeatherLifeListViewAdapter(this, null);
-            //listViewArrayAdapter[i] = new WeatherLifeListViewArrayAdapter(this, R.layout.list_item_weather_life, base.GetWeatherLifeItems());
-        }*/
-
-    }
 
     // 장소 검색 이 후 결과 화면으로 리턴한다..
     @Override
@@ -193,6 +121,8 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
                 // Get the user's selected place from the Intent.
                 String areaCode = data.getStringExtra("areaCode");
                 String areaName = data.getStringExtra("areaName");
+
+
                 weatherLifeMainPresenter.onActivityResultForWeatherLifeAreaResultOk(areaCode, areaName);
                 mLifeWeatherAreaSearch.setText(areaName);
             } else if (resultCode == RESULT_CANCELED) {
@@ -202,9 +132,14 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
         }
     }
 
+    /**
+     *  뷰 어뎁터로부터 뷰 이동시 액티비티로 받는 핸들러
+     * @param weatherLifeItem
+     * @param type
+     */
     @Override
-    public void onChangeWeatherLifeType(String type) {
-        weatherLifeMainPresenter.onChangeWeatherLifeType(type);
+    public void onChangeWeatherLifeType(WeatherLifeItem weatherLifeItem, String type) {
+        weatherLifeMainPresenter.onChangeWeatherLifeType(weatherLifeItem, type);
     }
 
 
@@ -314,7 +249,7 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
         for(int i = 0 ; i < size ; i++)
         {
             WeatherLifeBaseItem item = weatherLifeBaseData.getItems().get(i);
-
+            //listview array ada[ter 생성
             listViewArrayAdapter[i] = new WeatherLifeListViewArrayAdapter(this, R.layout.list_item_weather_life, item.getItem());
         }
 
@@ -329,9 +264,20 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
     }
 
     @Override
-    public void setOnChangeWeatherLifeTypeText(String text) {
+    public void setOnChangeWeatherLifeType(String text, WeatherLifeItem weatherLifeItem) {
         mLifewatherType.setText(text);
+        int itemCount = weatherLifeItem.getResult().size();
+        if(itemCount == 0)
+        {
+            mLlWeatherLifeNoDataContainer.setVisibility(View.VISIBLE);
+            String errMsg = weatherLifeItem.getHeader().getErrMsg();
+            mTxtWeatherLifeNoData.setText(errMsg);
+        }else
+        {
+            mLlWeatherLifeNoDataContainer.setVisibility(View.GONE);
+        }
     }
+
 
     @Override
     public void clearListViewArrayAdapter() {
@@ -357,14 +303,6 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
 
     @Override
     public void navigateToWeatherLifeAreaActivity() {
-  /*      mLifeWeatherAreaSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = null;
-                intent = new Intent(WeatherLifeActivity.this, WeatherLifeAreaActivity.class);
-                startActivityForResult(intent, REQUEST_WEATHERLIFE_AREA);
-            }
-        });*/
 
         Intent intent = null;
         intent = new Intent(WeatherLifeActivity.this, WeatherLifeAreaActivity.class);
@@ -384,6 +322,11 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
     public void setListViewsAndPages(int size) {
         listViews = new ListView[size];
         pages = new Vector<View>();
+    }
+
+    @Override
+    public void setWeatherLifePlaceTilte(String placeName) {
+        mLifeWeatherAreaSearch.setText(placeName);
     }
 
 }
