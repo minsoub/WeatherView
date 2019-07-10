@@ -166,7 +166,13 @@ public class TimeWeatherDialog extends BottomSheetDialog {
 
     @OnClick(R.id.tv_dialog_weekly_weather_favorite)
     public void onClickWeeklyWeatherFavoriteArea() {
-        timeWeatherView.navigateToWeeklyWeatherFavoriteArea();
+        //5개의 개수이상일때, 알람 표시
+        if(placeInfos.size() > 4)
+        {
+            timeWeatherView.navigateToWeeklyWeatherFavoriteAreaFail();
+        }else {
+            timeWeatherView.navigateToWeeklyWeatherFavoriteArea();
+        }
     }
 
     @OnClick(R.id.tv_dialog_weekly_weather_cancel)

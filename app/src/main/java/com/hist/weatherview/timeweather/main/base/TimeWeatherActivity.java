@@ -22,6 +22,7 @@ import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
 import com.hist.weatherview.common.area.base.WeeklyWeatherAreaActivity;
+import com.hist.weatherview.common.comm.WeeklyWeatherActivityResultFlag;
 import com.hist.weatherview.common.comm.dialog.TimeWeatherDialog;
 import com.hist.weatherview.timeweather.main.fragment.forecast.base.TimeWeatherForecastFragment;
 import com.hist.weatherview.timeweather.main.presenter.TimeWeatherPresenter;
@@ -29,7 +30,7 @@ import com.hist.weatherview.timeweather.main.presenter.impl.TimeWeatherPresenter
 import com.hist.weatherview.timeweather.main.view.TimeWeatherView;
 import com.hist.weatherview.weatherlife.area.base.WeatherLifeAreaActivity;
 import com.hist.weatherview.weatherlife.main.adapter.WeatherLifeTypeListener;
-import com.hist.weatherview.weeklyweather.comm.WeeklyWeatherActivityResultFlag;
+
 
 
 import java.util.ArrayList;
@@ -55,9 +56,9 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     private ProgressDialog progressDialog;
     private Handler progressDialogHandler;
     private SharedPrefersManager sharedPrefersManager;
-
+    private TimeWeatherDialog timeWeatherDialog;
     private TimeWeatherForecastFragment timeWeatherForecastFragment;
-
+    private SharedPlaceInfo startPlaceInfo;
 
     @BindView(R.id.in_weekly_weather_toolbar)
     View InWeeklyWeatherToolbar;
@@ -117,6 +118,15 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
                         String areaCode = data.getStringExtra("areaCode");
                         String areaName = data.getStringExtra("areaName");
                         TvArea.setText(areaName);
+                        if(this.startPlaceInfo == null)
+                        {
+                            this.startPlaceInfo = new SharedPlaceInfo(areaCode, areaName);
+                        }else
+                        {
+                            this.startPlaceInfo.setPlaceName(areaName);
+                            this.startPlaceInfo.setPlaceCode(areaCode);
+                        }
+                        this.sharedPrefersManager.setTimeWeatherStartPlace(startPlaceInfo);
                         timeWeatherPresenter.onActivityResultForTimeWeatherAreaResultOk(areaCode, areaName);
                         break;
 
@@ -275,6 +285,22 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     }
 
     @Override
+    public void navigateToWeeklyWeatherFavoriteAreaFail() {
+        this.showMessage("즐겨찾기 장소를 더 이상 추가 할 수 없습니다.");
+        this.timeWeatherDialog.dismiss();
+    }
+
+
+    /**
+     *  지역명을 설정한다.
+     * @param placeName
+     */
+    @Override
+    public void setTimeWeatherPlaceTitle(String placeName) {
+        TvArea.setText(placeName);
+    }
+
+    @Override
     public void navigateToWeeklyWeatherSearchArea() {
         Intent intent = null;
         //intent = new Intent(TimeWeatherActivity.this, WeeklyWeatherAreaActivity.class);
@@ -389,9 +415,13 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     public void onClickMore() {
         //drawerLayout.openDrawer(GravityCompat.START);
         ArrayList<SharedPlaceInfo> placeInfos = this.sharedPrefersManager.getTimeWeatherFavoritePlaceArrayListPref();
-        final TimeWeatherDialog weeklyWeatherDialog = new TimeWeatherDialog(this, placeInfos);
-        weeklyWeatherDialog.show();
-        weeklyWeatherDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        if(timeWeatherDialog != null)
+        {
+            timeWeatherDialog = null;
+        }
+        timeWeatherDialog = new TimeWeatherDialog(this, placeInfos);
+        timeWeatherDialog.show();
+        timeWeatherDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override public void onDismiss(DialogInterface dialog) {
                /* String addCategoryStr = weeklyWeatherDialog.getAddCategoryStr(); //Something To-do */
             }

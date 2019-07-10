@@ -56,4 +56,6 @@ public interface WeeklyWeatherView {
     void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode, String s);
 
     void navigateToWeeklyWeatherFavoriteAreaFail();                     // 즐겨 찾기 Fail 인 경우 dismiss 한다.
+
+    void setWeeklyWeatherPlaceTitle(String placeName);                  // 지역명 설정하기
 }

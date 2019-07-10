@@ -3,11 +3,7 @@ package com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.impl
 
 import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.weeklyweather.WeeklyWeatherBaseItem;
-import com.hist.item.weeklyweather.WeeklyWeatherData;
-import com.hist.item.weeklyweather.WeeklyWeatherItem;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
-import com.hist.item.weeklyweather.WeeklyWeatherArea;
-import com.hist.item.weeklyweather.dto.WeeklyWeatherDto;
 import com.hist.repository.util.HttpError;
 import com.hist.weatherview.common.util.DateUtil;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.interactor.WeeklyWeatherForecastInteractor;
@@ -39,7 +35,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
 
 
     @Override
-    public void init(WeeklyWeatherArea area) {
+    public void init() {
        // weeklyWeatherForecastView.showProgressDialog();
         //repository 등록
         weeklyWeatherForecastInteractor.setWeeklyWeatherRepository();
@@ -48,7 +44,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     @Override
     public void onCreateView() {
         // db onnect
-        weeklyWeatherForecastView.showProgressDialog();
+        /*weeklyWeatherForecastView.showProgressDialog();
         String dayTime = getTodayDate();
         String landRegId = "11B00000";
         String tempRegId = "11B10101";
@@ -56,7 +52,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
 
         String time = DateUtil.getCurrentDateByYYYYMMDD() + "0600";
 
-        weeklyWeatherForecastInteractor.getWeeklyWeatherAll(time,landRegId,tempRegId,stnId);
+        weeklyWeatherForecastInteractor.getWeeklyWeatherAll(time,landRegId,tempRegId,stnId);*/
 
     }
 

@@ -17,11 +17,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.timeweather.TimeWeatherBase;
 import com.hist.item.timeweather.TimeWeatherResult;
 import com.hist.item.timeweather.TimeWeatherResultTime;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 
+import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
 import com.hist.weatherview.timeweather.main.base.TimeWeatherActivity;
 import com.hist.weatherview.timeweather.main.fragment.forecast.adapter.TimeWeatherForecastRecycleViewAdapter;
@@ -55,6 +57,8 @@ public class TimeWeatherForecastFragment extends Fragment implements TimeWeather
     private ProgressDialog progressDialog;
     private Handler progressDialogHandler;
     private WeeklyWeatherArea area;
+    private SharedPlaceInfo startPlaceInfo;
+    private SharedPrefersManager sharedPrefersManager;
 
 
     @BindView(R.id.rv_weekly_weather_forecast)
@@ -83,6 +87,7 @@ public class TimeWeatherForecastFragment extends Fragment implements TimeWeather
         this.context = getActivity();
         this.progressDialog = new ProgressDialog(context);
         this.progressDialogHandler = new Handler();
+        this.sharedPrefersManager = new SharedPrefersManager(context);
 
         this.timeWeatherForecastPresenter = new TimeWeatherForecastPresenterImpl(this);
         this.timeWeatherForecastPresenter.init(this.area);  // 임시
@@ -93,6 +98,17 @@ public class TimeWeatherForecastFragment extends Fragment implements TimeWeather
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_weekly_weather_forecast, container, false);
         ButterKnife.bind(this, view);
         this.timeWeatherForecastPresenter.onCreateView();
+
+        this.startPlaceInfo = this.sharedPrefersManager.getTimeWeatherStartPlace();
+        if(this.startPlaceInfo == null)
+        {
+            this.startPlaceInfo = new SharedPlaceInfo("1100000000", "서울특별시");
+        }
+        ((TimeWeatherView)context).setTimeWeatherPlaceTitle(this.startPlaceInfo.getPlaceName());
+
+        this.getTimeWeatherForecastByAreaAndDate(this.startPlaceInfo.getPlaceCode());
+
+
         return view;
     }
 

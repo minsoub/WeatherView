@@ -2,7 +2,6 @@ package com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter;
 
 import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
-import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.repository.util.HttpError;
 
 /**
@@ -13,7 +12,7 @@ import com.hist.repository.util.HttpError;
  */
 public interface WeeklyWeatherForecastPresenter {
 
-    void init(WeeklyWeatherArea area);
+    void init();
     void onCreateView();
     //void setGuiderList(List<AreaInfo> guiderList);
 

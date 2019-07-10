@@ -54,4 +54,8 @@ public interface TimeWeatherView {
     //void setTimeWeatherForecast(WeeklyWeatherBase weeklyWeatherMiddleForecast);
 
     void getTimeWeatherForecastByAreaAndDate(String areaCode, String s);        //시간별 조회
+
+    void navigateToWeeklyWeatherFavoriteAreaFail();
+
+    void setTimeWeatherPlaceTitle(String placeName);                  // 지역명 설정하기
 }

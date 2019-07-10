@@ -22,9 +22,9 @@ import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
 import com.hist.weatherview.common.area.base.WeeklyWeatherAreaActivity;
+import com.hist.weatherview.common.comm.WeeklyWeatherActivityResultFlag;
 import com.hist.weatherview.common.comm.dialog.WeeklyWeatherDialog;
 import com.hist.weatherview.weatherlife.area.base.WeatherLifeAreaActivity;
-import com.hist.weatherview.weeklyweather.comm.WeeklyWeatherActivityResultFlag;
 
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.base.WeeklyWeatherForecastFragment;
 import com.hist.weatherview.weeklyweather.main.presenter.WeeklyWeatherPresenter;
@@ -57,6 +57,7 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
     private WeeklyWeatherForecastFragment weeklyWeatherForecastFragment;
     private WeeklyWeatherDialog weeklyWeatherDialog;
     private SharedPrefersManager sharedPrefersManager;
+    private SharedPlaceInfo startPlaceInfo;
 
 
     @BindView(R.id.in_weekly_weather_toolbar)
@@ -114,6 +115,15 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
                         String areaCode = data.getStringExtra("areaCode");
                         String areaName = data.getStringExtra("areaName");
                         TvForecastArea.setText(areaName);
+                        if(this.startPlaceInfo == null)
+                        {
+                            this.startPlaceInfo = new SharedPlaceInfo(areaCode, areaName);
+                        }else
+                        {
+                            this.startPlaceInfo.setPlaceName(areaName);
+                            this.startPlaceInfo.setPlaceCode(areaCode);
+                        }
+                        this.sharedPrefersManager.setWeeklyWeatherStartPlace(startPlaceInfo);
                         weeklyWeatherPresenter.onActivityResultForWeatherLifeAreaResultOk(areaCode, areaName);
                         break;
 
@@ -224,6 +234,7 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
                 return true;
             }
         });*/
+
     }
 
     @Override
@@ -254,7 +265,7 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
         TvForecastArea.setText(area.getAreaName());
         // 1. List Fragment를 새롭게 생성한다.
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_weekly_weather, new WeeklyWeatherForecastFragment(this, area))
+                .replace(R.id.container_weekly_weather, new WeeklyWeatherForecastFragment(this))
                 .commitAllowingStateLoss();
     }
 
@@ -299,10 +310,22 @@ public class WeeklyWeatherActivity extends AppCompatActivity implements WeeklyWe
         weeklyWeatherForecastFragment.getWeeklyWeatherMiddleForecastByAreaAndDate(areaCode);
     }
 
+    /**
+     *  즐겨찾기 지역 초과한 경우
+     */
     @Override
     public void navigateToWeeklyWeatherFavoriteAreaFail() {
         this.showMessage("즐겨찾기 장소를 더 이상 추가 할 수 없습니다.");
         this.weeklyWeatherDialog.dismiss();
+    }
+
+    /**
+     *  지역명을 설정한다.
+     * @param placeName
+     */
+    @Override
+    public void setWeeklyWeatherPlaceTitle(String placeName) {
+        TvForecastArea.setText(placeName);
     }
 
     /**

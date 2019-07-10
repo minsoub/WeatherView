@@ -97,6 +97,60 @@ public class SharedPrefersManager {
         return lstArrayList;
     }
 
+
+    public void setTimeWeatherStartPlace(SharedPlaceInfo place){
+        SharedPreferences.Editor editor = sharedWeeklyWeatherPlacePreferences.edit();
+        Gson gson = new Gson();
+        String stringPlace = gson.toJson(place);
+        editor.putString(SharedPrefersFlag.TIME_WEATHER_START_PLACE, stringPlace).apply();
+        editor.apply();
+    }
+
+    public SharedPlaceInfo getTimeWeatherStartPlace() {
+
+        Gson gson = new Gson();
+        String response = sharedWeeklyWeatherPlacePreferences.getString(SharedPrefersFlag.TIME_WEATHER_START_PLACE, "");
+        SharedPlaceInfo placeInfo = gson.fromJson(response, SharedPlaceInfo.class);
+
+        return placeInfo;
+    }
+
+    public void setWeeklyWeatherStartPlace(SharedPlaceInfo place){
+        SharedPreferences.Editor editor = sharedWeeklyWeatherPlacePreferences.edit();
+        Gson gson = new Gson();
+        String stringPlace = gson.toJson(place);
+        editor.putString(SharedPrefersFlag.WEEKLY_WEATHER_START_PLACE, stringPlace).apply();
+        editor.apply();
+    }
+
+    public SharedPlaceInfo getWeeklyWeatherStartPlace() {
+
+        Gson gson = new Gson();
+        String response = sharedWeeklyWeatherPlacePreferences.getString(SharedPrefersFlag.WEEKLY_WEATHER_START_PLACE, "");
+        SharedPlaceInfo placeInfo = gson.fromJson(response, SharedPlaceInfo.class);
+
+        return placeInfo;
+    }
+
+    public void setWeatherLifeStartPlace(SharedPlaceInfo place){
+        SharedPreferences.Editor editor = sharedWeeklyWeatherPlacePreferences.edit();
+        Gson gson = new Gson();
+        String stringPlace = gson.toJson(place);
+        editor.putString(SharedPrefersFlag.WEATHER_LIFE_START_PLACE, stringPlace).apply();
+        editor.apply();
+    }
+
+    public SharedPlaceInfo getWeatherLifeStartPlace() {
+
+        Gson gson = new Gson();
+        String response = sharedWeeklyWeatherPlacePreferences.getString(SharedPrefersFlag.WEATHER_LIFE_START_PLACE, "");
+        SharedPlaceInfo placeInfo = gson.fromJson(response, SharedPlaceInfo.class);
+
+        return placeInfo;
+    }
+
+
+
 /*
     public User getUser() {
         Gson gson = new Gson();
