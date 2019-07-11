@@ -1,12 +1,9 @@
 package com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.impl;
 
 
+import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.weeklyweather.WeeklyWeatherBaseItem;
-import com.hist.item.weeklyweather.WeeklyWeatherData;
-import com.hist.item.weeklyweather.WeeklyWeatherItem;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
-import com.hist.item.weeklyweather.WeeklyWeatherArea;
-import com.hist.item.weeklyweather.dto.WeeklyWeatherDto;
 import com.hist.repository.util.HttpError;
 import com.hist.weatherview.common.util.DateUtil;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.interactor.WeeklyWeatherForecastInteractor;
@@ -38,8 +35,8 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
 
 
     @Override
-    public void init(WeeklyWeatherArea area) {
-        weeklyWeatherForecastView.showProgressDialog();
+    public void init() {
+       // weeklyWeatherForecastView.showProgressDialog();
         //repository 등록
         weeklyWeatherForecastInteractor.setWeeklyWeatherRepository();
     }
@@ -47,7 +44,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     @Override
     public void onCreateView() {
         // db onnect
-        //weeklyWeatherForecastView.showProgressDialog();
+        /*weeklyWeatherForecastView.showProgressDialog();
         String dayTime = getTodayDate();
         String landRegId = "11B00000";
         String tempRegId = "11B10101";
@@ -55,41 +52,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
 
         String time = DateUtil.getCurrentDateByYYYYMMDD() + "0600";
 
-        weeklyWeatherForecastInteractor.getWeeklyWeatherAll(time,landRegId,tempRegId,stnId);
-
-
-/*
-        WeeklyWeatherArea area = new WeeklyWeatherArea();
-        area.setAreaName("등촌1동");   // 테스트
-        //weeklyWeatherForecastInteractor.getWeeklyWeatherByAreaID(area);   // 서버 연동
-
-        List<WeeklyWeatherBase> weeklyWeathers = new ArrayList<>();
-        WeeklyWeatherBase a1 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a2 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a3 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a4 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a5 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a6 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a7 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a8 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a9 = new WeeklyWeatherBase();
-        WeeklyWeatherBase a10 = new WeeklyWeatherBase();
-
-        weeklyWeathers.add(a1);
-        weeklyWeathers.add(a2);
-        weeklyWeathers.add(a3);
-        weeklyWeathers.add(a4);
-        weeklyWeathers.add(a5);
-        weeklyWeathers.add(a6);
-        weeklyWeathers.add(a7);
-        weeklyWeathers.add(a8);
-        weeklyWeathers.add(a9);
-        weeklyWeathers.add(a10);
-
-        this.weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathers);
-
-        // 투데이 날씨를 base activity로 넘긴다.
-        this.weeklyWeatherForecastView.setWeeklyWeatherToday(a1);*/
+        weeklyWeatherForecastInteractor.getWeeklyWeatherAll(time,landRegId,tempRegId,stnId);*/
 
     }
 
@@ -140,12 +103,14 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
            // weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase);
         }
 
-        //weeklyWeatherForecastView.goneProgressDialog();
+        weeklyWeatherForecastView.goneProgressDialog();
     }
 
     @Override
     public void onSuccessGetWeeklyWeatherByDateAndTimeAndArea(WeeklyWeatherBase weeklyWeathersBase) {
         // 네트워크 성공 후 API 서버로 부터 주간 기상 정보를 받아온다.
+        weeklyWeatherForecastView.goneProgressDialog();
+
         int size = weeklyWeathersBase.getData().getItems().size();
         List<WeeklyWeatherBaseItem> oldWeeklyWeatherItems = weeklyWeatherForecastInteractor.getWeeklyWeatherBaseList().getData().getItems();
         int oldSize = (oldWeeklyWeatherItems == null) ? 0 : oldWeeklyWeatherItems.size();
@@ -181,6 +146,7 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
     @Override
     public void onSuccessGetWeeklyWeatherMiddleForecastAllByTimeAndRegIdAndStnId(WeeklyWeatherBase weeklyWeathersBase) {
         // 네트워크 성공 후 API 서버로 부터 주간 기상 정보를 받아온다.
+        weeklyWeatherForecastView.goneProgressDialog();
         int size = weeklyWeathersBase.getData().getItems().size();
         /*List<WeeklyWeatherBaseItem> oldWeeklyWeatherItems = weeklyWeatherForecastInteractor.getWeeklyWeatherBaseList().getData().getItems();
         int oldSize = (oldWeeklyWeatherItems == null) ? 0 : oldWeeklyWeatherItems.size();*/
@@ -214,6 +180,26 @@ public class WeeklyWeatherForecastPresenterImpl implements WeeklyWeatherForecast
             weeklyWeatherForecastView.clearWeeklyWeatherAdapter();
             weeklyWeatherForecastView.setWeeklyWeatherListRecycleViewAdapterItem(weeklyWeathersBase.getData().getItems());
         }
+    }
+
+    @Override
+    public void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode) {
+        // 지역 선택 후 해당 해당 지역의 중기 날씨 정보를 가져온다.
+        weeklyWeatherForecastView.showProgressDialog();
+        weeklyWeatherForecastInteractor.getPlaceInfoByAreaCode(areaCode);
+    }
+
+    @Override
+    public void onSuccessGetPlaceInfoByAreaCode(PlaceInfoResult placeInfoResult) {
+        // 지역 코드 조회 성공 후 다시 상세 조회를 수행 한다.
+        String time = DateUtil.getCurrentDateByYYYYMMDD() + "0600";
+
+        String landRegId = "11D10000";
+        String tempRegId = "11B20201";
+        String stnId = "109";
+
+        //날짜, 중기 지역 코드, 중기 온도 코드,
+        weeklyWeatherForecastInteractor.getWeeklyWeatherAll(time,landRegId,tempRegId,stnId);
     }
 
     /*@Override

@@ -16,8 +16,11 @@ public interface TimeWeatherPresenter {
     void onCreateView();
 
     // 즐겨찾기 지역 요청 결과 처리
-    void onActivityResultTimeWeatherFavoriteAreaResultOK(WeeklyWeatherArea weeklyWeather, int position);
+    void onActivityResultTimeWeatherFavoriteAreaResultOK(String areaCode, String areaName);
 
     // 지역 변경 요청 결과 처리
     void onActivityResultTimeWeatherSearchAreaResultOK(WeeklyWeatherArea weeklyWeather, int position);
+
+
+    void onActivityResultForTimeWeatherAreaResultOk(String areaCode, String areaName);
 }

@@ -1,5 +1,6 @@
 package com.hist.weatherview.timeweather.main.fragment.forecast.presenter;
 
+import com.hist.item.PlaceInfo.PlaceInfoResult;
 import com.hist.item.timeweather.TimeWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
@@ -26,4 +27,7 @@ public interface TimeWeatherForecastPresenter {
     //void onClickImage(PlaceAttraction guider, int position);
 
     //void onSuccessGetGuiderList(List<Guider> guiderList);
+    void getTimeWeatherForecastByAreaAndDate(String areaCode);      // 지역 변경 요청 후 정보 조회
+
+    void onSuccessGetPlaceInfoByAreaCode(PlaceInfoResult placeInfoResult);  // 지역코드 조회 성공 후
 }

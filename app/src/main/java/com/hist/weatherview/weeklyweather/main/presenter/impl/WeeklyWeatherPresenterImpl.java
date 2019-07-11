@@ -38,16 +38,21 @@ public class WeeklyWeatherPresenterImpl implements WeeklyWeatherPresenter{
     }
 
     @Override
-    public void onActivityResultWeeklyWeatherFavoriteAreaResultOK(WeeklyWeatherArea weeklyWeather, int position) {
+    public void onActivityResultWeeklyWeatherFavoriteAreaResultOK(String areaCode, String areaName) {
         // 즐겨 찾기 결과 후
         // 1. 디비를 호출 후 결과를 받아 온다.
-        this.weeklyWeatherView.weeklyWeatherAreaChanged(weeklyWeather);
+        this.weeklyWeatherView.getWeeklyWeatherMiddleForecastByAreaAndDate(areaCode, "2019061206" );
     }
 
     @Override
     public void onActivityResultWeeklyWeatherSearchAreaResultOK(WeeklyWeatherArea weeklyWeather, int position) {
         // 장소 설정 결과 후 Fragment로 넘긴다.
         this.weeklyWeatherView.weeklyWeatherAreaChanged(weeklyWeather);
+    }
+
+    @Override
+    public void onActivityResultForWeatherLifeAreaResultOk(String areaCode, String areaName) {
+        this.weeklyWeatherView.getWeeklyWeatherMiddleForecastByAreaAndDate(areaCode, "2019061206" );
     }
 
 }

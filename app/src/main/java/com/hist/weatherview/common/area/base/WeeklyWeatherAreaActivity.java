@@ -17,11 +17,12 @@ import android.widget.Toast;
 
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
 import com.hist.weatherview.R;
+import com.hist.weatherview.common.comm.WeeklyWeatherActivityResultFlag;
 import com.hist.weatherview.weeklyweather.area.fragment.list.base.WeeklyWeatherAreaListFragment;
 import com.hist.weatherview.weeklyweather.area.presenter.WeeklyWeatherAreaPresenter;
 import com.hist.weatherview.weeklyweather.area.presenter.impl.WeeklyWeatherAreaPresenterImpl;
 import com.hist.weatherview.weeklyweather.area.view.WeeklyWeatherAreaView;
-import com.hist.weatherview.weeklyweather.comm.WeeklyWeatherActivityResultFlag;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

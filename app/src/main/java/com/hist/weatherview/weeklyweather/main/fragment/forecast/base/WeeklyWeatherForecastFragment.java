@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.weeklyweather.WeeklyWeatherBaseItem;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
+import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
 import com.hist.weatherview.weeklyweather.main.base.WeeklyWeatherActivity;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.adapter.WeeklyWeatherForecastRecycleViewAdapter;
@@ -51,8 +53,8 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
     private RecyclerView rvList;
     private ProgressDialog progressDialog;
     private Handler progressDialogHandler;
-    private WeeklyWeatherArea area;
-
+    private SharedPlaceInfo startPlaceInfo;
+    private SharedPrefersManager sharedPrefersManager;
 
     @BindView(R.id.rv_weekly_weather_forecast)
     RecyclerView RvWeeklyWeatherForecast;
@@ -69,9 +71,8 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
     }
 
     @SuppressLint("ValidFragment")
-    public WeeklyWeatherForecastFragment(WeeklyWeatherActivity weeklyWeatherActivity, WeeklyWeatherArea area) {
+    public WeeklyWeatherForecastFragment(WeeklyWeatherActivity weeklyWeatherActivity) {
         this.context = weeklyWeatherActivity;
-        this.area = area;
     }
 
     @Override
@@ -81,8 +82,11 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
         this.progressDialog = new ProgressDialog(context);
         this.progressDialogHandler = new Handler();
 
+        this.sharedPrefersManager = new SharedPrefersManager(context);
+
         this.weeklyWeatherForecastPresenter = new WeeklyWeatherForecastPresenterImpl(this);
-        this.weeklyWeatherForecastPresenter.init(this.area);  // 임시
+        this.weeklyWeatherForecastPresenter.init();  // 임시
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +94,18 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_weekly_weather_forecast, container, false);
         ButterKnife.bind(this, view);
         this.weeklyWeatherForecastPresenter.onCreateView();
+
+
+        this.startPlaceInfo = this.sharedPrefersManager.getWeeklyWeatherStartPlace();
+        if(this.startPlaceInfo == null)
+        {
+            this.startPlaceInfo = new SharedPlaceInfo("1100000000", "서울특별시");
+        }
+        ((WeeklyWeatherView)context).setWeeklyWeatherPlaceTitle(this.startPlaceInfo.getPlaceName());
+
+        this.getWeeklyWeatherMiddleForecastByAreaAndDate(this.startPlaceInfo.getPlaceCode());
+
+
         return view;
     }
 
@@ -169,5 +185,11 @@ public class WeeklyWeatherForecastFragment extends Fragment implements WeeklyWea
     public void setWeeklyWeatherMiddleForecast(WeeklyWeatherBase weeklyWeathersBase) {
         ((WeeklyWeatherView)context).setWeeklyWeatherMiddleForecast(weeklyWeathersBase);
 
+    }
+
+    public void getWeeklyWeatherMiddleForecastByAreaAndDate(String areaCode)
+    {
+        //presenter로 넘김
+        this.weeklyWeatherForecastPresenter.getWeeklyWeatherMiddleForecastByAreaAndDate(areaCode);
     }
 }

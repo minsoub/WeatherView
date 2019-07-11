@@ -79,12 +79,14 @@ public class PlaceInfoActivity extends AppCompatActivity implements PlaceInfoVie
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        placeInfoPresenter = new PlaceInfoPresenterImpl(this);
+        placeInfoPresenter = new PlaceInfoPresenterImpl(this, this);
         //ButterKnife Bind
         ButterKnife.bind(this);
         this.progressDialog = new ProgressDialog(this);
         this.progressDialogHandler = new Handler();
 
+        placeInfoPresenter.init();
+        placeInfoPresenter.onCreateView();
     }
 
     @Override
@@ -294,13 +296,18 @@ public class PlaceInfoActivity extends AppCompatActivity implements PlaceInfoVie
     }
 
     @Override
-    public void setPlaceInfoExpandableListViewAdapterItem(final List<String> mCityList, final HashMap<String, List<String>> mCityListDetail, final HashMap<String, List<String>> mCityKeyListDetail) {
-        mExpandalbeAreaAdapter = new WeatherLifeAreaExpandableListViewAdapter(this, mCityList, mCityListDetail);
+    public void setPlaceInfoExpandableListViewAdapterItem( List<String> mCityList,  HashMap<String, List<String>> mCityListDetail,  HashMap<String, List<String>> mCityKeyListDetail) {
+
+        final List<String> cityList = mCityList;
+        final HashMap<String, List<String>> cityListDetail = mCityListDetail;
+        final HashMap<String, List<String>> cityKeyListDetail = mCityKeyListDetail;
+
+        mExpandalbeAreaAdapter = new WeatherLifeAreaExpandableListViewAdapter(this, cityList, cityListDetail);
 
         ExListView.setAdapter(mExpandalbeAreaAdapter);
 
         /* Event Handler */
-        ExListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        /*ExListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
@@ -330,6 +337,6 @@ public class PlaceInfoActivity extends AppCompatActivity implements PlaceInfoVie
                 finish();
                 return false;
             }
-        });
+        });*/
     }
 }

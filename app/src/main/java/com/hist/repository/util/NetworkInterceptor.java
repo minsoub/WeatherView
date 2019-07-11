@@ -20,12 +20,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class NetworkInterceptor implements Interceptor {
-    private final String BASE_SERVER_API = "http://54.180.26.21:9000/";
+    private final String BASE_SERVER_API = "http://ec2-54-180-117-11.ap-northeast-2.compute.amazonaws.com:9000/";
+    private final String PLACE_INFO_BASE_SERVER_API = "http://ec2-54-180-117-11.ap-northeast-2.compute.amazonaws.com:9090/";
 
     private final String THUNDERSTROKE_URL = "thunderstroke/";      // 낙뢰정보
     private final String WEEKLY_WEATHER_URL = "weeklyweather/";    // 주간 날씨
     private final String TIME_WEATHER_URL = "timeweather/";    // 주간 날씨
     private final String WEATHER_LIFE_URL = "weatherlife/";        // 생활 기상
+    private final String PLACE_INFO_URL = "place/";                 //지역코드 정보
 
     private String accessToken = null;      //토큰
     public Retrofit retrofit;               //Retrofit
@@ -116,6 +118,20 @@ public class NetworkInterceptor implements Interceptor {
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_SERVER_API + TIME_WEATHER_URL).addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build();
+
+        return retrofit;
+    }
+
+    /**
+     *  PlaceInfo(지역코드) 연결 레파지토리
+     * @return
+     */
+    public Retrofit getPlaceInfoRepository() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(PLACE_INFO_BASE_SERVER_API + PLACE_INFO_URL).addConverterFactory(new NullOnEmptyConverterFactory())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();

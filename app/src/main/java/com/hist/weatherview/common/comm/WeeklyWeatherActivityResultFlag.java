@@ -1,4 +1,4 @@
-package com.hist.weatherview.weeklyweather.comm;
+package com.hist.weatherview.common.comm;
 
 public class WeeklyWeatherActivityResultFlag {
 

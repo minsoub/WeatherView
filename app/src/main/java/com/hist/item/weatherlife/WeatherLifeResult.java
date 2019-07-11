@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ *  생활기상 실제 데이터 정보 모델
+ */
 public class WeatherLifeResult {
 
     @JsonProperty("title")

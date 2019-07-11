@@ -15,17 +15,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hist.item.common.SharedPlaceInfo;
 import com.hist.item.timeweather.TimeWeatherResult;
 import com.hist.item.timeweather.TimeWeatherResultTime;
+import com.hist.item.weatherlife.WeatherLifeItem;
 import com.hist.item.weeklyweather.WeeklyWeatherArea;
+import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
-import com.hist.weatherview.common.area.base.WeeklyWeatherAreaActivity;
+import com.hist.weatherview.common.comm.WeeklyWeatherActivityResultFlag;
+import com.hist.weatherview.common.comm.dialog.TimeWeatherDialog;
 import com.hist.weatherview.timeweather.main.fragment.forecast.base.TimeWeatherForecastFragment;
 import com.hist.weatherview.timeweather.main.presenter.TimeWeatherPresenter;
 import com.hist.weatherview.timeweather.main.presenter.impl.TimeWeatherPresenterImpl;
 import com.hist.weatherview.timeweather.main.view.TimeWeatherView;
-import com.hist.weatherview.weeklyweather.comm.WeeklyWeatherActivityResultFlag;
-import com.hist.weatherview.weeklyweather.comm.dialog.WeeklyWeatherDialog;
+import com.hist.weatherview.weatherlife.area.base.WeatherLifeAreaActivity;
+import com.hist.weatherview.weatherlife.main.adapter.WeatherLifeTypeListener;
+
+
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,14 +48,17 @@ import butterknife.OnClick;
  *  - 액티비티 (CollapsedToolBar) + Fragment 구조
  */
 
-public class TimeWeatherActivity extends AppCompatActivity implements TimeWeatherView {
+public class TimeWeatherActivity extends AppCompatActivity implements WeatherLifeTypeListener, TimeWeatherView {
 
     private static final String TAG = "WeeklyWeatherActivity";
     private TimeWeatherPresenter timeWeatherPresenter;
     private IncludedToolbarLayout includedToolbarLayout;            //탭 레이아웃
     private ProgressDialog progressDialog;
     private Handler progressDialogHandler;
-
+    private SharedPrefersManager sharedPrefersManager;
+    private TimeWeatherDialog timeWeatherDialog;
+    private TimeWeatherForecastFragment timeWeatherForecastFragment;
+    private SharedPlaceInfo startPlaceInfo;
 
     @BindView(R.id.in_weekly_weather_toolbar)
     View InWeeklyWeatherToolbar;
@@ -73,17 +84,18 @@ public class TimeWeatherActivity extends AppCompatActivity implements TimeWeathe
         super.onCreate(savedInstanceState);
 
         this.timeWeatherPresenter = new TimeWeatherPresenterImpl(this);
-
+        this.timeWeatherForecastFragment = new TimeWeatherForecastFragment(this);
         setContentView(R.layout.activity_time_weather_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_time_weather, new TimeWeatherForecastFragment(this))
+                    .add(R.id.container_time_weather, timeWeatherForecastFragment)
                     .commit();
         }
 
         ButterKnife.bind(this);
         this.progressDialog = new ProgressDialog(this);
         this.progressDialogHandler = new Handler();
+        this.sharedPrefersManager = new SharedPrefersManager(this);
 
         this.timeWeatherPresenter.init();     //View Init
         this.timeWeatherPresenter.onCreateView();
@@ -98,10 +110,24 @@ public class TimeWeatherActivity extends AppCompatActivity implements TimeWeathe
             case WeeklyWeatherActivityResultFlag.WEEKLY_WEATHER_SEARCH_AREA_REQUEST:
                 switch (resultCode) {
                     case WeeklyWeatherActivityResultFlag.RESULT_OK:
-                        int position = data.getIntExtra("position", 0);
+                        /*int position = data.getIntExtra("position", 0);
                         WeeklyWeatherArea weeklyWeather = (WeeklyWeatherArea) data.getSerializableExtra("weeklyweather");
                         // 프리젠터 요청
-                        this.timeWeatherPresenter.onActivityResultTimeWeatherSearchAreaResultOK(weeklyWeather, position);
+                        this.timeWeatherPresenter.onActivityResultTimeWeatherSearchAreaResultOK(weeklyWeather, position);*/
+
+                        String areaCode = data.getStringExtra("areaCode");
+                        String areaName = data.getStringExtra("areaName");
+                        TvArea.setText(areaName);
+                        if(this.startPlaceInfo == null)
+                        {
+                            this.startPlaceInfo = new SharedPlaceInfo(areaCode, areaName);
+                        }else
+                        {
+                            this.startPlaceInfo.setPlaceName(areaName);
+                            this.startPlaceInfo.setPlaceCode(areaCode);
+                        }
+                        this.sharedPrefersManager.setTimeWeatherStartPlace(startPlaceInfo);
+                        timeWeatherPresenter.onActivityResultForTimeWeatherAreaResultOk(areaCode, areaName);
                         break;
 
                     case WeeklyWeatherActivityResultFlag.RESULT_CANCEL:
@@ -115,10 +141,26 @@ public class TimeWeatherActivity extends AppCompatActivity implements TimeWeathe
                         // 추가 등록 OK 시 프로세스
                         // 1. 즐겨찾기에 지역 저장
                         // 2. 해당 지역에 대해서 정보 요청
-                        int position = data.getIntExtra("position", 0);
-                        WeeklyWeatherArea weeklyWeather = (WeeklyWeatherArea) data.getSerializableExtra("weeklyweather");
+                        //int position = data.getIntExtra("position", 0);
+                        //WeeklyWeatherArea weeklyWeather = (WeeklyWeatherArea) data.getSerializableExtra("weeklyweather");
+                        String areaCode = data.getStringExtra("areaCode");
+                        String areaName = data.getStringExtra("areaName");
+                        // SharedPreference 등록 하고 조회 한다.
+
+                        ArrayList<SharedPlaceInfo> placeInfos = this.sharedPrefersManager.getTimeWeatherFavoritePlaceArrayListPref();
+                        if(placeInfos == null)
+                        {
+                            ArrayList<SharedPlaceInfo> tmp = new ArrayList<>();
+                            tmp.add(new SharedPlaceInfo(areaCode, areaName));
+                            this.sharedPrefersManager.setTimeWeatherFavoritePlaceArrayListPref(tmp);
+                        }else {
+                            placeInfos.add(new SharedPlaceInfo(areaCode, areaName));
+                            this.sharedPrefersManager.setTimeWeatherFavoritePlaceArrayListPref(placeInfos);
+                        }
+
+
                         // 프리젠터 요청
-                        this.timeWeatherPresenter.onActivityResultTimeWeatherFavoriteAreaResultOK(weeklyWeather, position);
+                        this.timeWeatherPresenter.onActivityResultTimeWeatherFavoriteAreaResultOK(areaCode, areaName);
                         //searchTagPresenter.onActivityResultForStoryResultEdit(position, story);
                         break;
                     case WeeklyWeatherActivityResultFlag.RESULT_DELETE:
@@ -224,26 +266,53 @@ public class TimeWeatherActivity extends AppCompatActivity implements TimeWeathe
         // 0. 지역정보 변경
         TvArea.setText(area.getAreaName());
         // 1. List Fragment를 새롭게 생성한다.
-        getSupportFragmentManager().beginTransaction()
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_weekly_weather, new TimeWeatherForecastFragment(this, area))
-                .commitAllowingStateLoss();
+                .commitAllowingStateLoss();*/
     }
 
     @Override
-    public void deleteWeeklyWeatherFavoriteArea(String area) {
+    public void deleteWeeklyWeatherFavoriteArea(ArrayList<SharedPlaceInfo> placeInfoArrayList, int index) {
         // 선택한 즐겨찾기 지역을 삭제 한다.
+        placeInfoArrayList.remove(index);
+        this.sharedPrefersManager.setTimeWeatherFavoritePlaceArrayListPref(placeInfoArrayList);
+    }
+
+    @Override
+    public void getTimeWeatherForecastByAreaAndDate(String areaCode, String s) {
+        // 지역 선택 후 시간별 조회를 수행한다.
+        timeWeatherForecastFragment.getTimeWeatherForecastByAreaAndDate(areaCode);
+    }
+
+    @Override
+    public void navigateToWeeklyWeatherFavoriteAreaFail() {
+        this.showMessage("즐겨찾기 장소를 더 이상 추가 할 수 없습니다.");
+        this.timeWeatherDialog.dismiss();
+    }
+
+
+    /**
+     *  지역명을 설정한다.
+     * @param placeName
+     */
+    @Override
+    public void setTimeWeatherPlaceTitle(String placeName) {
+        TvArea.setText(placeName);
     }
 
     @Override
     public void navigateToWeeklyWeatherSearchArea() {
         Intent intent = null;
-        intent = new Intent(TimeWeatherActivity.this, WeeklyWeatherAreaActivity.class);
+        //intent = new Intent(TimeWeatherActivity.this, WeeklyWeatherAreaActivity.class);
+        intent = new Intent(TimeWeatherActivity.this, WeatherLifeAreaActivity.class);       // 생활 기상 지역 선택으로 변경
         startActivityForResult(intent, WeeklyWeatherActivityResultFlag.WEEKLY_WEATHER_SEARCH_AREA_REQUEST);
     }
 
     @Override
     public void navigateToWeeklyWeatherFavoriteArea() {
-        Intent intent = new Intent(TimeWeatherActivity.this, WeeklyWeatherAreaActivity.class);
+        //Intent intent = new Intent(TimeWeatherActivity.this, WeeklyWeatherAreaActivity.class);
+        Intent intent = null;
+        intent = new Intent(TimeWeatherActivity.this, WeatherLifeAreaActivity.class);       // 생활 기상 지역 선택으로 변경
         startActivityForResult(intent, WeeklyWeatherActivityResultFlag.WEEKLY_WEATHER_FAVORITE_AREA_REQUEST);
     }
 
@@ -256,7 +325,7 @@ public class TimeWeatherActivity extends AppCompatActivity implements TimeWeathe
     public void setWeeklyWeatherTodayForecast(TimeWeatherResult today) {
         // 오늘날짜 날씨를 업데이트 한다.
         // 1. 지역 설정
-        TvArea.setText("서울특별시 강서구 가양동");
+        //TvArea.setText("서울특별시 강서구 가양동");
         // 2. 온도 설정
         TvTempMax.setText(getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
         TvTempMin.setText(getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
@@ -345,13 +414,23 @@ public class TimeWeatherActivity extends AppCompatActivity implements TimeWeathe
     @OnClick(R.id.ib_toolbar_weekly_weather_more)
     public void onClickMore() {
         //drawerLayout.openDrawer(GravityCompat.START);
-        final WeeklyWeatherDialog weeklyWeatherDialog = new WeeklyWeatherDialog(this);
-        weeklyWeatherDialog.show();
-        weeklyWeatherDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        ArrayList<SharedPlaceInfo> placeInfos = this.sharedPrefersManager.getTimeWeatherFavoritePlaceArrayListPref();
+        if(timeWeatherDialog != null)
+        {
+            timeWeatherDialog = null;
+        }
+        timeWeatherDialog = new TimeWeatherDialog(this, placeInfos);
+        timeWeatherDialog.show();
+        timeWeatherDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override public void onDismiss(DialogInterface dialog) {
                /* String addCategoryStr = weeklyWeatherDialog.getAddCategoryStr(); //Something To-do */
             }
         });
+
+    }
+
+    @Override
+    public void onChangeWeatherLifeType(WeatherLifeItem weatherLifeItem, String type) {
 
     }
 

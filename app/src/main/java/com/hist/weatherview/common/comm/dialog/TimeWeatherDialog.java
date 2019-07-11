@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.hist.item.common.SharedPlaceInfo;
 import com.hist.weatherview.R;
-import com.hist.weatherview.weeklyweather.main.view.WeeklyWeatherView;
+import com.hist.weatherview.timeweather.main.view.TimeWeatherView;
 
 import java.util.ArrayList;
 
@@ -34,20 +34,20 @@ import butterknife.OnClick;
  */
 
 
-public class WeeklyWeatherDialog extends BottomSheetDialog {
+public class TimeWeatherDialog extends BottomSheetDialog {
 
     private Context context;
-    private WeeklyWeatherView weeklyWeatherView;
+    private TimeWeatherView timeWeatherView;
     private ArrayList<SharedPlaceInfo> placeInfos;
     final String areas[] = {"등촌1동", "염창1동", "가양1동"};
 
     @BindView(R.id.ll_dialog_weekly_weather)
     LinearLayout llDialogWeeklyWeather;
 
-    public WeeklyWeatherDialog(@NonNull Context context, ArrayList<SharedPlaceInfo> placeInfos) {
+    public TimeWeatherDialog(@NonNull Context context, ArrayList<SharedPlaceInfo> placeInfos) {
         super(context);
         this.context = context;
-        this.weeklyWeatherView = (WeeklyWeatherView)context;
+        this.timeWeatherView = (TimeWeatherView)context;
         this.placeInfos = placeInfos;
     }
 
@@ -55,10 +55,10 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_weekly_weather);
         ButterKnife.bind(this);
-        refreshWeeklyWeatherFavoritePlaceList();
+        init();
     }
 
     public void init()
@@ -86,7 +86,6 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
             }
         }
     }
-
 
     public LinearLayout createLinearLayout() {
         LinearLayout ll = new LinearLayout(context);
@@ -146,7 +145,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weeklyWeatherView.setWeeklyWeatherFavoriteArea(areas[temp]);
+                timeWeatherView.setWeeklyWeatherFavoriteArea(areas[temp]);
                 dismiss();
             }
         });
@@ -154,7 +153,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weeklyWeatherView.deleteWeeklyWeatherFavoriteArea(placeInfos, temp);
+                timeWeatherView.deleteWeeklyWeatherFavoriteArea(placeInfos, temp);
                 dismiss();
             }
         });
@@ -162,7 +161,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
 
     @OnClick(R.id.tv_dialog_weekly_weather)
     public void onClickWeeklyWeatherSearchArea() {
-        weeklyWeatherView.navigateToWeeklyWeatherSearchArea();
+        timeWeatherView.navigateToWeeklyWeatherSearchArea();
     }
 
     @OnClick(R.id.tv_dialog_weekly_weather_favorite)
@@ -170,9 +169,9 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         //5개의 개수이상일때, 알람 표시
         if(placeInfos.size() > 4)
         {
-            weeklyWeatherView.navigateToWeeklyWeatherFavoriteAreaFail();
+            timeWeatherView.navigateToWeeklyWeatherFavoriteAreaFail();
         }else {
-            weeklyWeatherView.navigateToWeeklyWeatherFavoriteArea();
+            timeWeatherView.navigateToWeeklyWeatherFavoriteArea();
         }
     }
 
@@ -181,12 +180,4 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         dismiss();
     }
 
-    /**
-     *  즐겨찾기 항목을 가져온다.
-     * @param placeInfos
-     */
-    public void setWeeklyWeatherFavoritePlaceList(ArrayList<SharedPlaceInfo> placeInfos) {
-        this.placeInfos = placeInfos;
-        this.refreshWeeklyWeatherFavoritePlaceList();
-    }
 }
