@@ -113,7 +113,7 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         tv.setText(name);
         tv.setId(i);
         tv.setTextColor(Color.GRAY);
-        tv.setTextSize(25);
+        tv.setTextSize(15);
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             tv.setBackground(ContextCompat.getDrawable(context, R.drawable.weatherlife_circle_danger));
         }*/
@@ -143,10 +143,11 @@ public class WeeklyWeatherDialog extends BottomSheetDialog {
         relativeLayout.addView(tv);
         relativeLayout.addView(button);
 
+        //텍스트 클릭 시 이벤트 핸들러
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weeklyWeatherView.setWeeklyWeatherFavoriteArea(areas[temp]);
+                weeklyWeatherView.setWeeklyWeatherFavoriteArea(placeInfos, temp);
                 dismiss();
             }
         });

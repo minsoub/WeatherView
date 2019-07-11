@@ -373,9 +373,20 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
 
 
     @Override
-    public void setWeeklyWeatherFavoriteArea(String area) {
+    public void setWeeklyWeatherFavoriteArea(ArrayList<SharedPlaceInfo> placeInfoArrayList, int index) {
 
-        Toast.makeText(TimeWeatherActivity.this, area, Toast.LENGTH_LONG).show();
+        SharedPlaceInfo placeInfo = placeInfoArrayList.get(index);
+        if(this.startPlaceInfo == null)
+        {
+            this.startPlaceInfo = new SharedPlaceInfo(placeInfo.getPlaceCode(), placeInfo.getPlaceName());
+        }else
+        {
+            this.startPlaceInfo.setPlaceName(placeInfo.getPlaceName());
+            this.startPlaceInfo.setPlaceCode(placeInfo.getPlaceCode());
+        }
+        this.sharedPrefersManager.setWeeklyWeatherStartPlace(startPlaceInfo);
+        TvArea.setText(startPlaceInfo.getPlaceName());
+        timeWeatherForecastFragment.getTimeWeatherForecastByAreaAndDate(placeInfo.getPlaceCode());
     }
 
 
