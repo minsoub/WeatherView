@@ -58,7 +58,7 @@ public class TimeWeatherDialog extends BottomSheetDialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_weekly_weather);
         ButterKnife.bind(this);
-        init();
+        refreshWeeklyWeatherFavoritePlaceList();
     }
 
     public void init()
@@ -142,10 +142,11 @@ public class TimeWeatherDialog extends BottomSheetDialog {
         relativeLayout.addView(tv);
         relativeLayout.addView(button);
 
+        // 텍스트 클릭 시 발생 이벤트
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timeWeatherView.setWeeklyWeatherFavoriteArea(areas[temp]);
+                timeWeatherView.setWeeklyWeatherFavoriteArea(placeInfos, temp);
                 dismiss();
             }
         });

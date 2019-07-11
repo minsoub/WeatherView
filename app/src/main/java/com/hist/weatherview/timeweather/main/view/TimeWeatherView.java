@@ -33,7 +33,7 @@ public interface TimeWeatherView {
 
     void setWeeklyWeatherTodayForecast(TimeWeatherResult today);
 
-    void setWeeklyWeatherFavoriteArea(String area); // 즐겨 찾기 설정 완료 후 최종 즐겨 찾기 가졍괴
+    void setWeeklyWeatherFavoriteArea(ArrayList<SharedPlaceInfo> placeInfoArrayList, int index); // 즐겨 찾기 설정 완료 후 최종 즐겨 찾기 가졍괴
 
     void navigateToWeeklyWeatherSearchArea();       // 지역 설정 하기로 이동하기
 
