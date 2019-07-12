@@ -15,6 +15,7 @@ import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherData;
 import com.hist.item.weeklyweather.WeeklyWeatherItem;
 import com.hist.weatherview.R;
+import com.hist.weatherview.common.util.WeatherUtil;
 import com.hist.weatherview.timeweather.main.fragment.forecast.presenter.TimeWeatherForecastPresenter;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.WeeklyWeatherForecastPresenter;
 
@@ -67,17 +68,18 @@ public class TimeWeatherForecastRecycleViewAdapter extends RecyclerView.Adapter<
 
         if(i == 0)
         {
-            viewHolder.IvTimeWeatherSky.setImageResource(getSkyImageByValue(getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
+            viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
             viewHolder.TvTimeWeatherDate.setText("오늘");
             viewHolder.TvTimeWeatherTime.setText(insertString(timeWeatherResult.getTime().get(0).getFcstTime().toString(), ":", 2));
-            viewHolder.TvTimeWeatherTemp.setText(context.getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "T3H"))));
-            viewHolder.TvTimeWeatherSkyDesc.setText("맑음");
+            viewHolder.TvTimeWeatherTemp.setText(context.getString(R.string.format_temperature, Double.parseDouble(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "T3H"))));
+            viewHolder.TvTimeWeatherSkyDesc.setText(WeatherUtil.getSkyTypeStringByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
+
         }else{
-            viewHolder.IvTimeWeatherSky.setImageResource(getSkyImageByValue(getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
+            viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
             viewHolder.TvTimeWeatherDate.setText(insertString(timeWeatherResult.getTime().get(0).getFcstDate().toString().substring(4),"/",2));
             viewHolder.TvTimeWeatherTime.setText(insertString(timeWeatherResult.getTime().get(0).getFcstTime().toString(), ":", 2));
-            viewHolder.TvTimeWeatherTemp.setText(context.getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "T3H"))));
-            viewHolder.TvTimeWeatherSkyDesc.setText("맑음");
+            viewHolder.TvTimeWeatherTemp.setText(context.getString(R.string.format_temperature, Double.parseDouble(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "T3H"))));
+            viewHolder.TvTimeWeatherSkyDesc.setText(WeatherUtil.getSkyTypeStringByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
             //viewHolder.TvWeatherType.setText(morningSky);
             //viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, 21.0));
             //viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, 10.1));
@@ -86,40 +88,6 @@ public class TimeWeatherForecastRecycleViewAdapter extends RecyclerView.Adapter<
         //dayViewHolder.weatherType.setText(days.get(i).getWeatherDescription());
     }
 
-    public String getTimeWeatherResultTimeValueByCategory(TimeWeatherResult result, String category)
-    {
-        String retVal = "";
-        for(int i = 0 ; i < result.getTime().size() ; i++)
-        {
-            TimeWeatherResultTime time = result.getTime().get(i);
-            if(category.equals(time.getCategory()))
-            {
-                retVal = time.getFcstValue().toString();
-            }
-
-        }
-
-        return retVal;
-    }
-
-    public int getSkyImageByValue(String value)
-    {
-        double intValue = Double.parseDouble(value);
-        int retDrawable = R.drawable.art_clear;
-        if(intValue <= 2)
-        {
-            retDrawable = R.drawable.art_clear;
-        }else if(intValue > 2 && intValue <= 5)
-        {
-            retDrawable = R.drawable.art_clouds;
-        }else if(intValue > 5 && intValue <= 8)
-        {
-            retDrawable = R.drawable.art_clouds;        //흐림
-        }
-
-        return retDrawable;
-
-    }
 
     public String insertString(String str, String iStr, int position)
     {

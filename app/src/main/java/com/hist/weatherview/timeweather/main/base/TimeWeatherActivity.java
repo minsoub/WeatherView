@@ -24,6 +24,7 @@ import com.hist.repository.local.SharedPrefersManager;
 import com.hist.weatherview.R;
 import com.hist.weatherview.common.comm.WeeklyWeatherActivityResultFlag;
 import com.hist.weatherview.common.comm.dialog.TimeWeatherDialog;
+import com.hist.weatherview.common.util.WeatherUtil;
 import com.hist.weatherview.timeweather.main.fragment.forecast.base.TimeWeatherForecastFragment;
 import com.hist.weatherview.timeweather.main.presenter.TimeWeatherPresenter;
 import com.hist.weatherview.timeweather.main.presenter.impl.TimeWeatherPresenterImpl;
@@ -325,51 +326,15 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     public void setWeeklyWeatherTodayForecast(TimeWeatherResult today) {
         // 오늘날짜 날씨를 업데이트 한다.
         // 1. 지역 설정
-        //TvArea.setText("서울특별시 강서구 가양동");
         // 2. 온도 설정
-        TvTempMax.setText(getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
-        TvTempMin.setText(getString(R.string.format_temperature, Double.parseDouble(getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
+        TvTempMax.setText(getString(R.string.format_temperature, Double.parseDouble(WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
+        TvTempMin.setText(getString(R.string.format_temperature, Double.parseDouble(WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "T3H"))));
         // 3. 이미지 설정
-        IvImage.setImageResource(getSkyImageByValue(getTimeWeatherResultTimeValueByCategory(today, "SKY")));
+        IvImage.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "SKY")));
         // 4. 날씨 타입 설정
-        TvWeatherType.setText("맑음");
-
+        TvWeatherType.setText(WeatherUtil.getSkyTypeStringByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "SKY")));
     }
 
-    public String getTimeWeatherResultTimeValueByCategory(TimeWeatherResult result, String category)
-    {
-        String retVal = "";
-        for(int i = 0 ; i < result.getTime().size() ; i++)
-        {
-            TimeWeatherResultTime time = result.getTime().get(i);
-            if(category.equals(time.getCategory()))
-            {
-                retVal = time.getFcstValue().toString();
-            }
-
-        }
-
-        return retVal;
-    }
-
-    public int getSkyImageByValue(String value)
-    {
-        double intValue = Double.parseDouble(value);
-        int retDrawable = R.drawable.art_clear;
-        if(intValue <= 2)
-        {
-            retDrawable = R.drawable.art_clear;
-        }else if(intValue > 2 && intValue <= 5)
-        {
-            retDrawable = R.drawable.art_clouds;
-        }else if(intValue > 5 && intValue <= 8)
-        {
-            retDrawable = R.drawable.art_clouds;        //흐림
-        }
-
-        return retDrawable;
-
-    }
 
 
     @Override

@@ -14,6 +14,7 @@ import com.hist.item.weeklyweather.WeeklyWeatherItem;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherResult;
 import com.hist.weatherview.R;
+import com.hist.weatherview.common.util.WeatherUtil;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.WeeklyWeatherForecastPresenter;
 
 import java.util.List;
@@ -38,19 +39,6 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
     private List<WeeklyWeatherResult> weeklyWeatherItemResultOfMiddleTemp;
     private List<WeeklyWeatherResult> weeklyWeatherItemResultOfMiddleLand;
     private int layout;
-
-  /*  public WeeklyWeatherForecastRecycleViewAdapter(WeeklyWeatherForecastPresenter weeklyWeatherForecastPresenter, List<WeeklyWeatherData> data, Context context) {
-        this.weeklyWeatherForecastPresenter = weeklyWeatherForecastPresenter;
-        this.days = attractions;
-        this.context = context;
-        this.layout = layout;
-    }*/
-
-/*    public WeeklyWeatherForecastRecycleViewAdapter(WeeklyWeatherForecastPresenter weeklyWeatherForecastPresenter, List<WeeklyWeatherBase> weeklyWeatherItemList, Context context) {
-        this.weeklyWeatherForecastPresenter = weeklyWeatherForecastPresenter;
-        this.days = weeklyWeatherItemList;
-        this.context = context;
-    }*/
 
     public WeeklyWeatherForecastRecycleViewAdapter(WeeklyWeatherForecastPresenter weeklyWeatherForecastPresenter, List<WeeklyWeatherBaseItem> data, Context context) {
         this.weeklyWeatherForecastPresenter = weeklyWeatherForecastPresenter;
@@ -89,10 +77,8 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
         WeeklyWeatherResult weatherResultOfLand1 = weeklyWeatherItemResultOfMiddleLand.get((firstIdx >= weeklyWeatherItemResultOfMiddleLand.size()) ? 0 : firstIdx);
         WeeklyWeatherResult weatherResultOfLand2 = weeklyWeatherItemResultOfMiddleLand.get((secondIdx >= weeklyWeatherItemResultOfMiddleLand.size()) ? 0 : secondIdx);
 
-
-        
-        viewHolder.IvImage.setImageResource(R.drawable.art_clear);
-        viewHolder.IvImageAfternoon.setImageResource(R.drawable.art_clear);
+        viewHolder.IvImage.setImageResource(WeatherUtil.getSkyImageByString(weatherResultOfLand1.getValue()));              //오전 이미지
+        viewHolder.IvImageAfternoon.setImageResource(WeatherUtil.getSkyImageByString(weatherResultOfLand2.getValue()));     //오후 이미지
 
         viewHolder.TvDay.setText(weeklyWeatherResultOfMiddleTemp.getTitle());
 
@@ -102,56 +88,73 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
         viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultOfMiddleTemp2.getValue())));
         viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultOfMiddleTemp.getValue())));
 
-
-        /*if(i > 0)
-        {
-            if(i == 3) {
-                viewHolder.IvImage.setImageResource(R.drawable.art_light_rain);
-                viewHolder.IvImageAfternoon.setImageResource(R.drawable.art_clouds);
-                viewHolder.TvDay.setText("20190615");
-                viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, 21.0));
-                viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, 10.1));
-            }else {
-
-                if (weeklyWeatherItem == null)
-                    return;
-                viewHolder.IvImage.setImageResource(R.drawable.art_clear);
-                viewHolder.IvImageAfternoon.setImageResource(R.drawable.art_clear);
-                viewHolder.TvDay.setText(weeklyWeatherItem.get(0).getFcstDate().toString());
-
-                double maxtemp = 0;
-                double mintemp = 0;
-                String morningSky = "";
-                String afternoonSky = "";
-                for (int j = 0; j < weeklyWeatherItem.size(); j++) {
-                    WeeklyWeatherItem item = weeklyWeatherItem.get(i);
-                    if ("0600".equals(item.getFcstTime())) {
-                        if ("SKY".equals(item.getCategory())) {
-                            morningSky = item.getFcstValue().toString();
-                        } else if ("TMN".equals(item.getCategory())) {
-                            mintemp = item.getFcstValue();
-                        }
-                    } else {
-                        if ("SKY".equals(item.getCategory())) {
-                            afternoonSky = item.getFcstValue().toString();
-                        } else if ("TMN".equals(item.getCategory())) {
-                            maxtemp = item.getFcstValue();
-                        }
-                    }
-
-                }
-
-                //viewHolder.TvWeatherType.setText(morningSky);
-                viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, 21.0));
-                viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, 10.1));
-            }
-        }*/
-
-
-
-
-        //dayViewHolder.weatherType.setText(days.get(i).getWeatherDescription());
     }
+
+    /*public String getTimeWeatherResultTimeValueByCategory(WeeklyWeatherResult result, String category)
+    {
+        String retVal = "";
+        for(int i = 0 ; i < result.getTime().size() ; i++)
+        {
+            WeeklyWeatherResult time = result.getTime().get(i);
+            if(category.equals(time.getCategory()))
+            {
+                retVal = time.getFcstValue().toString();
+            }
+        }
+
+        return retVal;
+    }*/
+
+    public int getSkyImageByValue(String value)
+    {
+        String strValue = value;
+        int retDrawable;
+        if("맑음".equals(strValue))
+        {
+            //맑음
+            retDrawable = R.drawable.art_clear;
+        }else if("구름조금".equals(strValue))
+        {
+            //구름조금
+            retDrawable = R.drawable.art_light_clouds;
+        }else if("구름많음".equals(strValue))
+        {
+            retDrawable = R.drawable.art_clouds;
+        }else if("흐림".equals(strValue))
+        {
+            retDrawable = R.drawable.art_clouds;
+        }
+        else {
+            // 흐림
+            retDrawable = R.drawable.art_clouds;
+        }
+
+        return retDrawable;
+    }
+
+    public String getSkyTypeStringByValue(String value)
+    {
+        double intValue = Double.parseDouble(value);
+        String retDrawable;
+        if(intValue == 1 )
+        {
+            //맑음
+            retDrawable = "맑음";
+        }else if(intValue == 2)
+        {
+            //구름조금
+            retDrawable = "구름조금";
+        }else if(intValue == 3)
+        {
+            retDrawable = "구름많음";
+        }else {
+            // 구름 많음
+            retDrawable = "흐림";
+        }
+
+        return retDrawable;
+    }
+
 
     @Override
     public int getItemCount() {

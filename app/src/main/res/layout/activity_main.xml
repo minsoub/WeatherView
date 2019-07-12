@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMain"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.hist.weatherview.main.base.MainActivity">
+
+    <include
+        android:id="@+id/in_mainactivity_toolbar"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_main_title"
+        android:layout_below="@id/in_mainactivity_toolbar"
+        android:paddingTop="50dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경찰청 기상 조회 서비스"
+            android:textSize="25dp"
+            android:layout_weight="2"
+            android:gravity="center_horizontal|center_vertical"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_main_menu_conatiner"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/ll_main_title"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="스크롤 선택해주세요"
+            android:textColor="@color/white"
+             />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_main_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="horizontal"
+                android:visibility="visible" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="135dp"
+            android:src="@drawable/ic_main_police_log_200_200" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
