@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 intent = new Intent(MainActivity.this, WeatherLifeActivity.class);
                 break;
             case "0006":   // 지진 정보
+                this.showMessage("해당 서비스는 준비 중입니다.");
                 break;
             default:
                 break;

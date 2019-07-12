@@ -4,7 +4,7 @@
     <item android:drawable="@android:color/holo_blue_bright" />
 
     <item>
-        <bitmap android:src="@drawable/ic_police_splash"
+        <bitmap android:src="@drawable/ic_police_splash_150_150"
             android:gravity="center" />
     </item>
 

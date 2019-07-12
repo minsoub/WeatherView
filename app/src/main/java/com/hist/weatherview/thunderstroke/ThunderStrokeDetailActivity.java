@@ -3,6 +3,8 @@ package com.hist.weatherview.thunderstroke;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,7 +45,8 @@ public class ThunderStrokeDetailActivity extends AppCompatActivity implements On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thunderstroke_detail);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("낙뢰 정보");
         Intent intent = getIntent();
 
         mThunderStrokeTime = (TextView)findViewById(R.id.thunderstroke_time);
@@ -126,5 +129,18 @@ public class ThunderStrokeDetailActivity extends AppCompatActivity implements On
         mThunderStrokeLon.setText("126.555");
         mThunderStrokeStrong.setText("-9.4");
         mThunderStrokeType.setText("대지방전");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

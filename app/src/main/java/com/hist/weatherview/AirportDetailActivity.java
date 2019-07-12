@@ -2,6 +2,8 @@ package com.hist.weatherview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.content.Intent;
 
@@ -22,7 +24,8 @@ public class AirportDetailActivity extends AppCompatActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_airport_detail);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("공항 기상 상세 정보");
         Intent intent = getIntent();
         TextView icao_nm = (TextView)findViewById(R.id.icao_name);
         TextView crt_dt = (TextView)findViewById(R.id.airport_crt_dt);
@@ -120,5 +123,18 @@ public class AirportDetailActivity extends AppCompatActivity implements OnMapRea
         gmap.setMinZoomPreference(12);
         LatLng ny = new LatLng(lat, lon);  // 40.7143528, -74.0059731);
         gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

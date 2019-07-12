@@ -113,28 +113,14 @@ public class WeatherUtil {
         return strBuf.toString();
     }
 
-    public static String getCurrentDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date date = new Date();
+/*
+    public static String getWeeklyDatByValue(String value)
+    {
+        if(value.contains("3"))
+        {
 
-        String currentDay = date.toString();
-
-        return currentDay;
+        }
     }
+*/
 
-    public static String getCurrentDateByYYYYMMDD() {
-        Date date = new Date();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-//Add one to month {0 - 11}
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        StringBuilder stringBuilder = new StringBuilder(Integer.toString(year));
-        stringBuilder.append((month < 10) ? new StringBuilder("0").append(Integer.toString(month)) : Integer.toString(month));
-        stringBuilder.append((day < 10) ? new StringBuilder("0").append(Integer.toString(day)) : Integer.toString(day));
-
-        return stringBuilder.toString();
-    }
 }

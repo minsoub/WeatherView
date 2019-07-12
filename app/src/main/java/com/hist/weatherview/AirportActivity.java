@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,7 +18,8 @@ public class AirportActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_airport);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("공항 기상 정보");
         ListView listview;
         AirportItemAdapter adapter;
 
@@ -58,6 +61,20 @@ public class AirportActivity extends AppCompatActivity {
         for (int i=0; i<icao_cd.length; i++) {
             adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_airplanemode_active_black_24dp),
                     icao_cd[i], icao_nm[i], lat[i], lon[i]);
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

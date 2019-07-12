@@ -99,7 +99,7 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
         setContentView(R.layout.activity_weather_life);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle("생활 기상 정보");
         this.context = this;
         this.progressDialog = new ProgressDialog(context);
         this.progressDialogHandler = new Handler();
@@ -298,7 +298,8 @@ public class WeatherLifeActivity extends AppCompatActivity implements WeatherLif
     @Override
     @OnClick(R.id.edit_weatherlife_area_search)
     public void onClickAreaSearch() {
-        weatherLifeMainPresenter.onClickAreaSearch();
+        this.showMessage("해당 기능은 준비 중입니다.");
+        //weatherLifeMainPresenter.onClickAreaSearch();
     }
 
     @Override

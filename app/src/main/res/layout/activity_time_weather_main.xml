@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="150dp"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@color/colorMain"
                 android:paddingStart="54dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
@@ -63,7 +63,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="25dp"
                     android:textSize="22sp"
-                    android:text="서울특별시 등촌동"
+                    android:text="-"
+                    style="@style/CodeFont"
                     android:layout_alignParentLeft="true" />
 
                 <!--요일-->
@@ -74,6 +75,7 @@
                     android:layout_below="@+id/tv_area"
                     android:textSize="20sp"
                     android:text="오늘"
+                    style="@style/CodeFont"
                     android:layout_alignParentLeft="true" />
                 <!--온도-->
                 <TextView
@@ -81,9 +83,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_temp_max"
                     android:layout_below="@+id/tv_day"
-                    android:textSize="52sp"
-                    android:text="30"
-                    android:fontFamily="sans-serif-light"
+                    android:textSize="48sp"
+                    android:text="-"
+                    style="@style/CodeFont"
                     />
 
                 <!--최저 온도-->
@@ -94,8 +96,8 @@
                     android:layout_below="@+id/tv_temp_max"
                     android:layout_marginTop="8dp"
                     android:textSize="26sp"
-                    android:text="10"
-                    android:fontFamily="sans-serif-light"
+                    android:text="-"
+                    style="@style/CodeFont"
                     />
 
                 <!--날씨 아이콘-->

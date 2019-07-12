@@ -28,7 +28,7 @@ public class WeeklyWeatherPresenterImpl implements WeeklyWeatherPresenter{
 
         weeklyWeatherView.init();
         weeklyWeatherView.setToolbarLayout();
-        weeklyWeatherView.showToolbarTitle("주간날씨정보");
+        weeklyWeatherView.showToolbarTitle("주간 날씨 정보");
 
     }
 

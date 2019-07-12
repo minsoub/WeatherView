@@ -44,12 +44,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="150dp"
-                android:background="@android:color/holo_blue_bright"
-                android:paddingStart="54dp"
+                android:background="@color/colorMain"
+                android:paddingStart="15dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:paddingEnd="16dp"
-                android:paddingLeft="54dp"
+                android:paddingLeft="14dp"
                 android:paddingRight="16dp"
                 app:layout_collapseMode="parallax"
                 >
@@ -64,7 +64,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="25dp"
                     android:textSize="18sp"
-                    android:text="지역명"
+                    style="@style/CodeFont"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
@@ -74,7 +74,7 @@
                     android:layout_marginTop="10dp"
                     android:textSize="15sp"
                     android:layout_below="@+id/tv_forecast_area"
-                    android:text="주간예보"
+                    style="@style/CodeFont"
                     android:layout_alignParentLeft="true" />
 
                 <!--주간 예보 설명-->
@@ -84,6 +84,7 @@
                     android:id="@+id/tv_forecast_description"
                     android:layout_below="@+id/tv_forecast_title"
                     android:textSize="13sp"
+                    style="@style/CodeFont"
                     android:layout_alignParentLeft="true" />
                 <!--온도-->
 

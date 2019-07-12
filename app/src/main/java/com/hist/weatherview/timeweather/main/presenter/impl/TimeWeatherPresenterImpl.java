@@ -29,7 +29,7 @@ public class TimeWeatherPresenterImpl implements TimeWeatherPresenter{
 
         timeWeatherView.init();
         timeWeatherView.setToolbarLayout();
-        timeWeatherView.showToolbarTitle("시간별날씨정보");
+        timeWeatherView.showToolbarTitle("시간별 날씨 정보");
 
     }
 

@@ -112,7 +112,7 @@ public class TimeWeatherDialog extends BottomSheetDialog {
         tv.setText(name);
         tv.setId(i);
         tv.setTextColor(Color.GRAY);
-        tv.setTextSize(25);
+        tv.setTextSize(15);
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             tv.setBackground(ContextCompat.getDrawable(context, R.drawable.weatherlife_circle_danger));
         }*/
