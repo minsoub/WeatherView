@@ -14,6 +14,7 @@ import com.hist.item.weeklyweather.WeeklyWeatherItem;
 import com.hist.item.weeklyweather.WeeklyWeatherBase;
 import com.hist.item.weeklyweather.WeeklyWeatherResult;
 import com.hist.weatherview.R;
+import com.hist.weatherview.common.util.DateUtil;
 import com.hist.weatherview.common.util.WeatherUtil;
 import com.hist.weatherview.weeklyweather.main.fragment.forecast.presenter.WeeklyWeatherForecastPresenter;
 
@@ -38,6 +39,8 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
     private List<WeeklyWeatherBaseItem> weeklyWeatherDataList;
     private List<WeeklyWeatherResult> weeklyWeatherItemResultOfMiddleTemp;
     private List<WeeklyWeatherResult> weeklyWeatherItemResultOfMiddleLand;
+    private final int GAP_IDX = 3;
+    private final int GAP_LAND = 10;
     private int layout;
 
     public WeeklyWeatherForecastRecycleViewAdapter(WeeklyWeatherForecastPresenter weeklyWeatherForecastPresenter, List<WeeklyWeatherBaseItem> data, Context context) {
@@ -69,9 +72,51 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(WeeklyWeatherForecastViewHolder viewHolder, final int i) {
 
-        int firstIdx = i * 2;
-        int secondIdx = firstIdx + 1;
-        WeeklyWeatherResult weeklyWeatherResultOfMiddleTemp = weeklyWeatherItemResultOfMiddleTemp.get(firstIdx);
+        // 첫번째 Idx 일때, 기온 정보 계산은 아래와 같다.
+        int minTemp = (GAP_IDX * 2) * i;
+        int maxTemp = minTemp + 1;
+
+        int amLandIdx = i * 4;
+
+        int pmLandIdx = 0;
+        int amRnSt = 0;
+        int pmRnSt = 0;
+
+
+        if(i >= 6)
+        {
+            pmLandIdx = amLandIdx;
+            amRnSt = amLandIdx+1;
+            pmRnSt = amRnSt;
+        }else
+        {
+            pmLandIdx = amLandIdx + 1;
+            amRnSt = amLandIdx + 2;
+            pmRnSt = amLandIdx + 3;
+        }
+
+        // 최처/최고 온도
+        WeeklyWeatherResult weeklyWeatherResultMinTemp = weeklyWeatherItemResultOfMiddleTemp.get(minTemp);
+        WeeklyWeatherResult weeklyWeatherResultMaxTemp = weeklyWeatherItemResultOfMiddleTemp.get(maxTemp);
+
+        WeeklyWeatherResult weeklyWeatherResultLand = weeklyWeatherItemResultOfMiddleLand.get(amLandIdx);
+        WeeklyWeatherResult weeklyWeatherResultLand2 = weeklyWeatherItemResultOfMiddleLand.get(pmLandIdx);
+        WeeklyWeatherResult weeklyWeatherResultRnst = weeklyWeatherItemResultOfMiddleLand.get(amRnSt);
+        WeeklyWeatherResult weeklyWeatherResultRnst2 = weeklyWeatherItemResultOfMiddleLand.get(pmRnSt);
+
+        viewHolder.IvImage.setImageResource(WeatherUtil.getSkyImageByString(weeklyWeatherResultRnst.getValue()));              //오전 이미지
+        viewHolder.IvImageAfternoon.setImageResource(WeatherUtil.getSkyImageByString(weeklyWeatherResultRnst2.getValue()));     //오후 이미지
+
+        viewHolder.TvDay.setText(DateUtil.getMiddleDateStringByValue(weeklyWeatherResultMinTemp.getTitle()));
+
+        viewHolder.TvAmImageDescription.setText(weeklyWeatherResultLand.getValue());
+        viewHolder.TvPmImageDescription.setText(weeklyWeatherResultLand2.getValue());
+
+        viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultMaxTemp.getValue())));
+        viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultMinTemp.getValue())));
+
+
+       /* WeeklyWeatherResult weeklyWeatherResultOfMiddleTemp = weeklyWeatherItemResultOfMiddleTemp.get(firstIdx);
         WeeklyWeatherResult weeklyWeatherResultOfMiddleTemp2 = weeklyWeatherItemResultOfMiddleTemp.get(secondIdx);
 
         WeeklyWeatherResult weatherResultOfLand1 = weeklyWeatherItemResultOfMiddleLand.get((firstIdx >= weeklyWeatherItemResultOfMiddleLand.size()) ? 0 : firstIdx);
@@ -86,7 +131,7 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
         viewHolder.TvPmImageDescription.setText(weatherResultOfLand2.getValue());
 
         viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultOfMiddleTemp2.getValue())));
-        viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultOfMiddleTemp.getValue())));
+        viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, Double.parseDouble(weeklyWeatherResultOfMiddleTemp.getValue())));*/
 
     }
 
@@ -158,7 +203,7 @@ public class WeeklyWeatherForecastRecycleViewAdapter extends RecyclerView.Adapte
 
     @Override
     public int getItemCount() {
-        return weeklyWeatherItemResultOfMiddleTemp.size() / 2;
+        return (weeklyWeatherItemResultOfMiddleTemp.size() / 6) - 1;
     }
 
     /**

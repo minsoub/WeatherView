@@ -44,14 +44,42 @@ public class WeatherUtil {
             retDrawable = R.drawable.art_light_clouds;
         }else if(intValue == 3)
         {
-            retDrawable = R.drawable.art_clouds;
-        }else {
             // 구름 많음
+            retDrawable = R.drawable.art_heavy_clouds;
+        }else {
+            // 흐름
             retDrawable = R.drawable.art_clouds;
         }
 
+        // RainCheck
+
+
         return retDrawable;
     }
+
+    public static int getSkyImageBySkyAndPtyValue(String skyValue, String ptyValue)
+    {
+        int skyImage = getSkyImageByValue(skyValue);
+        double intPtyValue = Double.parseDouble(ptyValue);
+        if(intPtyValue == 1)
+        {
+            // 비
+            skyImage = R.drawable.art_rain;
+        }else if(intPtyValue == 2)
+        {
+            skyImage = R.drawable.art_rain;
+        }else if(intPtyValue == 3)
+        {
+            skyImage = R.drawable.art_snow;
+        }else
+        {
+           // no jobs..
+        }
+
+        return skyImage;
+    }
+
+    // Rain 체크
 
     public static int getSkyImageByString(String value)
     {

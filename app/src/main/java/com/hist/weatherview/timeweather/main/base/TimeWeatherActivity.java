@@ -36,6 +36,7 @@ import com.hist.weatherview.weatherlife.main.adapter.WeatherLifeTypeListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -75,7 +76,12 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
     TextView TvTempMin;
     @BindView(R.id.iv_image)
     ImageView IvImage;
-
+    @BindView(R.id.tv_temp_reh)
+    TextView TvTempReh;
+    @BindView(R.id.tv_temp_pop)
+    TextView TvTempPop;
+    @BindView(R.id.tv_temp_vvv)
+    TextView TvTempVvv;
 
     /*@BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;*/
@@ -333,6 +339,12 @@ public class TimeWeatherActivity extends AppCompatActivity implements WeatherLif
         IvImage.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "SKY")));
         // 4. 날씨 타입 설정
         TvWeatherType.setText(WeatherUtil.getSkyTypeStringByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "SKY")));
+        // 5. 습도 설정
+        TvTempReh.setText((WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "REH")));
+        // 6. 강수 확률
+        TvTempPop.setText((WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "POP")));
+        // 7. 풍속 설저이
+        TvTempVvv.setText((WeatherUtil.getTimeWeatherResultTimeValueByCategory(today, "VVV")));
     }
 
 

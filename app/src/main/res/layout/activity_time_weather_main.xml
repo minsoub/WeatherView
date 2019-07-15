@@ -77,7 +77,8 @@
                     android:text="오늘"
                     style="@style/CodeFont"
                     android:layout_alignParentLeft="true" />
-                <!--온도-->
+
+                <!--온도 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,8 +98,97 @@
                     android:layout_marginTop="8dp"
                     android:textSize="26sp"
                     android:text="-"
+                    android:visibility="gone"
                     style="@style/CodeFont"
                     />
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/tv_temp_min"
+                    >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.5"
+                            >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_temp_max"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"
+                            android:text="습도"
+                            style="@style/CodeFont"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_temp_reh"
+                            android:layout_below="@+id/tv_temp_max"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"
+                            android:text="-"
+                            style="@style/CodeFont"
+                            />
+                        </LinearLayout>
+
+                    <!-- 강수량 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="0.5"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_temp_max"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"
+                            android:text="강수확률"
+                            style="@style/CodeFont"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_temp_pop"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"
+                            android:text="-"
+                            style="@style/CodeFont"
+                            />
+                    </LinearLayout>
+
+                    <!-- 풍속 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="0.5"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"
+                            android:text="풍속"
+                            style="@style/CodeFont"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_temp_vvv"
+                            android:layout_marginTop="8dp"
+                            android:textSize="20sp"
+                            android:text="-"
+                            style="@style/CodeFont"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <!--날씨 아이콘-->
                 <ImageView

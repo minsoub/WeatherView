@@ -62,10 +62,47 @@ public class DateUtil {
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        //timeCheck
+        int hour = calendar.get(Calendar.HOUR);
+        if(hour < 5)
+        {
+            day -= 1;
+        }
+
         StringBuilder stringBuilder = new StringBuilder(Integer.toString(year));
         stringBuilder.append((month < 10) ? new StringBuilder("0").append(Integer.toString(month)) : Integer.toString(month));
         stringBuilder.append((day < 10) ? new StringBuilder("0").append(Integer.toString(day)) : Integer.toString(day));
 
+
         return stringBuilder.toString();
+    }
+
+    public static String getMiddleDateStringByValue(String value) {
+
+        String retVal = "";
+        if(value.contains("3"))
+        {
+            retVal = "3일후";
+        }else if(value.contains("4"))
+        {
+            retVal = "4일후";
+        }else if(value.contains("5"))
+        {
+            retVal = "5일후";
+        }else if(value.contains("6"))
+        {
+            retVal = "6일후";
+        }else if(value.contains("7"))
+        {
+            retVal = "7일후";
+        }else if(value.contains("8"))
+        {
+            retVal = "8일후";
+        }else if(value.contains("9"))
+        {
+            retVal = "9일후";
+        }
+
+        return retVal;
     }
 }

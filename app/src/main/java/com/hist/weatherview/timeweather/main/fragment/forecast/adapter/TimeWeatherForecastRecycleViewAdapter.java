@@ -68,14 +68,19 @@ public class TimeWeatherForecastRecycleViewAdapter extends RecyclerView.Adapter<
 
         if(i == 0)
         {
-            viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
+            //viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
+            viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageBySkyAndPtyValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY"),
+                    WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "PTY")));
+
             viewHolder.TvTimeWeatherDate.setText("오늘");
             viewHolder.TvTimeWeatherTime.setText(insertString(timeWeatherResult.getTime().get(0).getFcstTime().toString(), ":", 2));
             viewHolder.TvTimeWeatherTemp.setText(context.getString(R.string.format_temperature, Double.parseDouble(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "T3H"))));
             viewHolder.TvTimeWeatherSkyDesc.setText(WeatherUtil.getSkyTypeStringByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
 
+
         }else{
-            viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageByValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY")));
+            viewHolder.IvTimeWeatherSky.setImageResource(WeatherUtil.getSkyImageBySkyAndPtyValue(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "SKY"),
+                    WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "PTY")));
             viewHolder.TvTimeWeatherDate.setText(insertString(timeWeatherResult.getTime().get(0).getFcstDate().toString().substring(4),"/",2));
             viewHolder.TvTimeWeatherTime.setText(insertString(timeWeatherResult.getTime().get(0).getFcstTime().toString(), ":", 2));
             viewHolder.TvTimeWeatherTemp.setText(context.getString(R.string.format_temperature, Double.parseDouble(WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "T3H"))));
@@ -84,7 +89,8 @@ public class TimeWeatherForecastRecycleViewAdapter extends RecyclerView.Adapter<
             //viewHolder.TvTempMax.setText(context.getString(R.string.format_temperature, 21.0));
             //viewHolder.TvTempMin.setText(context.getString(R.string.format_temperature, 10.1));
         }
-
+        viewHolder.TvTimeWeatherReh.setText((WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "REH")));
+        viewHolder.TvTimeWeatherPop.setText((WeatherUtil.getTimeWeatherResultTimeValueByCategory(timeWeatherResult, "POP")));
         //dayViewHolder.weatherType.setText(days.get(i).getWeatherDescription());
     }
 
@@ -136,6 +142,11 @@ public class TimeWeatherForecastRecycleViewAdapter extends RecyclerView.Adapter<
         TextView TvTimeWeatherTemp;
         @BindView(R.id.tv_time_weather_time)
         TextView TvTimeWeatherTime;
+        @BindView(R.id.tv_time_weather_reh)
+        TextView TvTimeWeatherReh;      //습도
+        @BindView(R.id.tv_time_weather_pop)
+        TextView TvTimeWeatherPop;      //강수확률
+
 
 
 

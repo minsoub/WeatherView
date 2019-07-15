@@ -16,10 +16,13 @@
         android:textColor="@color/darkGray"
         />
 
+
+
+
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
         android:orientation="vertical"
         android:paddingLeft="16dp">
 
@@ -30,21 +33,11 @@
             android:layout_gravity="center"
             android:text="오전"
             />
-
         <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="100dp"
-            android:layout_weight="0.5"
             android:orientation="horizontal"
-            android:paddingLeft="16dp">
-<!--            <TextView
-                android:id="@+id/tv_weather_type"
-                android:text="타입"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/darkGray"
-                style="@style/CodeFont"
-                />-->
+            >
             <ImageView
                 android:id="@+id/iv_image"
                 android:layout_width="32dp"
@@ -56,25 +49,15 @@
                 android:paddingLeft="10dp"
                 android:textColor="@color/darkGray"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                >
-
-            </TextView>
-            <TextView
-                android:id="@+id/tv_temp_min"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:textColor="@color/darkGray"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 />
-        </LinearLayout>
 
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
         android:orientation="vertical"
         android:paddingLeft="16dp">
 
@@ -85,14 +68,11 @@
             android:layout_gravity="center"
             android:text="오후"
             />
-
         <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="100dp"
-            android:layout_weight="0.5"
             android:orientation="horizontal"
-            android:paddingLeft="16dp">
-
+            >
             <ImageView
                 android:id="@+id/iv_image_afternoon"
                 android:layout_width="32dp"
@@ -105,8 +85,44 @@
                 android:textColor="@color/darkGray"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 >
-
             </TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
+
+<!--            <TextView
+                android:id="@+id/tv_weather_type"
+                android:text="타입"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/darkGray"
+                style="@style/CodeFont"
+                />-->
+            <TextView
+                android:id="@+id/tv_temp_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:textColor="@color/darkGray"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                />
+
             <TextView
                 android:id="@+id/tv_temp_max"
                 android:layout_width="wrap_content"
@@ -118,6 +134,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
 
     <!--<LinearLayout
         android:layout_width="wrap_content"
